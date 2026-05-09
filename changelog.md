@@ -1,53 +1,82 @@
 # 📋 Changelog
 
-Semua perubahan signifikan pada proyek ini akan dicatat di sini.
-Format mengacu pada [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
-Versi mengikuti [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) · Versi: [Semantic Versioning](https://semver.org/)
 
 ---
 
-## [Unreleased]
+## [1.2.0] — 2025-05-09
 
-### Direncanakan
-- `level1/index.html` — Panduan Pemula dalam format dokumen HTML interaktif
-- `level2/index.html` — Presentasi interaktif dengan catatan presenter untuk tingkat berkembang
-- `level3/index.html` — Referensi mendalam dan checklist untuk tingkat mahir
-- Halaman glosarium istilah STEM
-- Mode cetak (print-friendly) untuk semua tingkat
-- Versi ringkas 1-halaman (cheat sheet) per tingkat
+### Ditambahkan — Proyek Lengkap ✅
+
+**Level 1 — Pemula**
+- `level1/dokumen.html` — Dokumen bacaan mandiri (8 seksi, ~25 menit baca)
+  - Sejarah & urgensi STEM (PISA 2022, Indonesia Emas 2045, proyeksi talenta 2030)
+  - Definisi, komponen S-T-E-M, evolusi definisi (NSF → Bybee → Kelley & Knowles → BSKAP)
+  - 3 karakteristik utama pembelajaran STEM
+  - 3 perspektif implementasi dengan panduan memilih
+  - 5 langkah pertama di kelas
+  - Contoh aktivitas PAUD (jus jeruk) dan SD (jalur kelereng)
+  - Sidebar sticky dengan active nav, scroll progress bar
+
+- `level1/presentasi.html` — Presentasi interaktif (10 slide)
+  - Cover → urgensi → definisi → karakteristik → mitos/fakta → 3 perspektif → analogi nyata → langkah pertama → kutipan kunci → penutup
+  - Panel catatan presenter per slide (tujuan, cara membawakan, tips)
+  - Navigasi keyboard (←→) dan toggle catatan (N)
+  - Progress bar bawah
+
+**Level 2 — Berkembang**
+- `level2/dokumen.html` — Panduan perancangan & pelaksanaan (8 seksi, ~40 menit baca)
+  - 4 langkah perencanaan sistematis dengan template TP STEM
+  - Alur praktik saintifik (6 tahap iteratif)
+  - Alur praktik enjinering (6 tahap iteratif) + perbandingan kapan pakai mana
+  - Model pembelajaran: PjBL Lucas, Laboy-Rush, SEAMEO, PBL, Siklus 5E
+  - Asesmen autentik per tahap dengan tabel instrumen
+  - Panduan pembagian asesmen antar guru mapel
+  - Contoh modul SD (perahu daur ulang), SMP (filter air), SMA (sensor energi)
+  - Lingkungan belajar fisik, budaya kelas, dan digital
+
+- `level2/presentasi.html` — Presentasi workshop implementasi (12 slide)
+  - Rekap L1 → 4 langkah → masalah nyata → pemetaan CP → alur saintifik → alur enjinering → model pembelajaran → asesmen → pembagian mapel → studi kasus → penutup komitmen
+  - Catatan aktivitas per slide (pemetaan masalah, tabel CP, form 1-1-1)
+  - Indikator aktivitas terpisah dari tips presenter
+
+**Level 3 — Mahir**
+- `level3/dokumen.html` — Referensi mendalam + checklist (8 seksi, ~50 menit baca)
+  - Tangga integrasi: multidisipliner → interdisipliner → transdisipliner
+  - 7 pilar kemitraan strategis (guru lintas mapel, industri, masyarakat, LSM, PT, praktisi, orang tua)
+  - Panduan membangun kemitraan efektif
+  - Peran pemangku kepentingan: dinas → pengawas → kepsek → guru → orang tua
+  - UDL 3 prinsip + adaptasi SLB per jenis hambatan
+  - P5 berbasis STEM + kegiatan ekstrakurikuler
+  - Roadmap PLC 4 fase + siklus refleksi berkelanjutan
+  - Checklist mandiri 15 item (4 kategori) dengan simpan progress ke localStorage
+
+- `level3/presentasi.html` — Presentasi sesi refleksi & ekosistem (11 slide)
+  - Cover → ekosistem vs proyek → tangga integrasi → 7 pilar → peran sistem → UDL → P5/ekstra → PLC roadmap → refleksi → self-assessment → penutup
+  - Nada peer-to-peer (bukan top-down) — dirancang untuk fasilitasi kolaboratif
+  - Catatan presenter dengan pertanyaan diskusi mendalam
+
+### Diperbarui
+- `readme.md` — Dokumentasi lengkap semua file, fitur teknis, dan panduan deploy
+- `changelog.md` — Riwayat lengkap semua versi
+
+---
+
+## [1.1.0] — 2025-05-08
+
+### Diubah
+- Revisi struktur: setiap level kini memiliki **dua format** (dokumen + presentasi)
+- `index.html` diperbarui sepenuhnya dengan layout dua-kolom per level, section format explainer
+- URL repo diupdate ke `https://nitoe.github.io/stem/`
 
 ---
 
 ## [1.0.0] — 2025-05-08
 
 ### Ditambahkan
-- `index.html` — Halaman utama (landing hub) dengan:
-  - Hero section dengan animasi canvas particle
-  - Navigasi sticky responsif
-  - 4 pillar STEM (S-T-E-M) visual
-  - 3 kartu level berjenjang (Pemula, Berkembang, Mahir)
-  - Section "Cara Belajar" (4 langkah)
-  - Peta scaffolding visual konten (8 tahapan)
-  - Feature box & kutipan dari panduan resmi
-  - Footer lengkap dengan navigasi & metadata
-  - Scroll progress bar
-  - Reveal animation on scroll
-  - Tema dark navy/teal/amber profesional
-  - Font: DM Serif Display + Plus Jakarta Sans
-  - Responsif untuk mobile dan desktop
-- `readme.md` — Dokumentasi lengkap proyek:
-  - Struktur folder
-  - Peta tingkat belajar & konten per level
-  - Panduan deploy GitHub Pages
-  - Keterangan sumber dokumen resmi
-- `changelog.md` — File riwayat perubahan ini
-
-### Keputusan Desain
-- Memilih tema **dark** agar tidak melelahkan mata saat dibaca lama (professional development)
-- Format per tingkat dibedakan secara eksplisit: dokumen vs presentasi vs referensi
-- Scaffolding tidak mengharuskan urutan linear — guru bisa masuk di titik mana pun
-- Semua file statis (HTML/CSS/JS) tanpa dependency build tool agar mudah dihost di mana saja
-- Animasi particle background dipilih untuk merefleksikan "koneksi antar disiplin" dalam STEM
+- `index.html` — Landing hub dengan hero, pillar STEM, 3 kartu level, scaffolding map, particle canvas
+- `readme.md` — Dokumentasi awal
+- `changelog.md` — File ini
 
 ---
 
@@ -55,10 +84,9 @@ Versi mengikuti [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 | Kode | Artinya |
 |------|---------|
-| **Major** (1.x.x) | Penambahan level baru atau perubahan struktur besar |
-| **Minor** (x.1.x) | Penambahan fitur atau halaman baru dalam level yang ada |
-| **Patch** (x.x.1) | Perbaikan teks, typo, bug tampilan, atau update konten minor |
+| **Major** (1.x.x) | Perubahan struktur besar atau penambahan level |
+| **Minor** (x.1.x) | Penambahan file/halaman baru |
+| **Patch** (x.x.1) | Perbaikan teks, typo, atau bug tampilan |
 
 ---
-
-*Panduan STEM Hub Guru Indonesia · Dimulai Mei 2025*
+*v1.2.0 · Mei 2025 · https://nitoe.github.io/stem/*
