@@ -4,1304 +4,405 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panduan Pembelajaran STEM | Hub Guru Indonesia</title>
-  <meta name="description" content="Pusat sumber belajar STEM untuk guru Indonesia — dari pemula hingga mahir. Berdasarkan Panduan Pembelajaran STEM Kemendikdasmen 2025." />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-
   <style>
-    /* ── DESIGN TOKENS ───────────────────────────────────────── */
     :root {
-      --navy:        #0B1D2E;
-      --navy-mid:    #132840;
-      --navy-light:  #1D3A52;
-      --teal:        #0EA5C9;
-      --teal-dim:    #0EA5C930;
-      --amber:       #F59E0B;
-      --amber-dim:   #F59E0B25;
-      --green:       #10B981;
-      --coral:       #EF4444;
-      --white:       #F8FAFC;
-      --white-dim:   #F8FAFC18;
-      --text-main:   #E2EAF0;
-      --text-muted:  #8BA5BB;
-      --text-faint:  #4A6478;
-      --border:      #1D3A52;
-      --radius:      14px;
-      --radius-lg:   22px;
-      --font-serif:  'DM Serif Display', Georgia, serif;
-      --font-sans:   'Plus Jakarta Sans', system-ui, sans-serif;
-      --shadow:      0 8px 32px rgba(0,0,0,0.4);
-      --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
-    }
-
-    /* ── RESET & BASE ────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font-sans);
-      background: var(--navy);
-      color: var(--text-main);
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-
-    a { color: var(--teal); text-decoration: none; transition: color .2s; }
-    a:hover { color: var(--amber); }
-
-    /* ── CANVAS BACKGROUND ───────────────────────────────────── */
-    #bg-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.45;
-    }
-
-    /* ── LAYOUT ──────────────────────────────────────────────── */
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ── NAV ─────────────────────────────────────────────────── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(11,29,46,0.88);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-logo-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--teal), var(--green));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-serif);
-      font-size: 16px;
-      color: #fff;
-      letter-spacing: -1px;
-      flex-shrink: 0;
-    }
-
-    .nav-brand {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.2;
-    }
-    .nav-brand span {
-      display: block;
-      font-size: 11px;
-      font-weight: 400;
-      color: var(--text-muted);
-      letter-spacing: .04em;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--text-main); }
-
-    .nav-badge {
-      font-size: 11px;
-      font-weight: 600;
-      background: var(--amber-dim);
-      color: var(--amber);
-      border: 1px solid var(--amber);
-      padding: 3px 9px;
-      border-radius: 20px;
-      opacity: 0.9;
-    }
-
-    /* ── HERO ────────────────────────────────────────────────── */
-    .hero {
-      padding: 96px 0 80px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--teal);
-      background: var(--teal-dim);
-      padding: 6px 16px;
-      border-radius: 20px;
-      border: 1px solid var(--teal);
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeUp .7s .1s ease forwards;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: .5; transform: scale(1.4); }
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(40px, 6vw, 72px);
-      line-height: 1.08;
-      letter-spacing: -.02em;
-      color: var(--white);
-      max-width: 760px;
-      margin: 0 auto 10px;
-      opacity: 0;
-      animation: fadeUp .7s .2s ease forwards;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--teal);
-    }
-
-    .hero-subtitle {
-      font-size: clamp(16px, 2vw, 19px);
-      color: var(--text-muted);
-      max-width: 560px;
-      margin: 0 auto 14px;
-      font-weight: 300;
-      opacity: 0;
-      animation: fadeUp .7s .3s ease forwards;
-    }
-
-    .hero-source {
-      font-size: 12px;
-      color: var(--text-faint);
-      margin-bottom: 44px;
-      opacity: 0;
-      animation: fadeUp .7s .35s ease forwards;
-    }
-    .hero-source strong { color: var(--text-muted); }
-
-    .hero-cta {
-      display: inline-flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      opacity: 0;
-      animation: fadeUp .7s .45s ease forwards;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-sans);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 13px 26px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all .2s;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--teal);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(14,165,201,.35);
-    }
-    .btn-primary:hover {
-      background: #0891b2;
-      color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(14,165,201,.45);
-    }
-
-    .btn-ghost {
-      background: var(--white-dim);
-      color: var(--text-main);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover {
-      background: var(--navy-light);
-      color: var(--white);
-    }
-
-    /* ── STEM PILLARS ────────────────────────────────────────── */
-    .pillars {
-      padding: 16px 0 64px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .pillars-row {
-      display: flex;
-      gap: 2px;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      opacity: 0;
-      animation: fadeUp .8s .5s ease forwards;
-    }
-
-    .pillar {
-      flex: 1;
-      padding: 20px 20px 22px;
-      text-align: center;
-      background: var(--navy-mid);
-      transition: background .2s;
-    }
-    .pillar:hover { background: var(--navy-light); }
-
-    .pillar-icon {
-      font-size: 26px;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .pillar-letter {
-      font-family: var(--font-serif);
-      font-size: 28px;
-      font-weight: 400;
-      margin-bottom: 4px;
-    }
-
-    .pillar-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .pillar-s .pillar-letter { color: #38BDF8; }
-    .pillar-t .pillar-letter { color: #34D399; }
-    .pillar-e .pillar-letter { color: var(--amber); }
-    .pillar-m .pillar-letter { color: #F472B6; }
-
-    /* ── SECTION HEADER ──────────────────────────────────────── */
-    .section-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 12px;
-    }
-
-    .section-header h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(28px, 4vw, 42px);
-      line-height: 1.15;
-      color: var(--white);
-      max-width: 580px;
-      margin: 0 auto 14px;
-    }
-
-    .section-header p {
-      font-size: 16px;
-      color: var(--text-muted);
-      max-width: 520px;
-      margin: 0 auto;
-      font-weight: 300;
-    }
-
-    /* ── LEVEL CARDS ─────────────────────────────────────────── */
-    .levels {
-      padding: 80px 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .levels-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 8px;
-    }
-
-    @media (max-width: 860px) {
-      .levels-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-    }
-
-    .level-card {
-      background: var(--navy-mid);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 36px 32px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-      overflow: hidden;
-      transition: transform .25s, box-shadow .25s, border-color .25s;
-      opacity: 0;
-      animation: fadeUp .7s ease forwards;
-    }
-
-    .level-card:nth-child(1) { animation-delay: .6s; }
-    .level-card:nth-child(2) { animation-delay: .75s; }
-    .level-card:nth-child(3) { animation-delay: .9s; }
-
-    .level-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow);
-    }
-
-    .level-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-    }
-
-    .level-card.beginner { border-color: #38BDF830; }
-    .level-card.beginner::before { background: linear-gradient(90deg, #38BDF8, #0EA5C9); }
-    .level-card.beginner:hover { border-color: #38BDF860; }
-
-    .level-card.intermediate { border-color: #34D39930; }
-    .level-card.intermediate::before { background: linear-gradient(90deg, #10B981, #34D399); }
-    .level-card.intermediate:hover { border-color: #34D39960; }
-
-    .level-card.advanced { border-color: #F59E0B30; }
-    .level-card.advanced::before { background: linear-gradient(90deg, var(--amber), #FBBF24); }
-    .level-card.advanced:hover { border-color: #F59E0B60; }
-
-    .level-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      width: fit-content;
-    }
-
-    .level-badge.b { background: #38BDF815; color: #38BDF8; border: 1px solid #38BDF830; }
-    .level-badge.i { background: #34D39915; color: #34D399; border: 1px solid #34D39930; }
-    .level-badge.a { background: #F59E0B15; color: #F59E0B; border: 1px solid #F59E0B30; }
-
-    .level-number {
-      position: absolute;
-      top: 28px;
-      right: 28px;
-      font-family: var(--font-serif);
-      font-size: 56px;
-      line-height: 1;
-      opacity: 0.07;
-      color: var(--white);
-      user-select: none;
-    }
-
-    .level-card h3 {
-      font-family: var(--font-serif);
-      font-size: 24px;
-      line-height: 1.2;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-
-    .level-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 22px;
-      flex: 1;
-    }
-
-    .level-format {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-faint);
-      margin-bottom: 18px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .level-format svg { opacity: 0.6; }
-
-    .level-topics {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-
-    .level-topics li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    .level-topics li::before {
-      content: '→';
-      color: var(--text-faint);
-      flex-shrink: 0;
-      font-size: 11px;
-      margin-top: 2px;
-    }
-
-    .level-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 12px 22px;
-      border-radius: 10px;
-      transition: all .2s;
-      border: 1px solid;
-      text-align: center;
-      justify-content: center;
-    }
-
-    .level-cta.b { color: #38BDF8; border-color: #38BDF840; background: #38BDF810; }
-    .level-cta.b:hover { background: #38BDF820; border-color: #38BDF8; color: #38BDF8; }
-
-    .level-cta.i { color: #34D399; border-color: #34D39940; background: #34D39910; }
-    .level-cta.i:hover { background: #34D39920; border-color: #34D399; color: #34D399; }
-
-    .level-cta.a { color: var(--amber); border-color: #F59E0B40; background: #F59E0B10; }
-    .level-cta.a:hover { background: #F59E0B20; border-color: var(--amber); color: var(--amber); }
-
-    .level-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: var(--text-faint);
-      font-weight: 500;
-    }
-    .level-status.ready { color: var(--green); }
-    .level-status.coming { color: var(--amber); }
-
-    /* ── HOW IT WORKS ────────────────────────────────────────── */
-    .how {
-      padding: 80px 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-
-    @media (max-width: 860px) {
-      .how-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    .how-step {
-      background: var(--navy-mid);
-      padding: 32px 24px;
-      transition: background .2s;
-    }
-    .how-step:hover { background: var(--navy-light); }
-
-    .how-num {
-      font-family: var(--font-serif);
-      font-size: 42px;
-      line-height: 1;
-      margin-bottom: 14px;
-      background: linear-gradient(135deg, var(--teal), var(--green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .how-step h4 {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-
-    .how-step p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
-
-    /* ── SCAFFOLDING ─────────────────────────────────────────── */
-    .scaffold {
-      padding: 80px 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .scaffold-track {
-      position: relative;
-      padding: 16px 0;
-    }
-
-    .scaffold-track::before {
-      content: '';
-      position: absolute;
-      left: 22px;
-      top: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(180deg, var(--teal), var(--green), var(--amber));
-      opacity: .35;
-    }
-
-    .scaffold-item {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      padding: 20px 24px;
-      border-radius: var(--radius);
-      transition: background .2s;
-      margin-bottom: 4px;
-    }
-    .scaffold-item:hover { background: var(--navy-mid); }
-
-    .scaffold-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 2px;
-      border: 3px solid;
-      position: relative;
-      z-index: 1;
-      background: var(--navy);
-    }
-
-    .scaffold-dot.s { border-color: #38BDF8; }
-    .scaffold-dot.t { border-color: #34D399; }
-    .scaffold-dot.e { border-color: var(--amber); }
-    .scaffold-dot.m { border-color: #F472B6; }
-
-    .scaffold-content {}
-    .scaffold-content h4 {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-    .scaffold-content p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
-
-    /* ── QUOTES / FEATURE BOX ───────────────────────────────── */
-    .feature-box {
-      padding: 80px 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    @media (max-width: 700px) {
-      .feature-grid { grid-template-columns: 1fr; }
-    }
-
-    .feature-item {
-      background: var(--navy-mid);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      transition: border-color .2s;
-    }
-    .feature-item:hover { border-color: var(--teal-dim); }
-
-    .feature-icon {
-      font-size: 28px;
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    .feature-item h4 {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-
-    .feature-item p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .callout {
-      background: linear-gradient(135deg, #0EA5C915, #10B98110);
-      border: 1px solid var(--teal-dim);
-      border-radius: var(--radius-lg);
-      padding: 40px 44px;
-      margin-top: 20px;
-      grid-column: 1 / -1;
-    }
-
-    .callout-quote {
-      font-family: var(--font-serif);
-      font-size: clamp(18px, 2.5vw, 24px);
-      line-height: 1.4;
-      color: var(--white);
-      font-style: italic;
-      margin-bottom: 16px;
-    }
-
-    .callout-quote span { color: var(--teal); }
-
-    .callout-source {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    /* ── FOOTER ──────────────────────────────────────────────── */
-    footer {
-      padding: 64px 0 40px;
-      border-top: 1px solid var(--border);
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-inner {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
-      align-items: start;
-    }
-
-    @media (max-width: 700px) {
-      .footer-inner { grid-template-columns: 1fr; }
-    }
-
-    .footer-brand {
-      font-family: var(--font-serif);
-      font-size: 22px;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-
-    .footer-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      max-width: 380px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .footer-meta {
-      font-size: 12px;
-      color: var(--text-faint);
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      list-style: none;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .footer-links a:hover { color: var(--text-main); }
-
-    .footer-links .badge-coming {
-      font-size: 10px;
-      font-weight: 600;
-      background: var(--amber-dim);
-      color: var(--amber);
-      padding: 2px 7px;
-      border-radius: 10px;
-      margin-left: 6px;
-    }
-
-    .footer-bottom {
-      margin-top: 48px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .footer-bottom p {
-      font-size: 12px;
-      color: var(--text-faint);
-    }
-
-    .version-tag {
-      font-size: 11px;
-      font-weight: 600;
-      background: var(--navy-light);
-      color: var(--text-muted);
-      padding: 4px 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-    }
-
-    /* ── ANIMATIONS ──────────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .reveal.in { opacity: 1; transform: translateY(0); }
-
-    /* ── DIVIDER ─────────────────────────────────────────────── */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 0;
-    }
-
-    /* ── SCROLL PROGRESS ─────────────────────────────────────── */
-    #scroll-progress {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--teal), var(--green), var(--amber));
-      z-index: 999;
-      width: 0%;
-      transition: width .1s linear;
-    }
-
-    /* ── CHIP ────────────────────────────────────────────────── */
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 20px;
-      background: var(--navy-light);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
+      --navy:#0B1D2E; --navy-mid:#132840; --navy-light:#1D3A52;
+      --teal:#0EA5C9; --teal-dim:#0EA5C930;
+      --amber:#F59E0B; --amber-dim:#F59E0B25;
+      --green:#10B981; --pink:#F472B6;
+      --blue:#38BDF8; --emerald:#34D399;
+      --white:#F8FAFC; --white-dim:#F8FAFC18;
+      --text-main:#E2EAF0; --text-muted:#8BA5BB; --text-faint:#4A6478;
+      --border:#1D3A52;
+      --r:14px; --rl:22px;
+      --ff-serif:'DM Serif Display',Georgia,serif;
+      --ff-sans:'Plus Jakarta Sans',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-sans);background:var(--navy);color:var(--text-main);line-height:1.65;overflow-x:hidden}
+    a{color:var(--teal);text-decoration:none;transition:color .2s}
+    a:hover{color:var(--amber)}
+    #bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
+    #prog{position:fixed;top:0;left:0;height:2px;z-index:999;width:0%;background:linear-gradient(90deg,var(--teal),var(--green),var(--amber));transition:width .1s}
+    .wrap{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:0 24px}
+    .div{height:1px;background:var(--border)}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:rgba(11,29,46,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-in{max-width:1160px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .nav-logo{display:flex;align-items:center;gap:10px}
+    .nav-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--green));display:flex;align-items:center;justify-content:center;font-family:var(--ff-serif);font-size:15px;color:#fff}
+    .nav-brand{font-size:15px;font-weight:700;color:var(--white);line-height:1.2}
+    .nav-brand span{display:block;font-size:11px;font-weight:400;color:var(--text-muted)}
+    .nav-links{display:flex;align-items:center;gap:22px;list-style:none}
+    .nav-links a{font-size:13px;font-weight:500;color:var(--text-muted);transition:color .2s}
+    .nav-links a:hover{color:var(--text-main)}
+    .nav-ver{font-size:11px;font-weight:600;background:var(--navy-light);color:var(--text-muted);padding:3px 10px;border-radius:6px;border:1px solid var(--border)}
+    .nav-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber)}
+    @media(max-width:800px){.nav-links{display:none}}
+
+    /* HERO */
+    .hero{padding:88px 0 72px;text-align:center;position:relative;z-index:1}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);background:var(--teal-dim);padding:6px 16px;border-radius:20px;border:1px solid var(--teal);margin-bottom:28px;opacity:0;animation:fu .7s .1s ease forwards}
+    .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+    .hero h1{font-family:var(--ff-serif);font-size:clamp(36px,5.5vw,66px);line-height:1.08;letter-spacing:-.02em;color:var(--white);max-width:740px;margin:0 auto 12px;opacity:0;animation:fu .7s .2s ease forwards}
+    .hero h1 em{font-style:italic;color:var(--teal)}
+    .hero-sub{font-size:clamp(15px,2vw,18px);color:var(--text-muted);max-width:600px;margin:0 auto 10px;font-weight:300;opacity:0;animation:fu .7s .3s ease forwards}
+    .hero-src{font-size:12px;color:var(--text-faint);margin-bottom:44px;opacity:0;animation:fu .7s .35s ease forwards}
+    .hero-src strong{color:var(--text-muted)}
+    .hero-cta{display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:0;animation:fu .7s .45s ease forwards}
+    .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-sans);font-size:14px;font-weight:600;padding:12px 24px;border-radius:10px;cursor:pointer;transition:all .2s;border:none}
+    .btn-p{background:var(--teal);color:#fff;box-shadow:0 4px 20px rgba(14,165,201,.35)}
+    .btn-p:hover{background:#0891b2;color:#fff;transform:translateY(-2px)}
+    .btn-g{background:var(--white-dim);color:var(--text-main);border:1px solid var(--border)}
+    .btn-g:hover{background:var(--navy-light);color:var(--white)}
+
+    /* PILLARS */
+    .pillars{padding:16px 0 60px;z-index:1;position:relative}
+    .p-row{display:flex;gap:2px;border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);opacity:0;animation:fu .8s .5s ease forwards}
+    .p-col{flex:1;padding:18px 16px 20px;text-align:center;background:var(--navy-mid);transition:background .2s}
+    .p-col:hover{background:var(--navy-light)}
+    .p-ico{font-size:24px;margin-bottom:7px;display:block}
+    .p-let{font-family:var(--ff-serif);font-size:26px;margin-bottom:4px}
+    .p-lbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+    .ps .p-let{color:var(--blue)} .pt .p-let{color:var(--emerald)} .pe .p-let{color:var(--amber)} .pm .p-let{color:var(--pink)}
+
+    /* SECTION HDR */
+    .sh{text-align:center;margin-bottom:48px}
+    .sh-lbl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+    .sh h2{font-family:var(--ff-serif);font-size:clamp(26px,4vw,40px);line-height:1.15;color:var(--white);max-width:560px;margin:0 auto 12px}
+    .sh p{font-size:15px;color:var(--text-muted);max-width:540px;margin:0 auto;font-weight:300}
+
+    /* FORMAT EXPLAINER */
+    .fmt-sec{padding:56px 0 0;position:relative;z-index:1}
+    .fmt-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+    @media(max-width:640px){.fmt-grid{grid-template-columns:1fr}}
+    .fmt-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--rl);padding:30px 26px;display:flex;gap:18px;align-items:flex-start;transition:border-color .2s}
+    .fmt-card:hover{border-color:var(--teal-dim)}
+    .fmt-ico{width:50px;height:50px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px}
+    .ico-doc{background:#38BDF815;border:1px solid #38BDF825}
+    .ico-pres{background:#F59E0B15;border:1px solid #F59E0B25}
+    .fmt-card h4{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px}
+    .fmt-card p{font-size:13px;color:var(--text-muted);line-height:1.55;margin-bottom:12px}
+    .tags{display:flex;flex-wrap:wrap;gap:6px}
+    .tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--navy-light);color:var(--text-muted);border:1px solid var(--border)}
+
+    /* LEVEL BLOCKS */
+    .levels{padding:80px 0;position:relative;z-index:1}
+    .lv-block{margin-bottom:32px;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;opacity:0;animation:fu .7s ease forwards}
+    .lv-block:nth-child(1){animation-delay:.5s} .lv-block:nth-child(2){animation-delay:.65s} .lv-block:nth-child(3){animation-delay:.8s}
+    .lv1{border-color:#38BDF820} .lv2{border-color:#34D39920} .lv3{border-color:#F59E0B20}
+
+    .lv-hdr{padding:28px 32px 22px;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .lv1 .lv-hdr{background:linear-gradient(135deg,#38BDF808,#0EA5C905)}
+    .lv2 .lv-hdr{background:linear-gradient(135deg,#10B98108,#34D39905)}
+    .lv3 .lv-hdr{background:linear-gradient(135deg,#F59E0B08,#FBBF2405)}
+
+    .lv-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px;margin-bottom:10px;width:fit-content}
+    .b{background:#38BDF815;color:var(--blue);border:1px solid #38BDF830}
+    .i{background:#34D39915;color:var(--emerald);border:1px solid #34D39930}
+    .a{background:#F59E0B15;color:var(--amber);border:1px solid #F59E0B30}
+
+    .lv-hdr h3{font-family:var(--ff-serif);font-size:clamp(19px,2.4vw,26px);color:var(--white);line-height:1.2;margin-bottom:8px}
+    .lv-hdr p{font-size:13px;color:var(--text-muted);line-height:1.55;max-width:600px}
+    .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+    .pill{font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--navy-light);color:var(--text-muted);border:1px solid var(--border)}
+
+    .fmt-duo{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+    @media(max-width:620px){.fmt-duo{grid-template-columns:1fr} .lv-hdr{padding:20px 18px 16px}}
+
+    .f-cell{background:var(--navy-mid);padding:26px 30px 28px;display:flex;flex-direction:column;transition:background .2s}
+    .f-cell:hover{background:var(--navy-light)}
+    .f-type{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .f-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+    .f-type strong{display:block;font-size:14px;font-weight:700;color:var(--white);margin-bottom:1px}
+    .f-type span{font-size:11px;color:var(--text-faint)}
+    .f-desc{font-size:13px;color:var(--text-muted);line-height:1.55;margin-bottom:20px;flex:1}
+    .f-link{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;padding:9px 17px;border-radius:9px;border:1px solid;transition:all .2s;align-self:flex-start}
+
+    .lv1 .dl{color:var(--blue);border-color:#38BDF830;background:#38BDF808}.lv1 .dl:hover{background:#38BDF818;border-color:var(--blue);color:var(--blue)}
+    .lv1 .pl{color:var(--amber);border-color:#F59E0B30;background:#F59E0B08}.lv1 .pl:hover{background:#F59E0B18;border-color:var(--amber);color:var(--amber)}
+    .lv2 .dl{color:var(--emerald);border-color:#34D39930;background:#34D39908}.lv2 .dl:hover{background:#34D39918;border-color:var(--emerald);color:var(--emerald)}
+    .lv2 .pl{color:var(--amber);border-color:#F59E0B30;background:#F59E0B08}.lv2 .pl:hover{background:#F59E0B18;border-color:var(--amber);color:var(--amber)}
+    .lv3 .dl{color:var(--amber);border-color:#F59E0B30;background:#F59E0B08}.lv3 .dl:hover{background:#F59E0B18;border-color:var(--amber);color:var(--amber)}
+    .lv3 .pl{color:var(--pink);border-color:#F472B630;background:#F472B608}.lv3 .pl:hover{background:#F472B618;border-color:var(--pink);color:var(--pink)}
+
+    /* SCAFFOLD */
+    .scf{padding:80px 0;position:relative;z-index:1}
+    .scf-track{position:relative;padding:8px 0}
+    .scf-track::before{content:'';position:absolute;left:21px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--teal),var(--green),var(--amber));opacity:.3}
+    .scf-item{display:flex;gap:18px;align-items:flex-start;padding:16px 18px;border-radius:var(--r);transition:background .2s;margin-bottom:2px}
+    .scf-item:hover{background:var(--navy-mid)}
+    .scf-dot{width:19px;height:19px;border-radius:50%;flex-shrink:0;margin-top:3px;border:3px solid;position:relative;z-index:1;background:var(--navy)}
+    .ds{border-color:var(--blue)} .dt{border-color:var(--emerald)} .de{border-color:var(--amber)} .dm{border-color:var(--pink)}
+    .scf-body h4{font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px}
+    .scf-body p{font-size:13px;color:var(--text-muted);line-height:1.55}
+    .ltag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:7px;vertical-align:middle}
+    .l1t{background:#38BDF815;color:var(--blue)} .l2t{background:#34D39915;color:var(--emerald)} .l3t{background:#F59E0B15;color:var(--amber)}
+
+    /* CALLOUT */
+    .clo-sec{padding:0 0 80px;position:relative;z-index:1}
+    .clo{background:linear-gradient(135deg,#0EA5C912,#10B98108);border:1px solid var(--teal-dim);border-radius:var(--rl);padding:38px 42px}
+    .clo-q{font-family:var(--ff-serif);font-size:clamp(17px,2.3vw,22px);line-height:1.45;color:var(--white);font-style:italic;margin-bottom:14px}
+    .clo-q span{color:var(--teal)}
+    .clo-src{font-size:13px;color:var(--text-muted)}
+
+    /* FOOTER */
+    footer{padding:52px 0 32px;border-top:1px solid var(--border);position:relative;z-index:1}
+    .ft-in{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+    @media(max-width:600px){.ft-in{grid-template-columns:1fr}}
+    .ft-brand{font-family:var(--ff-serif);font-size:20px;color:var(--white);margin-bottom:10px}
+    .ft-desc{font-size:13px;color:var(--text-muted);max-width:380px;line-height:1.6;margin-bottom:14px}
+    .ft-meta{font-size:12px;color:var(--text-faint)}
+    .ft-links{display:flex;flex-direction:column;gap:8px;list-style:none}
+    .ft-links a{font-size:13px;color:var(--text-muted)}.ft-links a:hover{color:var(--text-main)}
+    .ft-bot{margin-top:36px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .ft-bot p{font-size:12px;color:var(--text-faint)}
+    .ver{font-size:11px;font-weight:600;background:var(--navy-light);color:var(--text-muted);padding:3px 10px;border-radius:6px;border:1px solid var(--border)}
+
+    @keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+    .rev.in{opacity:1;transform:translateY(0)}
   </style>
 </head>
 <body>
+<div id="prog"></div>
+<canvas id="bg"></canvas>
 
-  <div id="scroll-progress"></div>
-  <canvas id="bg-canvas"></canvas>
-
-  <!-- ── NAV ──────────────────────────────────────────────── -->
-  <nav>
-    <div class="nav-inner">
-      <div class="nav-logo">
-        <div class="nav-logo-mark">SE</div>
-        <div class="nav-brand">
-          Panduan STEM
-          <span>Hub Guru Indonesia</span>
-        </div>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#levels">Tingkat Belajar</a></li>
-        <li><a href="#cara-belajar">Cara Belajar</a></li>
-        <li><a href="#scaffolding">Scaffolding</a></li>
-        <li><a href="changelog.md" class="chip">v1.0.0</a></li>
-      </ul>
-      <span class="nav-badge">Kemendikdasmen 2025</span>
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-mark">SE</div>
+      <div class="nav-brand">Panduan STEM <span>Hub Guru Indonesia</span></div>
     </div>
-  </nav>
+    <ul class="nav-links">
+      <li><a href="#format">Format</a></li>
+      <li><a href="#levels">Tingkat</a></li>
+      <li><a href="#konten">Konten</a></li>
+      <li><a href="changelog.md" class="nav-ver">v1.1.0</a></li>
+    </ul>
+    <span class="nav-badge">Kemendikdasmen 2025</span>
+  </div>
+</nav>
 
-  <!-- ── HERO ─────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-eyebrow">Panduan Resmi Kemendikdasmen 2025</div>
-      <h1>Panduan Pembelajaran <em>STEM</em> untuk Guru</h1>
-      <p class="hero-subtitle">
-        Dari nol hingga mahir — sumber belajar berjenjang untuk membantu guru
-        merancang & melaksanakan pembelajaran STEM yang bermakna.
-      </p>
-      <p class="hero-source">
-        Berdasarkan <strong>Panduan Pembelajaran STEM</strong> · Pusat Kurikulum dan Pembelajaran BSKAP ·
-        Kementerian Pendidikan Dasar dan Menengah RI
-      </p>
-      <div class="hero-cta">
-        <a href="#levels" class="btn btn-primary">
-          Mulai Belajar
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="readme.md" class="btn btn-ghost">
-          Baca Readme
-        </a>
-      </div>
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Panduan Resmi Kemendikdasmen 2025</div>
+    <h1>Panduan Pembelajaran <em>STEM</em><br>untuk Guru</h1>
+    <p class="hero-sub">Tiga tingkat berjenjang — masing-masing hadir dalam dua format:<br><strong>dokumen bacaan</strong> dan <strong>presentasi</strong>, untuk mengakomodasi cara belajar yang berbeda.</p>
+    <p class="hero-src">Berdasarkan <strong>Panduan Pembelajaran STEM</strong> · Pusat Kurikulum dan Pembelajaran BSKAP · Kemendikdasmen RI · 2025</p>
+    <div class="hero-cta">
+      <a href="#levels" class="btn btn-p">Lihat Semua Level <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#format" class="btn btn-g">Tentang Format</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── STEM PILLARS ──────────────────────────────────────── -->
-  <section class="pillars">
-    <div class="container">
-      <div class="pillars-row">
-        <div class="pillar pillar-s">
-          <span class="pillar-icon">🔬</span>
-          <div class="pillar-letter">S</div>
-          <div class="pillar-label">Sains</div>
-        </div>
-        <div class="pillar pillar-t">
-          <span class="pillar-icon">💻</span>
-          <div class="pillar-letter">T</div>
-          <div class="pillar-label">Teknologi</div>
-        </div>
-        <div class="pillar pillar-e">
-          <span class="pillar-icon">⚙️</span>
-          <div class="pillar-letter">E</div>
-          <div class="pillar-label">Enjinering</div>
-        </div>
-        <div class="pillar pillar-m">
-          <span class="pillar-icon">📐</span>
-          <div class="pillar-letter">M</div>
-          <div class="pillar-label">Matematika</div>
-        </div>
-      </div>
+<section class="pillars">
+  <div class="wrap">
+    <div class="p-row">
+      <div class="p-col ps"><span class="p-ico">🔬</span><div class="p-let">S</div><div class="p-lbl">Sains</div></div>
+      <div class="p-col pt"><span class="p-ico">💻</span><div class="p-let">T</div><div class="p-lbl">Teknologi</div></div>
+      <div class="p-col pe"><span class="p-ico">⚙️</span><div class="p-let">E</div><div class="p-lbl">Enjinering</div></div>
+      <div class="p-col pm"><span class="p-ico">📐</span><div class="p-let">M</div><div class="p-lbl">Matematika</div></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <div class="divider"></div>
+<div class="div"></div>
 
-  <!-- ── LEVEL CARDS ───────────────────────────────────────── -->
-  <section class="levels" id="levels">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-label">Jalur Belajar Berjenjang</div>
-        <h2>Pilih Titik Mulaimu</h2>
-        <p>Setiap tingkat dirancang berbeda — format, kedalaman, dan cara penyampaiannya disesuaikan dengan kebutuhan kamu.</p>
-      </div>
-
-      <div class="levels-grid">
-
-        <!-- LEVEL 1 -->
-        <div class="level-card beginner">
-          <div class="level-number">1</div>
-          <div class="level-badge b">🌱 Tingkat Pemula</div>
-          <h3>Apa Itu STEM dan Mengapa Penting?</h3>
-          <p class="level-desc">
-            Untuk guru yang belum pernah atau baru pertama kali mendengar tentang STEM.
-            Penjelasan konsep dari nol, dengan bahasa sederhana, analogi, dan contoh nyata di kelas.
-          </p>
-          <div class="level-format">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Format: Dokumen Panduan Bacaan
-          </div>
-          <ul class="level-topics">
-            <li>Definisi & sejarah STEM (sejak 1990-an hingga Indonesia)</li>
-            <li>Mengapa STEM urgent? (PISA 2022 & Indonesia Emas 2045)</li>
-            <li>Komponen S-T-E-M dan peran masing-masing</li>
-            <li>3 karakteristik utama pembelajaran STEM</li>
-            <li>Pertama kali masuk kelas: langkah paling sederhana</li>
-          </ul>
-          <a href="level1/index.html" class="level-cta b">
-            Buka Panduan Pemula
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <!-- LEVEL 2 -->
-        <div class="level-card intermediate">
-          <div class="level-number">2</div>
-          <div class="level-badge i">🌿 Tingkat Berkembang</div>
-          <h3>Merancang dan Melaksanakan Pembelajaran STEM</h3>
-          <p class="level-desc">
-            Untuk guru yang sudah mengerti konsep STEM dan siap merancang pembelajaran nyata di kelas —
-            lengkap dengan alur perencanaan, pelaksanaan, dan asesmen.
-          </p>
-          <div class="level-format">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            Format: Presentasi Interaktif + Catatan Presenter
-          </div>
-          <ul class="level-topics">
-            <li>4 langkah perencanaan pembelajaran STEM</li>
-            <li>Praktik saintifik & enjinering — diagram alur lengkap</li>
-            <li>Model PjBL, PBL, dan 5E — cara memilih yang tepat</li>
-            <li>Contoh modul SD, SMP, SMA, SMK, PAUD & SLB</li>
-            <li>Asesmen autentik dari tahap ke tahap</li>
-          </ul>
-          <a href="level2/index.html" class="level-cta i">
-            Buka Presentasi Berkembang
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <!-- LEVEL 3 -->
-        <div class="level-card advanced">
-          <div class="level-number">3</div>
-          <div class="level-badge a">🌳 Tingkat Mahir</div>
-          <h3>Memimpin & Mengembangkan Ekosistem STEM</h3>
-          <p class="level-desc">
-            Untuk guru yang sudah melaksanakan STEM dan ingin memperdalam — kemitraan,
-            diferensiasi, inklusi, kolaborasi lintas mapel, dan langkah pengembangan berikutnya.
-          </p>
-          <div class="level-format">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            Format: Dokumen Referensi Mendalam + Checklist
-          </div>
-          <ul class="level-topics">
-            <li>Kerangka kemitraan: industri, LSM, PT, orang tua</li>
-            <li>Integrasi multidisipliner → transdisipliner</li>
-            <li>Universal Design for Learning (UDL) & inklusi</li>
-            <li>Refleksi & siklus perbaikan berkelanjutan</li>
-            <li>Roadmap pengembangan komunitas belajar STEM</li>
-          </ul>
-          <a href="level3/index.html" class="level-cta a">
-            Buka Referensi Mahir
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-      </div>
+<!-- FORMAT EXPLAINER -->
+<section class="fmt-sec" id="format">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Dua Format per Tingkat</div>
+      <h2>Belajar Sesuai Caramu</h2>
+      <p>Setiap tingkat hadir dalam dua format yang berbeda. Pilih yang paling sesuai — atau gunakan keduanya.</p>
     </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ── HOW IT WORKS ──────────────────────────────────────── -->
-  <section class="how" id="cara-belajar">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-label">Cara Menggunakan Hub Ini</div>
-        <h2>Dirancang untuk Belajar Nyata</h2>
-        <p>Tidak harus berurutan — temukan titik masuk yang paling sesuai denganmu.</p>
-      </div>
-
-      <div class="how-grid reveal">
-        <div class="how-step">
-          <div class="how-num">01</div>
-          <h4>Kenali Dirimu</h4>
-          <p>Pilih tingkat yang mencerminkan pengalamanmu saat ini. Tidak ada salahnya mulai dari Pemula meski sudah pernah mencoba STEM.</p>
-        </div>
-        <div class="how-step">
-          <div class="how-num">02</div>
-          <h4>Baca atau Tonton</h4>
-          <p>Setiap tingkat hadir dalam format berbeda — dokumen untuk dibaca pelan, presentasi untuk sesi pelatihan, referensi untuk dicari saat butuh.</p>
-        </div>
-        <div class="how-step">
-          <div class="how-num">03</div>
-          <h4>Coba di Kelas</h4>
-          <p>Setiap halaman dilengkapi dengan contoh praktis, template, dan aktivitas konkret yang bisa langsung kamu coba minggu depan.</p>
-        </div>
-        <div class="how-step">
-          <div class="how-num">04</div>
-          <h4>Naik Tingkat</h4>
-          <p>Setelah praktik, kembali dan lanjut ke tingkat berikutnya. STEM adalah perjalanan iteratif — percobaan, revisi, dan perbaikan.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ── SCAFFOLDING MAP ───────────────────────────────────── -->
-  <section class="scaffold" id="scaffolding">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-label">Peta Scaffolding</div>
-        <h2>Apa yang Akan Kamu Pelajari</h2>
-        <p>Gambaran besar konten dari seluruh tingkat — dari konsep dasar hingga implementasi lanjutan.</p>
-      </div>
-
-      <div class="scaffold-track reveal">
-        <div class="scaffold-item">
-          <div class="scaffold-dot s"></div>
-          <div class="scaffold-content">
-            <h4>Sejarah & Urgensi STEM di Indonesia</h4>
-            <p>STEM lahir di AS sejak 1990-an. Di Indonesia, relevansinya ditunjukkan oleh data PISA 2022 dan target Indonesia Emas 2045. Mengapa setiap guru perlu mengenal STEM.</p>
-          </div>
-        </div>
-        <div class="scaffold-item">
-          <div class="scaffold-dot t"></div>
-          <div class="scaffold-content">
-            <h4>Definisi, Karakteristik, dan Komponen STEM</h4>
-            <p>Apa itu S-T-E-M masing-masing, bagaimana mereka saling berperan dalam menyelesaikan masalah nyata, dan 3 karakteristik utama: penyelesaian masalah, praktik saintifik-enjinering, integrasi lintas disiplin.</p>
-          </div>
-        </div>
-        <div class="scaffold-item">
-          <div class="scaffold-dot e"></div>
-          <div class="scaffold-content">
-            <h4>3 Perspektif Implementasi</h4>
-            <p>STEM sebagai kerangka berpikir lintas mapel, sebagai pendekatan terpadu (embedded & integrated), dan sebagai mata pelajaran tersendiri. Mana yang cocok untuk kondisi sekolahmu?</p>
-          </div>
-        </div>
-        <div class="scaffold-item">
-          <div class="scaffold-dot m"></div>
-          <div class="scaffold-content">
-            <h4>Kerangka Pembelajaran: Pedagogis, Lingkungan, Kemitraan, Digital</h4>
-            <p>Model PjBL (Lucas, Laboy-Rush, SEAMEO), PBL, dan 5E. Desain ruang fisik & virtual, budaya belajar, 7 pilar kemitraan, dan pemanfaatan digital yang tepat guna.</p>
-          </div>
-        </div>
-        <div class="scaffold-item">
-          <div class="scaffold-dot s"></div>
-          <div class="scaffold-content">
-            <h4>Peran Pemangku Kepentingan</h4>
-            <p>Dinas Pendidikan, Pengawas, Kepala Sekolah, Pendidik, hingga Orang Tua — semua punya peran spesifik dalam menciptakan ekosistem STEM yang sehat.</p>
-          </div>
-        </div>
-        <div class="scaffold-item">
-          <div class="scaffold-dot t"></div>
-          <div class="scaffold-content">
-            <h4>Implementasi: Intrakurikuler, Kokurikuler, Ekstrakurikuler</h4>
-            <p>4 langkah perancangan pembelajaran STEM, alur praktik saintifik dan enjinering, manajemen waktu, asesmen autentik per tahap, Projek Penguatan Profil Pelajar Pancasila (P5), dan kegiatan ekstra.</p>
-          </div>
-        </div>
-        <div class="scaffold-item">
-          <div class="scaffold-dot e"></div>
-          <div class="scaffold-content">
-            <h4>Contoh Nyata dari PAUD hingga SLB</h4>
-            <p>Modul lengkap: PAUD (jus jeruk), SD (miniatur rintangan, perahu penyelamat), SMP (pencemaran air), SMA (energi listrik & sensor), SMK, hingga SLB dengan prinsip UDL.</p>
-          </div>
-        </div>
-        <div class="scaffold-item">
-          <div class="scaffold-dot m"></div>
-          <div class="scaffold-content">
-            <h4>Langkah Berikutnya & Pengembangan Profesional</h4>
-            <p>Refleksi berkelanjutan, komunitas belajar antarguru (PLC), roadmap menuju ekosistem STEM sekolah yang mandiri, dan adaptasi untuk kondisi keterbatasan sumber daya.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ── FEATURES & QUOTE ──────────────────────────────────── -->
-  <section class="feature-box">
-    <div class="container">
-      <div class="feature-grid">
-        <div class="feature-item reveal">
-          <span class="feature-icon">🧩</span>
-          <h4>Mudah & Murah</h4>
-          <p>Prinsip panduan ini: STEM bisa dilakukan dengan bahan sederhana di sekitar kelas. Tidak butuh lab canggih untuk memulai. Contoh: jus jeruk, botol plastik bekas, balok mainan.</p>
-        </div>
-        <div class="feature-item reveal">
-          <span class="feature-icon">♿</span>
-          <h4>Inklusif untuk Semua</h4>
-          <p>Mencakup panduan Universal Design for Learning (UDL) dan akomodasi untuk murid berkebutuhan khusus. Dari TK, SD, SMP, SMA, SMK, hingga SLB — semua ada contohnya.</p>
-        </div>
-        <div class="feature-item reveal">
-          <span class="feature-icon">🗓️</span>
-          <h4>Langsung Bisa Dipakai</h4>
-          <p>Setiap halaman berisi template perencanaan, contoh rubrik asesmen, skenario aktivitas murid, dan petunjuk praktis yang bisa langsung diadaptasi sesuai jenjang kamu.</p>
-        </div>
-        <div class="feature-item reveal">
-          <span class="feature-icon">🤝</span>
-          <h4>Belajar Bersama</h4>
-          <p>Panduan ini mendorong kolaborasi antarguru lintas mata pelajaran. Ada panduan cara membangun tim, menyepakati topik proyek, dan berbagi alokasi asesmen.</p>
-        </div>
-        <div class="callout reveal">
-          <p class="callout-quote">
-            "Pembelajaran STEM bukan sekadar kumpulan pengetahuan, melainkan sebuah
-            <span>dampak nyata bagi murid</span> — menerapkan ilmu dalam kehidupan sehari-hari,
-            memberikan kontribusi bagi dirinya, satuan pendidikan, dan komunitas."
-          </p>
-          <p class="callout-source">— Panduan Pembelajaran STEM, BSKAP Kemendikdasmen 2025, hlm. 6</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ────────────────────────────────────────────── -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
+    <div class="fmt-grid rev">
+      <div class="fmt-card">
+        <div class="fmt-ico ico-doc">📄</div>
         <div>
-          <div class="footer-brand">Panduan STEM · Hub Guru</div>
-          <p class="footer-desc">
-            Sumber belajar digital berjenjang untuk guru Indonesia dalam mengimplementasikan
-            pembelajaran STEM berdasarkan Panduan Kemendikdasmen 2025. Dihost sementara
-            di GitHub sebelum dipindahkan ke website sekolah.
-          </p>
-          <p class="footer-meta">
-            Sumber: Pusat Kurikulum dan Pembelajaran · BSKAP ·
-            Kementerian Pendidikan Dasar dan Menengah RI · 2025
-          </p>
+          <h4>Dokumen Bacaan</h4>
+          <p>Teks terstruktur yang bisa dibaca dengan kecepatan sendiri. Cocok untuk belajar mandiri, referensi saat merencanakan pembelajaran, atau dibaca ulang kapan pun dibutuhkan.</p>
+          <div class="tags"><span class="tag">Belajar mandiri</span><span class="tag">Referensi cepat</span><span class="tag">Bacaan mendalam</span><span class="tag">Bisa diprint</span></div>
         </div>
-        <ul class="footer-links">
-          <li><a href="index.html">🏠 Beranda</a></li>
-          <li><a href="level1/index.html">📘 Level 1 – Pemula</a></li>
-          <li><a href="level2/index.html">📗 Level 2 – Berkembang</a></li>
-          <li><a href="level3/index.html">📙 Level 3 – Mahir</a></li>
-          <li><a href="readme.md">📄 Readme</a></li>
-          <li><a href="changelog.md">📋 Changelog</a></li>
-        </ul>
       </div>
-      <div class="footer-bottom">
-        <p>Dibuat berdasarkan dokumen resmi pemerintah · Digunakan untuk kepentingan pendidikan · Bukan produk komersial</p>
-        <span class="version-tag">v1.0.0 — Mei 2025</span>
+      <div class="fmt-card">
+        <div class="fmt-ico ico-pres">🖥️</div>
+        <div>
+          <h4>Presentasi + Catatan Presenter</h4>
+          <p>Slide interaktif untuk sesi pelatihan guru, workshop sekolah, atau dipelajari sendiri. Setiap slide dilengkapi catatan presenter sebagai panduan fasilitasi.</p>
+          <div class="tags"><span class="tag">Workshop & pelatihan</span><span class="tag">Catatan presenter</span><span class="tag">Visual & slide</span><span class="tag">Fasilitasi kelompok</span></div>
+        </div>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    // ── SCROLL PROGRESS ──────────────────────────────────────
-    const progress = document.getElementById('scroll-progress');
-    window.addEventListener('scroll', () => {
-      const scrollTop = document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.width = (scrollTop / scrollHeight * 100) + '%';
-    });
+<div class="div" style="margin-top:56px"></div>
 
-    // ── REVEAL ON SCROLL ─────────────────────────────────────
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    reveals.forEach(el => observer.observe(el));
+<!-- LEVELS -->
+<section class="levels" id="levels">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Jalur Belajar Berjenjang</div>
+      <h2>Tiga Tingkat, Enam Sumber</h2>
+      <p>Pilih tingkat yang mencerminkan pengalamanmu, lalu pilih format yang paling cocok hari ini.</p>
+    </div>
 
-    // ── ANIMATED PARTICLE CANVAS ─────────────────────────────
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let W, H, particles = [], animId;
+    <!-- LV1 -->
+    <div class="lv-block lv1">
+      <div class="lv-hdr">
+        <div>
+          <div class="lv-badge b">🌱 Level 1 — Pemula</div>
+          <h3>Apa Itu STEM dan Mengapa Penting?</h3>
+          <p>Untuk guru yang belum pernah atau baru pertama kali mengenal STEM. Konsep dibangun dari nol dengan bahasa sederhana, analogi, dan contoh konkret dari kelas nyata.</p>
+          <div class="pills"><span class="pill">Sejarah & urgensi STEM</span><span class="pill">Komponen S-T-E-M</span><span class="pill">3 karakteristik utama</span><span class="pill">3 perspektif implementasi</span><span class="pill">Langkah pertama di kelas</span></div>
+        </div>
+      </div>
+      <div class="fmt-duo">
+        <div class="f-cell">
+          <div class="f-type"><div class="f-ico ico-doc">📄</div><div><strong>Dokumen Bacaan</strong><span>Bacaan mandiri, lengkap & terstruktur</span></div></div>
+          <p class="f-desc">Penjelasan komprehensif tentang STEM dari nol: sejarah, definisi, karakteristik, dan cara pertama kali memulai. Dilengkapi contoh aktivitas PAUD dan SD yang bisa langsung diadaptasi.</p>
+          <a href="level1/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="f-cell">
+          <div class="f-type"><div class="f-ico ico-pres">🖥️</div><div><strong>Presentasi</strong><span>Slide interaktif + catatan presenter</span></div></div>
+          <p class="f-desc">Slide visual untuk sesi pengenalan STEM — cocok untuk rapat guru atau workshop sekolah. Setiap slide dilengkapi catatan presenter dengan poin diskusi dan pertanyaan pemantik.</p>
+          <a href="level1/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
 
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
+    <!-- LV2 -->
+    <div class="lv-block lv2">
+      <div class="lv-hdr">
+        <div>
+          <div class="lv-badge i">🌿 Level 2 — Berkembang</div>
+          <h3>Merancang & Melaksanakan Pembelajaran STEM</h3>
+          <p>Untuk guru yang sudah memahami konsep dan siap merancang pembelajaran nyata — lengkap dengan alur perencanaan, model pembelajaran, pelaksanaan, dan asesmen autentik.</p>
+          <div class="pills"><span class="pill">4 langkah perencanaan</span><span class="pill">Praktik saintifik & enjinering</span><span class="pill">Model PjBL, PBL, 5E</span><span class="pill">Contoh modul SD–SMK</span><span class="pill">Asesmen autentik</span></div>
+        </div>
+      </div>
+      <div class="fmt-duo">
+        <div class="f-cell">
+          <div class="f-type"><div class="f-ico ico-doc">📄</div><div><strong>Dokumen Bacaan</strong><span>Panduan lengkap perancangan & pelaksanaan</span></div></div>
+          <p class="f-desc">Panduan praktis 4 langkah perancangan dengan template, contoh analisis Capaian Pembelajaran, diagram alur praktik saintifik-enjinering, dan rubrik asesmen per tahap.</p>
+          <a href="level2/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="f-cell">
+          <div class="f-type"><div class="f-ico ico-pres">🖥️</div><div><strong>Presentasi</strong><span>Slide workshop + catatan fasilitasi</span></div></div>
+          <p class="f-desc">Slide untuk workshop implementasi STEM di sekolah. Setiap slide dilengkapi catatan presenter berisi poin diskusi, pertanyaan pemantik, dan tips fasilitasi untuk pelatih.</p>
+          <a href="level2/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
 
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * W;
-        this.y = Math.random() * H;
-        this.r = Math.random() * 1.8 + 0.3;
-        this.vx = (Math.random() - .5) * .25;
-        this.vy = (Math.random() - .5) * .25;
-        const colors = ['#0EA5C9','#10B981','#F59E0B','#F472B6','#38BDF8'];
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.life = Math.random();
-        this.lifeSpeed = Math.random() * .003 + .001;
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.life += this.lifeSpeed;
-        if (this.life > 1) this.reset();
-        if (this.x < 0 || this.x > W) this.vx *= -1;
-        if (this.y < 0 || this.y > H) this.vy *= -1;
-      }
-      draw() {
-        const a = Math.sin(this.life * Math.PI) * 0.6;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = this.color + Math.round(a * 255).toString(16).padStart(2,'0');
-        ctx.fill();
-      }
-    }
+    <!-- LV3 -->
+    <div class="lv-block lv3">
+      <div class="lv-hdr">
+        <div>
+          <div class="lv-badge a">🌳 Level 3 — Mahir</div>
+          <h3>Memimpin & Mengembangkan Ekosistem STEM</h3>
+          <p>Untuk guru berpengalaman yang ingin memperdalam — kemitraan strategis, integrasi transdisipliner, inklusi, kokurikuler, dan membangun komunitas belajar di sekolah.</p>
+          <div class="pills"><span class="pill">7 pilar kemitraan</span><span class="pill">Multi → transdisipliner</span><span class="pill">UDL & inklusi SLB</span><span class="pill">P5 & kokurikuler</span><span class="pill">PLC antarguru</span></div>
+        </div>
+      </div>
+      <div class="fmt-duo">
+        <div class="f-cell">
+          <div class="f-type"><div class="f-ico ico-doc">📄</div><div><strong>Dokumen Bacaan</strong><span>Referensi mendalam + checklist</span></div></div>
+          <p class="f-desc">Referensi komprehensif: kerangka kemitraan, panduan inklusi UDL, roadmap P5, dan checklist mandiri untuk merefleksikan dan mengembangkan praktik STEM yang sudah berjalan.</p>
+          <a href="level3/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="f-cell">
+          <div class="f-type"><div class="f-ico ico-pres">🖥️</div><div><strong>Presentasi</strong><span>Slide refleksi & pengembangan strategis</span></div></div>
+          <p class="f-desc">Slide untuk sesi refleksi dan perencanaan strategis bersama tim guru. Memuat studi kasus, diskusi PLC, dan peta jalan pengembangan ekosistem STEM sekolah jangka panjang.</p>
+          <a href="level3/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
 
-    function initParticles() {
-      particles = Array.from({length: 120}, () => new Particle());
-    }
+  </div>
+</section>
 
-    function drawConnections() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 90) {
-            const a = (1 - dist / 90) * 0.08;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(14,165,201,${a})`;
-            ctx.lineWidth = .5;
-            ctx.stroke();
-          }
-        }
-      }
-    }
+<div class="div"></div>
 
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
-      drawConnections();
-      particles.forEach(p => { p.update(); p.draw(); });
-      animId = requestAnimationFrame(animate);
-    }
+<!-- SCAFFOLD MAP -->
+<section class="scf" id="konten">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Peta Konten</div>
+      <h2>Apa yang Akan Kamu Pelajari</h2>
+      <p>298 halaman Panduan STEM Kemendikdasmen dirangkum dalam tiga tingkat berjenjang.</p>
+    </div>
+    <div class="scf-track rev">
+      <div class="scf-item"><div class="scf-dot ds"></div><div class="scf-body"><h4>Sejarah & Urgensi STEM di Indonesia <span class="ltag l1t">L1</span></h4><p>STEM sejak 1990-an, data PISA 2022, Indonesia Emas 2045, proyeksi talenta digital 2030, dan mengapa setiap guru perlu terlibat.</p></div></div>
+      <div class="scf-item"><div class="scf-dot dt"></div><div class="scf-body"><h4>Definisi, Komponen & Karakteristik STEM <span class="ltag l1t">L1</span></h4><p>Apa itu S-T-E-M masing-masing, evolusi definisi (NSF → Bybee → Kelley & Knowles), dan 3 karakteristik utama: penyelesaian masalah, praktik saintifik-enjinering, integrasi lintas disiplin.</p></div></div>
+      <div class="scf-item"><div class="scf-dot de"></div><div class="scf-body"><h4>3 Perspektif Implementasi <span class="ltag l1t">L1</span> <span class="ltag l2t">L2</span></h4><p>STEM sebagai kerangka berpikir (semua guru), pendekatan terpadu/embedded (modul tematik), dan mata pelajaran mandiri. Cara memilih sesuai kondisi sekolah.</p></div></div>
+      <div class="scf-item"><div class="scf-dot dm"></div><div class="scf-body"><h4>Model Pembelajaran: PjBL, PBL, Siklus 5E <span class="ltag l2t">L2</span></h4><p>PjBL Lucas, PjBL STEM Laboy-Rush, Empat Tahap SEAMEO, PBL, dan Siklus 5E — perbandingan, kapan menggunakan masing-masing, dan contoh aktivitas.</p></div></div>
+      <div class="scf-item"><div class="scf-dot ds"></div><div class="scf-body"><h4>4 Langkah Perencanaan Pembelajaran STEM <span class="ltag l2t">L2</span></h4><p>Identifikasi masalah → analisis CP & integrasi → strategi praktik saintifik-enjinering → penyusunan rencana. Template komponen TP STEM dan manajemen alokasi waktu.</p></div></div>
+      <div class="scf-item"><div class="scf-dot dt"></div><div class="scf-body"><h4>Asesmen Autentik Per Tahap <span class="ltag l2t">L2</span></h4><p>Observasi, rubrik, catatan anekdotal, penilaian kinerja, portofolio. Cara setiap guru mapel menilai kontribusinya tanpa keluar dari konteks proyek STEM.</p></div></div>
+      <div class="scf-item"><div class="scf-dot de"></div><div class="scf-body"><h4>Kerangka Kemitraan: 7 Pilar <span class="ltag l3t">L3</span></h4><p>Pendidik lintas mapel, dunia kerja/industri, masyarakat, LSM, perguruan tinggi, praktisi, orang tua — cara membangun, tantangan, dan solusi tiap jenis kemitraan.</p></div></div>
+      <div class="scf-item"><div class="scf-dot dm"></div><div class="scf-body"><h4>Inklusi, Kokurikuler, Ekstra & PLC <span class="ltag l3t">L3</span></h4><p>Universal Design for Learning (UDL) untuk SLB & inklusi, P5 berbasis STEM, olimpiade dan STEM club, membangun Professional Learning Community, dan roadmap jangka panjang.</p></div></div>
+    </div>
+  </div>
+</section>
 
-    resize();
-    initParticles();
-    animate();
-    window.addEventListener('resize', () => { resize(); });
-  </script>
+<div class="div"></div>
 
+<section class="clo-sec">
+  <div class="wrap">
+    <div class="clo rev">
+      <p class="clo-q">"Pembelajaran STEM bukan sekadar kumpulan pengetahuan, melainkan sebuah <span>dampak nyata bagi murid</span> — mampu menerapkan ilmu dalam kehidupan sehari-hari sehingga memberikan kontribusi nyata bagi dirinya, satuan pendidikan, dan komunitas."</p>
+      <p class="clo-src">— Panduan Pembelajaran STEM, BSKAP Kemendikdasmen 2025, hlm. 6</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="ft-brand">Panduan STEM · Hub Guru</div>
+        <p class="ft-desc">Sumber belajar digital berjenjang untuk guru Indonesia. Tiga tingkat, dua format per tingkat — dokumen bacaan dan presentasi. Berdasarkan Panduan STEM Kemendikdasmen 2025.</p>
+        <p class="ft-meta">Pusat Kurikulum dan Pembelajaran · BSKAP · Kemendikdasmen RI · 2025</p>
+      </div>
+      <ul class="ft-links">
+        <li><a href="index.html">🏠 Beranda</a></li>
+        <li><a href="level1/dokumen.html">📘 L1 · Dokumen</a></li>
+        <li><a href="level1/presentasi.html">🖥️ L1 · Presentasi</a></li>
+        <li><a href="level2/dokumen.html">📗 L2 · Dokumen</a></li>
+        <li><a href="level2/presentasi.html">🖥️ L2 · Presentasi</a></li>
+        <li><a href="level3/dokumen.html">📙 L3 · Dokumen</a></li>
+        <li><a href="level3/presentasi.html">🖥️ L3 · Presentasi</a></li>
+        <li><a href="readme.md">📄 Readme</a></li>
+        <li><a href="changelog.md">📋 Changelog</a></li>
+      </ul>
+    </div>
+    <div class="ft-bot">
+      <p>Dokumen resmi pemerintah RI · Kepentingan pendidikan non-komersial</p>
+      <span class="ver">v1.1.0 — Mei 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(s/h*100)+'%'});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+const cv=document.getElementById('bg'),cx=cv.getContext('2d');let W,H,P=[];
+function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+class Dot{constructor(){this.reset()}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.5+.3;this.vx=(Math.random()-.5)*.2;this.vy=(Math.random()-.5)*.2;this.c=['#0EA5C9','#10B981','#F59E0B','#F472B6','#38BDF8'][Math.floor(Math.random()*5)];this.life=Math.random();this.ls=Math.random()*.003+.001}update(){this.x+=this.vx;this.y+=this.vy;this.life+=this.ls;if(this.life>1)this.reset();if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1}draw(){const a=Math.sin(this.life*Math.PI)*.5;cx.beginPath();cx.arc(this.x,this.y,this.r,0,Math.PI*2);cx.fillStyle=this.c+Math.round(a*255).toString(16).padStart(2,'0');cx.fill()}}
+function init(){P=Array.from({length:100},()=>new Dot())}
+function draw(){cx.clearRect(0,0,W,H);for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<80){cx.beginPath();cx.moveTo(P[i].x,P[i].y);cx.lineTo(P[j].x,P[j].y);cx.strokeStyle=`rgba(14,165,201,${(1-d/80)*.07})`;cx.lineWidth=.5;cx.stroke()}}P.forEach(p=>{p.update();p.draw()});requestAnimationFrame(draw)}
+resize();init();draw();window.addEventListener('resize',resize);
+</script>
 </body>
 </html>
