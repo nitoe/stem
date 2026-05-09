@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Level 1 · Presentasi — Apa Itu STEM?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --navy:#0B1D2E;--navy-mid:#132840;--navy-light:#1D3A52;
+      --teal:#0EA5C9;--blue:#38BDF8;--blue-dim:#38BDF815;
+      --amber:#F59E0B;--green:#10B981;--pink:#F472B6;--emerald:#34D399;
+      --white:#F8FAFC;--text-main:#E2EAF0;--text-muted:#8BA5BB;--text-faint:#4A6478;
+      --border:#1D3A52;
+      --ff-serif:'DM Serif Display',Georgia,serif;
+      --ff-sans:'Plus Jakarta Sans',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--ff-sans);background:var(--navy);color:var(--text-main);overflow:hidden;height:100vh;user-select:none}
+
+    /* TOPBAR */
+    #topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(11,29,46,.95);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100;height:48px}
+    .tb-left{display:flex;align-items:center;gap:12px}
+    .tb-back{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);text-decoration:none;transition:color .2s;padding:4px 8px;border-radius:6px;border:1px solid transparent}
+    .tb-back:hover{color:var(--text-main);border-color:var(--border)}
+    .tb-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--blue-dim);color:var(--blue);border:1px solid #38BDF830;padding:3px 10px;border-radius:20px}
+    .tb-title{font-size:13px;color:var(--text-muted)}
+    .tb-right{display:flex;align-items:center;gap:10px}
+    .tb-counter{font-size:13px;font-weight:600;color:var(--text-muted);min-width:60px;text-align:right}
+    .tb-btn{background:var(--navy-light);border:1px solid var(--border);color:var(--text-muted);padding:6px 14px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;font-family:var(--ff-sans);transition:all .2s}
+    .tb-btn:hover{background:var(--navy-mid);color:var(--text-main)}
+    .tb-btn.active{background:var(--blue-dim);color:var(--blue);border-color:#38BDF840}
+    #doc-link{font-size:12px;font-weight:600;color:var(--text-faint);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:7px;transition:all .2s}
+    #doc-link:hover{color:var(--text-main);border-color:var(--teal)}
+
+    /* PROGRESS BAR */
+    #progress-bar{position:fixed;bottom:0;left:0;right:0;height:3px;background:var(--navy-light);z-index:100}
+    #progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width .3s ease;width:0%}
+
+    /* SLIDES CONTAINER */
+    #slides-wrap{position:fixed;top:48px;left:0;right:0;bottom:3px;display:flex;align-items:stretch}
+
+    /* SLIDE PANEL */
+    #slide-panel{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;transition:flex .3s ease}
+
+    /* NOTES PANEL */
+    #notes-panel{width:320px;background:var(--navy-mid);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:width .3s ease}
+    #notes-panel.hidden{width:0;border-left:none}
+    .notes-hdr{padding:14px 18px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;flex-shrink:0}
+    #notes-content{padding:20px 18px;overflow-y:auto;flex:1}
+    .note-section{margin-bottom:18px}
+    .note-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:7px}
+    .note-text{font-size:13px;color:var(--text-muted);line-height:1.6}
+    .note-text strong{color:var(--text-main)}
+    .note-text ul{padding-left:16px;margin-top:4px}
+    .note-text ul li{margin-bottom:4px}
+    .note-tip{background:#F59E0B10;border:1px solid #F59E0B25;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:var(--amber);line-height:1.5}
+    .note-tip strong{color:var(--amber)}
+
+    /* SLIDE CARD */
+    .slide{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;width:100%;max-width:900px;aspect-ratio:16/9;padding:52px 60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+    .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--teal),var(--green))}
+
+    /* SLIDE TYPES */
+    .slide.cover{background:linear-gradient(135deg,#0B1D2E,#132840,#0B2535);text-align:center;align-items:center}
+    .slide.cover::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%, #38BDF815, transparent 60%),radial-gradient(ellipse at 70% 30%, #10B98110, transparent 50%)}
+
+    .slide-num{position:absolute;bottom:20px;right:24px;font-size:11px;font-weight:600;color:var(--text-faint)}
+
+    /* SLIDE CONTENT ELEMENTS */
+    .s-eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;position:relative;z-index:1}
+    .s-title{font-family:var(--ff-serif);font-size:clamp(24px,3.5vw,44px);line-height:1.1;color:var(--white);margin-bottom:12px;position:relative;z-index:1}
+    .s-title em{font-style:italic;color:var(--teal)}
+    .s-sub{font-size:clamp(13px,1.6vw,17px);color:var(--text-muted);font-weight:300;line-height:1.6;max-width:620px;position:relative;z-index:1}
+    .s-sub.centered{text-align:center;margin:0 auto}
+    .s-body{font-size:clamp(13px,1.5vw,15px);color:var(--text-muted);line-height:1.7;margin-top:16px}
+
+    /* GRID LAYOUTS */
+    .s-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;flex:1}
+    .s-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:20px;flex:1}
+    .s-4col{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-top:18px}
+
+    .s-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+    .s-card h4{font-size:clamp(13px,1.4vw,15px);font-weight:700;color:var(--white);margin-bottom:6px}
+    .s-card p{font-size:clamp(11px,1.2vw,13px);color:var(--text-muted);line-height:1.55;margin:0}
+    .s-card .letter{font-family:var(--ff-serif);font-size:clamp(22px,2.8vw,34px);margin-bottom:8px;line-height:1}
+    .s-card.sc-s .letter{color:var(--blue)} .s-card.sc-t .letter{color:var(--emerald)} .s-card.sc-e .letter{color:var(--amber)} .s-card.sc-m .letter{color:var(--pink)}
+
+    .s-list{margin-top:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .s-list-item{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+    .sli-n{font-family:var(--ff-serif);font-size:22px;line-height:1;color:var(--blue);opacity:.6;flex-shrink:0;width:28px}
+    .sli-body h5{font-size:clamp(12px,1.4vw,14px);font-weight:700;color:var(--white);margin-bottom:3px}
+    .sli-body p{font-size:clamp(11px,1.2vw,13px);color:var(--text-muted);margin:0;line-height:1.5}
+
+    .s-highlight{background:linear-gradient(135deg,#0EA5C915,#10B98110);border:1px solid #0EA5C930;border-radius:12px;padding:18px 20px;margin-top:16px}
+    .s-highlight p{font-size:clamp(12px,1.4vw,15px);color:var(--text-main);line-height:1.6;margin:0}
+    .s-highlight span{color:var(--teal)}
+
+    .s-stat-row{display:flex;gap:14px;margin-top:18px;flex:1}
+    .s-stat{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center}
+    .s-stat .val{font-family:var(--ff-serif);font-size:clamp(22px,2.8vw,34px);color:var(--amber);line-height:1;margin-bottom:6px}
+    .s-stat p{font-size:clamp(11px,1.1vw,12px);color:var(--text-muted);margin:0;line-height:1.4}
+
+    .s-steps{display:flex;flex-direction:column;gap:8px;margin-top:14px;flex:1}
+    .s-step{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;padding:10px 14px}
+    .ss-n{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+    .ss-txt{font-size:clamp(12px,1.3vw,14px);color:var(--text-muted);line-height:1.4}
+    .ss-txt strong{color:var(--text-main)}
+
+    blockquote.s-quote{border-left:3px solid var(--teal);padding:16px 20px;background:#0EA5C915;border-radius:0 12px 12px 0;margin-top:20px}
+    blockquote.s-quote p{font-family:var(--ff-serif);font-size:clamp(14px,1.8vw,20px);font-style:italic;color:var(--white);line-height:1.5;margin:0}
+    blockquote.s-quote cite{display:block;font-size:11px;color:var(--text-muted);margin-top:8px;font-style:normal}
+
+    /* NAV ARROWS */
+    #nav-prev,#nav-next{position:fixed;top:50%;transform:translateY(-50%);background:rgba(11,29,46,.7);border:1px solid var(--border);color:var(--text-muted);width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:50;transition:all .2s;backdrop-filter:blur(8px)}
+    #nav-prev:hover,#nav-next:hover{background:var(--navy-mid);color:var(--text-main);border-color:var(--teal)}
+    #nav-prev{left:12px}
+    #nav-next{right:12px}
+    #nav-prev:disabled,#nav-next:disabled{opacity:.2;cursor:not-allowed}
+
+    /* KEYBOARD HINT */
+    #kb-hint{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--text-faint);display:flex;gap:8px;align-items:center;pointer-events:none;opacity:.6}
+    .kb{background:var(--navy-light);border:1px solid var(--border);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}
+
+    /* TRANSITIONS */
+    .slide{animation:slideIn .35s ease}
+    @keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="tb-left">
+    <a href="../index.html" class="tb-back">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Hub
+    </a>
+    <div class="tb-badge">🌱 L1 Presentasi</div>
+    <div class="tb-title">Apa Itu STEM dan Mengapa Penting?</div>
+  </div>
+  <div class="tb-right">
+    <button class="tb-btn" id="toggle-notes">📝 Catatan</button>
+    <span class="tb-counter" id="counter">1 / 10</span>
+    <a href="dokumen.html" id="doc-link">📄 Dokumen</a>
+  </div>
+</div>
+
+<!-- SLIDES -->
+<div id="slides-wrap">
+  <div id="slide-panel">
+    <div class="slide cover" id="slide-el">
+      <div class="s-eyebrow">Level 1 · Pemula · Pengenalan STEM</div>
+      <h1 class="s-title">Apa Itu <em>STEM</em><br>dan Mengapa Penting?</h1>
+      <p class="s-sub centered">Panduan untuk guru yang baru mengenal STEM —<br>dari konsep dasar hingga langkah pertama di kelas.</p>
+      <div class="slide-num">1 / 10</div>
+    </div>
+  </div>
+
+  <!-- NOTES PANEL -->
+  <div id="notes-panel">
+    <div class="notes-hdr">📝 Catatan Presenter</div>
+    <div id="notes-content">
+      <div class="note-section">
+        <div class="note-label">Tujuan Slide</div>
+        <div class="note-text">Slide pembuka untuk menciptakan suasana yang ramah dan tidak mengintimidasi. Banyak guru merasa cemas dengan kata "STEM" — awali dengan nada yang hangat dan inklusif.</div>
+      </div>
+      <div class="note-section">
+        <div class="note-label">Cara Membawakan</div>
+        <div class="note-text"><ul><li>Beri salam dan perkenalkan diri</li><li>Tanyakan: <strong>"Siapa di sini yang pernah mendengar kata STEM sebelumnya?"</strong> Minta tunjuk tangan.</li><li>Sambung: <strong>"Hari ini kita mulai dari nol bersama-sama."</strong></li></ul></div>
+      </div>
+      <div class="note-tip"><strong>💡 Tips:</strong> Jangan langsung masuk ke materi. Luangkan 2-3 menit untuk ice breaker sederhana — minta peserta ceritakan satu hal yang pernah mereka perbaiki atau buat sendiri di rumah.</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<button id="nav-prev" onclick="changeSlide(-1)" disabled>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+</button>
+<button id="nav-next" onclick="changeSlide(1)">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+</button>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+<div id="kb-hint"><span class="kb">←</span> Sebelumnya <span class="kb">→</span> Berikutnya <span class="kb">N</span> Catatan</div>
+
+<script>
+const slides = [
+  {
+    html: `
+      <div class="slide cover">
+        <div class="s-eyebrow">Level 1 · Pemula · Pengenalan STEM</div>
+        <h1 class="s-title">Apa Itu <em>STEM</em><br>dan Mengapa Penting?</h1>
+        <p class="s-sub centered">Panduan untuk guru yang baru mengenal STEM —<br>dari konsep dasar hingga langkah pertama di kelas.</p>
+        <div class="slide-num">1 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Slide pembuka — ciptakan suasana hangat dan tidak mengintimidasi.",
+      cara: ["Sapa peserta dan perkenalkan diri.", "Tanya: <strong>'Siapa yang pernah mendengar kata STEM sebelumnya?'</strong> Minta tunjuk tangan.", "Sambung: <strong>'Hari ini kita mulai dari nol bersama-sama.'</strong>"],
+      tip: "Luangkan 2-3 menit untuk ice breaker: minta peserta ceritakan satu hal yang pernah mereka buat atau perbaiki sendiri."
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">Konteks & Urgensi</div>
+        <h2 class="s-title">Mengapa STEM Relevan<br>untuk Indonesia?</h2>
+        <div class="s-stat-row">
+          <div class="s-stat"><div class="val">73</div><p>Peringkat Indonesia<br>di PISA 2022<br>(dari 81 negara)</p></div>
+          <div class="s-stat"><div class="val">2045</div><p>Target Indonesia<br>menjadi negara<br>maju (Emas 2045)</p></div>
+          <div class="s-stat"><div class="val">9 Juta</div><p>Estimasi kekurangan<br>talenta digital<br>di 2030</p></div>
+          <div class="s-stat"><div class="val">65%</div><p>Pekerjaan masa depan<br>murid kita yang belum<br>terdefinisi saat ini</p></div>
+        </div>
+        <div class="s-highlight" style="margin-top:12px"><p>Solusinya bukan menghafal lebih banyak — melainkan <span>belajar cara berpikir</span> yang fleksibel, kreatif, dan berbasis bukti.</p></div>
+        <div class="slide-num">2 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Membangun rasa urgensi tanpa membuat peserta merasa bersalah atau tertekan.",
+      cara: ["Bacakan angka-angka satu per satu, beri jeda.", "Tanya: <strong>'Apakah ini mengejutkan kamu?'</strong>", "Tekankan: ini bukan kritik kepada guru — ini panggilan bersama untuk bergerak."],
+      tip: "Hindari nada menyalahkan. Framing yang tepat: 'Ini tantangan kita bersama, dan kita bisa mulai sekarang.'"
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">Definisi</div>
+        <h2 class="s-title">STEM = Pendekatan, Bukan Sekadar Singkatan</h2>
+        <div class="s-4col" style="margin-top:18px">
+          <div class="s-card sc-s"><div class="letter">S</div><h4>Sains</h4><p>Memahami alam melalui pengamatan & eksperimen</p></div>
+          <div class="s-card sc-t"><div class="letter">T</div><h4>Teknologi</h4><p>Alat & sistem buatan manusia untuk memecahkan masalah</p></div>
+          <div class="s-card sc-e"><div class="letter">E</div><h4>Enjinering</h4><p>Merancang & membangun solusi secara sistematis</p></div>
+          <div class="s-card sc-m"><div class="letter">M</div><h4>Matematika</h4><p>Bahasa universal untuk mengukur dan menganalisis</p></div>
+        </div>
+        <div class="s-highlight">
+          <p>STEM adalah <span>pendekatan pembelajaran terintegrasi</span> yang menggunakan konteks dunia nyata untuk membangun kemampuan berpikir kritis dan pemecahan masalah.</p>
+        </div>
+        <div class="slide-num">3 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Meluruskan miskonsepsi bahwa STEM hanya tentang empat mata pelajaran yang digabung.",
+      cara: ["Tunjuk setiap huruf sambil jelaskan perannya.", "Tekankan kata 'terintegrasi' — ini yang membedakannya.", "Analogi: Seperti memasak — bukan sekadar bahan terpisah, tapi resepnya yang menyatukan."],
+      tip: "Tanyakan: 'Apakah kalian bisa membayangkan masalah nyata yang membutuhkan keempat komponen ini sekaligus?' Minta 1-2 contoh dari peserta."
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">Karakteristik Pembelajaran STEM</div>
+        <h2 class="s-title">3 Ciri Khas yang Membedakan STEM</h2>
+        <div class="s-list">
+          <div class="s-list-item"><div class="sli-n">1</div><div class="sli-body"><h5>Berbasis Masalah Nyata</h5><p>Berangkat dari pertanyaan atau tantangan yang relevan dengan kehidupan murid — bukan skenario buku teks yang dibuat-buat.</p></div></div>
+          <div class="s-list-item"><div class="sli-n">2</div><div class="sli-body"><h5>Melibatkan Praktik Saintifik & Enjinering</h5><p>Murid mengajukan pertanyaan, merancang solusi, menguji, menganalisis, dan memperbaiki — bukan sekadar menonton guru.</p></div></div>
+          <div class="s-list-item"><div class="sli-n">3</div><div class="sli-body"><h5>Mengintegrasikan Minimal 2 Disiplin</h5><p>Konten dari dua atau lebih bidang (S, T, E, M) saling terhubung secara bermakna dalam satu konteks pembelajaran.</p></div></div>
+        </div>
+        <div class="slide-num">4 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Memberi peserta 'filter' untuk menilai apakah kegiatan yang mereka rancang benar-benar STEM.",
+      cara: ["Untuk setiap karakteristik, minta peserta menilai: apakah pembelajaran mereka selama ini sudah memenuhi ini?", "Ini bukan untuk menghakimi — tapi untuk refleksi."],
+      tip: "Aktivitas cepat: bagikan 3 kartu (1, 2, 3) kepada setiap peserta. Bacakan skenario kegiatan, minta mereka angkat kartu karakteristik mana yang terpenuhi."
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">Mitos vs Fakta</div>
+        <h2 class="s-title">Apa yang Sering Disalahpahami tentang STEM</h2>
+        <div class="s-2col" style="margin-top:18px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="s-card" style="border-color:#EF444430;background:#EF444410"><h4 style="color:#F87171">❌ Mitos</h4><p>"STEM hanya untuk guru IPA dan Matematika"</p></div>
+            <div class="s-card" style="border-color:#EF444430;background:#EF444410"><h4 style="color:#F87171">❌ Mitos</h4><p>"Butuh laboratorium dan alat mahal"</p></div>
+            <div class="s-card" style="border-color:#EF444430;background:#EF444410"><h4 style="color:#F87171">❌ Mitos</h4><p>"STEM itu untuk murid pintar saja"</p></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="s-card" style="border-color:#10B98130;background:#10B98110"><h4 style="color:#34D399">✅ Fakta</h4><p>"Semua guru bisa mengintegrasikan cara berpikir STEM"</p></div>
+            <div class="s-card" style="border-color:#10B98130;background:#10B98110"><h4 style="color:#34D399">✅ Fakta</h4><p>"Kardus, tali, dan air sudah cukup untuk memulai"</p></div>
+            <div class="s-card" style="border-color:#10B98130;background:#10B98110"><h4 style="color:#34D399">✅ Fakta</h4><p>"STEM justru inklusif — mendorong semua murid berpikir"</p></div>
+          </div>
+        </div>
+        <div class="slide-num">5 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Meruntuhkan hambatan psikologis. Banyak guru tidak mencoba STEM karena mitos-mitos ini.",
+      cara: ["Tanyakan sebelum slide: 'Apa kekhawatiran terbesar kalian tentang STEM?' Tulis di whiteboard.", "Setelah slide, cek satu per satu: 'Apakah kekhawatiran itu sudah terjawab?'"],
+      tip: "Siapkan satu contoh sederhana (mis. membuat filter air dari pasir dan botol bekas) untuk membuktikan bahwa alat mahal tidak diperlukan."
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">3 Perspektif Implementasi</div>
+        <h2 class="s-title">Cara Sekolah Mengimplementasikan STEM</h2>
+        <div class="s-3col" style="margin-top:16px">
+          <div class="s-card" style="border-color:#38BDF840">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:10px">Perspektif 1</div>
+            <h4>Kerangka Berpikir</h4>
+            <p style="margin-top:6px">Setiap guru mapel menggunakan pendekatan STEM dalam pembelajaran sendiri, tanpa harus berkolaborasi formal.</p>
+            <div style="margin-top:10px;font-size:11px;color:var(--blue);font-weight:600">👍 Titik awal terbaik</div>
+          </div>
+          <div class="s-card" style="border-color:#34D39940">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--emerald);margin-bottom:10px">Perspektif 2</div>
+            <h4>Pendekatan Terpadu</h4>
+            <p style="margin-top:6px">2+ guru berkolaborasi merancang modul atau proyek bersama yang mengintegrasikan konten masing-masing.</p>
+            <div style="margin-top:10px;font-size:11px;color:var(--emerald);font-weight:600">🤝 Butuh kolaborasi</div>
+          </div>
+          <div class="s-card" style="border-color:#F59E0B40">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:10px">Perspektif 3</div>
+            <h4>Mata Pelajaran STEM</h4>
+            <p style="margin-top:6px">Sekolah membuat jadwal khusus mata pelajaran STEM yang berdiri sendiri dengan guru lintas disiplin.</p>
+            <div style="margin-top:10px;font-size:11px;color:var(--amber);font-weight:600">🏗 Butuh persiapan</div>
+          </div>
+        </div>
+        <div class="s-highlight" style="margin-top:14px"><p>Tidak ada yang lebih baik dari yang lain — <span>pilih sesuai kondisi sekolahmu saat ini.</span></p></div>
+        <div class="slide-num">6 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Menunjukkan bahwa ada 'pintu masuk' yang berbeda sesuai kapasitas sekolah.",
+      cara: ["Tanya peserta: 'Di sekolahmu, perspektif mana yang paling mungkin dilakukan sekarang?'", "Diskusi berpasangan 3 menit, lalu bagikan ke grup."],
+      tip: "Tegaskan bahwa Perspektif 1 bukan 'versi murahan' — ini titik mulai yang sah dan berharga."
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">Analogi Nyata</div>
+        <h2 class="s-title">STEM dalam Kehidupan Sehari-hari</h2>
+        <div class="s-2col" style="margin-top:16px;align-items:start">
+          <div>
+            <div class="s-card" style="margin-bottom:12px">
+              <h4>🍊 Membuat Jus Jeruk (PAUD)</h4>
+              <p>Mengamati kulit jeruk (S) · Menggunakan alat pemeras (T) · Merancang urutan langkah (E) · Menghitung jumlah buah (M)</p>
+            </div>
+            <div class="s-card">
+              <h4>🛤 Jalur Kelereng dari Kardus (SD)</h4>
+              <p>Menguji gravitasi & kemiringan (S) · Memilih bahan (T) · Merancang jalur fungsional (E) · Mengukur dimensi (M)</p>
+            </div>
+          </div>
+          <div>
+            <div class="s-card" style="margin-bottom:12px">
+              <h4>💧 Filter Air Sederhana (SMP)</h4>
+              <p>Menguji kualitas air (S) · Memilih lapisan filter (T) · Merancang sistem filtrasi (E) · Mengukur efektivitas (M)</p>
+            </div>
+            <div class="s-card">
+              <h4>⚡ Sensor Energi (SMA)</h4>
+              <p>Konsep sensor & energi (S) · Pemrograman mikrokontroler (T) · Desain rangkaian (E) · Kalkulasi efisiensi (M)</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-num">7 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Membuat STEM terasa konkret dan bisa dilakukan — bukan abstrak.",
+      cara: ["Untuk setiap contoh, minta peserta identifikasi komponen STEM yang terlibat.", "Tantangan: 'Bisa kamu tambahkan contoh dari mapelmu sendiri?'"],
+      tip: "Contoh jus jeruk untuk PAUD sangat efektif untuk guru PAUD yang merasa STEM 'terlalu tinggi' untuk usia dini."
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">Langkah Pertama</div>
+        <h2 class="s-title">Mulai dari Mana Minggu Ini?</h2>
+        <div class="s-steps">
+          <div class="s-step"><div class="ss-n">1</div><div class="ss-txt"><strong>Pilih topik yang sudah ada di silabus</strong> — jangan buat proyek baru dari nol.</div></div>
+          <div class="s-step"><div class="ss-n">2</div><div class="ss-txt"><strong>Hubungkan dengan masalah nyata</strong> di sekitar murid — sampah, air, tanaman, energi rumah tangga.</div></div>
+          <div class="s-step"><div class="ss-n">3</div><div class="ss-txt"><strong>Tambahkan satu aktivitas</strong> "merancang" atau "menguji" — tidak harus panjang, 20 menit sudah cukup.</div></div>
+          <div class="s-step"><div class="ss-n">4</div><div class="ss-txt"><strong>Biarkan murid gagal dengan aman</strong> — STEM merayakan proses perbaikan, bukan kesempurnaan pertama.</div></div>
+          <div class="s-step"><div class="ss-n">5</div><div class="ss-txt"><strong>Minta murid mengomunikasikan</strong> hasilnya — presentasi singkat atau demo kepada teman sudah bermakna.</div></div>
+        </div>
+        <div class="slide-num">8 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Mengubah pemahaman konseptual menjadi rencana aksi konkret sebelum workshop berakhir.",
+      cara: ["Beri waktu 5 menit: setiap peserta menulis di sticky note topik apa yang ingin mereka coba dan masalah nyata apa yang relevan.", "Bagikan ke pasangan dan berikan umpan balik."],
+      tip: "Tekanan untuk sempurna adalah hambatan terbesar. Tekankan: 'Percobaan pertamamu tidak harus sempurna — yang penting mulai.'"
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">Kutipan Kunci</div>
+        <h2 class="s-title">Apa yang Kita Harapkan untuk Murid</h2>
+        <blockquote class="s-quote">
+          <p>"Pembelajaran STEM bukan sekadar kumpulan pengetahuan, melainkan sebuah dampak nyata bagi murid — mampu menerapkan ilmu dalam kehidupan sehari-hari sehingga memberikan kontribusi nyata bagi dirinya, satuan pendidikan, dan komunitas."</p>
+          <cite>— Panduan Pembelajaran STEM, BSKAP Kemendikdasmen 2025, hlm. 6</cite>
+        </blockquote>
+        <div class="s-highlight" style="margin-top:18px">
+          <p>Pertanyaan refleksi: <span>Apakah pembelajaran di kelasmu hari ini sudah mencapai dampak seperti ini?</span></p>
+        </div>
+        <div class="slide-num">9 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Menghubungkan kembali ke visi besar — mengapa ini semua penting.",
+      cara: ["Bacakan kutipan dengan perlahan dan penuh.", "Beri hening 5 detik setelah membaca.", "Minta peserta refleksi dalam diam selama 1 menit: 'Apa yang berubah dalam cara pandang saya tentang STEM hari ini?'"],
+      tip: "Momen ini bisa menjadi transisi emosional yang kuat jika dibawakan dengan tenang dan tidak terburu-buru."
+    }
+  },
+  {
+    html: `
+      <div class="slide">
+        <div class="s-eyebrow">Penutup & Langkah Selanjutnya</div>
+        <h2 class="s-title">Apa yang Bisa Kamu Lakukan Sekarang?</h2>
+        <div class="s-3col" style="margin-top:16px">
+          <div class="s-card" style="border-color:#38BDF840;text-align:center;padding:20px 16px">
+            <div style="font-size:32px;margin-bottom:10px">📄</div>
+            <h4>Baca Dokumen</h4>
+            <p style="margin-top:6px">Pelajari materi Level 1 lebih mendalam dengan panduan bacaan mandiri.</p>
+          </div>
+          <div class="s-card" style="border-color:#34D39940;text-align:center;padding:20px 16px">
+            <div style="font-size:32px;margin-bottom:10px">✏️</div>
+            <h4>Rancang Satu Aktivitas</h4>
+            <p style="margin-top:6px">Ambil topik minggu depan dan tambahkan satu elemen STEM sederhana.</p>
+          </div>
+          <div class="s-card" style="border-color:#F59E0B40;text-align:center;padding:20px 16px">
+            <div style="font-size:32px;margin-bottom:10px">🌿</div>
+            <h4>Lanjut ke Level 2</h4>
+            <p style="margin-top:6px">Setelah mencoba, pelajari cara merancang pembelajaran STEM yang lebih sistematis.</p>
+          </div>
+        </div>
+        <div class="s-highlight" style="margin-top:14px"><p>Terima kasih sudah hadir! <span>Langkah terkecil yang kamu ambil hari ini bermakna bagi murid-muridmu.</span></p></div>
+        <div class="slide-num">10 / 10</div>
+      </div>`,
+    notes: {
+      tujuan: "Menutup sesi dengan energi positif dan call-to-action yang jelas.",
+      cara: ["Rangkum tiga hal yang sudah dipelajari bersama.", "Minta setiap peserta menuliskan: 'Satu hal yang akan saya coba dalam 2 minggu ke depan.'", "Ajak mereka berbagi komitmen secara lisan jika waktu memungkinkan."],
+      tip: "Akhiri dengan tepuk tangan untuk diri sendiri — ini menciptakan energi positif dan rasa pencapaian bersama."
+    }
+  }
+];
+
+let current = 0;
+let notesOpen = true;
+
+function render() {
+  const s = slides[current];
+  document.getElementById('slide-panel').innerHTML = s.html;
+  // notes
+  let nc = `<div class="note-section"><div class="note-label">Tujuan Slide</div><div class="note-text">${s.notes.tujuan}</div></div>`;
+  if (s.notes.cara) {
+    nc += `<div class="note-section"><div class="note-label">Cara Membawakan</div><div class="note-text"><ul>${s.notes.cara.map(c=>`<li>${c}</li>`).join('')}</ul></div></div>`;
+  }
+  if (s.notes.tip) {
+    nc += `<div class="note-tip"><strong>💡 Tips:</strong> ${s.notes.tip}</div>`;
+  }
+  document.getElementById('notes-content').innerHTML = nc;
+  document.getElementById('counter').textContent = `${current+1} / ${slides.length}`;
+  document.getElementById('progress-fill').style.width = ((current+1)/slides.length*100)+'%';
+  document.getElementById('nav-prev').disabled = current === 0;
+  document.getElementById('nav-next').disabled = current === slides.length-1;
+}
+
+function changeSlide(dir) {
+  const n = current + dir;
+  if (n >= 0 && n < slides.length) { current = n; render(); }
+}
+
+document.getElementById('toggle-notes').addEventListener('click', () => {
+  notesOpen = !notesOpen;
+  document.getElementById('notes-panel').classList.toggle('hidden', !notesOpen);
+  document.getElementById('toggle-notes').classList.toggle('active', notesOpen);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  if (e.key === 'n' || e.key === 'N') document.getElementById('toggle-notes').click();
+});
+
+document.getElementById('toggle-notes').classList.add('active');
+render();
+</script>
+</body>
+</html>
