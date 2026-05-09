@@ -1,147 +1,101 @@
 # 📚 Panduan Pembelajaran STEM — Hub Guru Indonesia
 
-> Sumber belajar digital berjenjang untuk guru Indonesia dalam mengimplementasikan pembelajaran STEM.
-> Berdasarkan **Panduan Pembelajaran STEM** · Pusat Kurikulum dan Pembelajaran BSKAP ·
-> Kementerian Pendidikan Dasar dan Menengah RI · 2025.
+> Sumber belajar digital berjenjang untuk guru Indonesia.  
+> Berdasarkan **Panduan Pembelajaran STEM** · BSKAP · Kemendikdasmen RI · 2025.
 
----
-
-## 🌐 Live Preview
-
-Hosted sementara di GitHub Pages. Dipindahkan ke website sekolah setelah finalisasi.
-
-```
-https://[username].github.io/stem-guide/
-```
+🌐 **Live:** https://nitoe.github.io/stem/
 
 ---
 
 ## 📁 Struktur Proyek
 
 ```
-stem-guide/
+stem/
 ├── index.html                  ← Halaman utama / landing hub
-├── readme.md                   ← Dokumentasi proyek ini
+├── readme.md                   ← Dokumentasi ini
 ├── changelog.md                ← Riwayat perubahan
 │
 ├── level1/
-│   └── index.html              ← Tingkat 1: Pemula (format dokumen)
+│   ├── dokumen.html            ← L1: Dokumen bacaan mandiri
+│   └── presentasi.html         ← L1: Presentasi + catatan presenter
 │
 ├── level2/
-│   └── index.html              ← Tingkat 2: Berkembang (format presentasi + catatan)
+│   ├── dokumen.html            ← L2: Panduan perancangan & pelaksanaan
+│   └── presentasi.html         ← L2: Presentasi workshop implementasi
 │
 └── level3/
-    └── index.html              ← Tingkat 3: Mahir (referensi mendalam + checklist)
+    ├── dokumen.html            ← L3: Referensi mendalam + checklist
+    └── presentasi.html         ← L3: Presentasi sesi refleksi & ekosistem
 ```
 
 ---
 
-## 🎯 Tujuan Proyek
+## 🎯 Prinsip Desain
 
-Membantu guru dari berbagai jenjang — PAUD, SD, SMP, SMA, SMK, SLB, hingga Pendidikan Khusus — dalam:
+### Dua Format per Tingkat
+Setiap level menyediakan **dua format** untuk mengakomodasi gaya belajar yang berbeda:
 
-1. **Memahami** konsep dasar STEM secara kontekstual dan relevan
-2. **Merancang** pembelajaran STEM yang bermakna sesuai jenjang
-3. **Melaksanakan** praktik saintifik dan enjinering di kelas
-4. **Menilai** murid secara autentik melalui berbagai instrumen asesmen
-5. **Mengembangkan** ekosistem STEM bersama rekan guru dan mitra
+| Format | Untuk Siapa | Cara Pakai |
+|--------|-------------|------------|
+| **Dokumen Bacaan** | Guru yang belajar mandiri | Dibaca sendiri, bisa diprint, dijadikan referensi |
+| **Presentasi + Catatan Presenter** | Pelatih / fasilitator | Dibawakan dalam workshop atau sesi pelatihan guru |
 
----
+Navigasi presentasi: tombol `←` `→`, atau keyboard `Arrow Keys`. Tekan `N` untuk toggle catatan presenter.
 
-## 🗺️ Peta Tingkat Belajar (Scaffolding)
+### Scaffolding Tiga Tingkat
 
-| Tingkat | Nama | Format | Untuk Siapa |
-|---------|------|--------|-------------|
-| **Level 1** | Pemula | Dokumen HTML | Guru yang belum pernah/baru pertama mengenal STEM |
-| **Level 2** | Berkembang | Presentasi Interaktif + Catatan Presenter | Guru yang sudah paham konsep dan siap merancang pembelajaran |
-| **Level 3** | Mahir | Referensi Mendalam + Checklist | Guru yang sudah berpengalaman dan ingin mengembangkan ekosistem |
-
-### Konten per Tingkat
-
-#### 🌱 Level 1 — Pemula
-- Sejarah & urgensi STEM di Indonesia (PISA 2022, Indonesia Emas 2045)
-- Definisi S-T-E-M (masing-masing komponen)
-- 3 karakteristik utama: penyelesaian masalah, praktik saintifik-enjinering, integrasi lintas disiplin
-- 3 perspektif implementasi: kerangka berpikir, pendekatan terpadu, mata pelajaran
-- Pertama kali mencoba STEM: langkah paling sederhana
-- Contoh sederhana dari PAUD
-
-#### 🌿 Level 2 — Berkembang *(Presentasi + Catatan Presenter)*
-- Kerangka pembelajaran mendalam dalam konteks STEM
-- 4 langkah perencanaan: identifikasi masalah → analisis CP → strategi praktik → penyusunan rencana
-- Alur praktik saintifik dan enjinering (iteratif)
-- Model pembelajaran: PjBL Lucas, PjBL Laboy-Rush, SEAMEO 4-Stage, PBL, Siklus 5E
-- Asesmen autentik per tahap dengan instrumen konkret
-- Contoh modul: SD, SMP, SMA, SMK, PAUD
-- Lingkungan belajar: fisik, virtual, inklusif
-- Kemitraan: pendidik lintas mapel, industri, masyarakat, LSM, PT
-
-#### 🌳 Level 3 — Mahir *(Referensi + Checklist)*
-- Integrasi mendalam: multi → inter → transdisipliner
-- Universal Design for Learning (UDL) untuk SLB dan inklusi
-- 7 pilar kemitraan strategis dengan panduan implementasi
-- Peran pemangku kepentingan (dinas, pengawas, kepala sekolah, orang tua)
-- Implementasi kokurikuler: P5 dan proyek lintas mapel
-- Ekstrakurikuler: olimpiade, lomba inovasi, STEM club
-- Refleksi & siklus perbaikan berkelanjutan
-- Membangun Professional Learning Community (PLC) di sekolah
+| Level | Nama | Untuk Siapa | Warna Tema |
+|-------|------|-------------|------------|
+| **Level 1** | 🌱 Pemula | Guru yang belum pernah/baru mengenal STEM | Biru |
+| **Level 2** | 🌿 Berkembang | Guru yang paham konsep, siap merancang pembelajaran | Hijau |
+| **Level 3** | 🌳 Mahir | Guru berpengalaman yang ingin membangun ekosistem | Amber |
 
 ---
 
-## 🎨 Desain & Teknologi
+## 📖 Konten per Level
 
-- **HTML + CSS + Vanilla JS** — tidak ada framework, ringan, bisa dihost di mana saja
-- **Font**: DM Serif Display (heading) + Plus Jakarta Sans (body) via Google Fonts
-- **Tema**: Dark navy/teal/amber — terinspirasi dari diagram Venn STEM
-- **Animasi**: canvas particle background, scroll-reveal, CSS transitions
-- **Responsif**: mobile-friendly, grid adaptif
-- **Aksesibel**: kontras tinggi, semantic HTML, label jelas
+### 🌱 Level 1 — Pemula
+**Dokumen:** Penjelasan dari nol — sejarah STEM, definisi S-T-E-M masing-masing, 3 karakteristik utama, 3 perspektif implementasi, 5 langkah pertama di kelas, contoh aktivitas PAUD & SD.
+
+**Presentasi (10 slide):** Pengenalan STEM untuk rapat guru atau workshop sekolah pertama. Catatan presenter berisi pertanyaan pemantik, aktivitas singkat, dan tips fasilitasi.
+
+### 🌿 Level 2 — Berkembang
+**Dokumen:** 4 langkah perencanaan sistematis, alur praktik saintifik (6 tahap), alur praktik enjinering (6 tahap), perbandingan model PjBL/PBL/5E, template TP STEM, asesmen autentik per tahap, contoh modul SD/SMP/SMA, lingkungan belajar.
+
+**Presentasi (12 slide):** Workshop implementasi dengan aktivitas: pemetaan masalah lokal, tabel integrasi CP, pembagian asesmen antar mapel. Dilengkapi form komitmen 1-1-1.
+
+### 🌳 Level 3 — Mahir
+**Dokumen:** Tangga integrasi multi→inter→transdisipliner, 7 pilar kemitraan strategis, peran pemangku kepentingan (dinas s.d. orang tua), UDL & adaptasi SLB, P5 berbasis STEM, ekstrakurikuler, roadmap PLC 4 fase, checklist mandiri 15 item (tersimpan di localStorage).
+
+**Presentasi (11 slide):** Sesi refleksi & pengembangan strategis dengan diskusi peer-to-peer. Catatan presenter dirancang untuk fasilitasi kolaboratif, bukan ceramah.
 
 ---
 
-## 🚀 Cara Deploy ke GitHub Pages
+## 🎨 Teknologi
 
-1. Buat repository baru di GitHub (misal: `stem-guide`)
-2. Upload semua file ke branch `main`
-3. Di Settings → Pages → Source: pilih `main` branch, folder `/ (root)`
-4. Selesai — akses di `https://[username].github.io/stem-guide/`
+- **HTML + CSS + Vanilla JS** — tanpa framework, ringan, hostable di mana saja
+- **Font:** DM Serif Display + Plus Jakarta Sans (Google Fonts)
+- **Tema:** Dark navy/teal/amber, warna berbeda per level
+- **Fitur:** Scroll progress bar, sticky sidebar nav dengan active state, particle canvas background (index), checklist tersimpan (L3), keyboard navigation (presentasi)
+- **Responsif:** Mobile-friendly dengan mobile nav bar
+
+---
+
+## 🚀 Deploy ke GitHub Pages
+
+1. Push semua file ke branch `main` di repo `nitoe/stem`
+2. Settings → Pages → Source: `main`, folder `/ (root)`
+3. Akses: https://nitoe.github.io/stem/
 
 ---
 
 ## 📖 Sumber Dokumen
 
-**Judul**: Panduan Pembelajaran STEM (Sains, Teknologi, Enjinering, Matematika)
-untuk Guru Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar dan Jenjang Pendidikan Menengah
-
-**Penerbit**: Pusat Kurikulum dan Pembelajaran, Badan Standar, Kurikulum, dan Asesmen Pendidikan (BSKAP),
-Kementerian Pendidikan Dasar dan Menengah Republik Indonesia
-
-**Tahun**: 2025
-
-**Pengarah Utama**: Prof. Dr. Abdul Mu'ti, M.Ed. (Menteri Pendidikan Dasar dan Menengah)
-
-**Catatan**: Dokumen ini adalah karya pemerintah RI dan digunakan untuk kepentingan
-pendidikan non-komersial dalam rangka mendukung implementasi kebijakan nasional.
+**Judul:** Panduan Pembelajaran STEM untuk Guru PAUD, Pendidikan Dasar dan Menengah  
+**Penerbit:** Pusat Kurikulum dan Pembelajaran, BSKAP, Kemendikdasmen RI  
+**Tahun:** 2025  
+**Pengarah:** Prof. Dr. Abdul Mu'ti, M.Ed.
 
 ---
 
-## 📋 Status Pengembangan
-
-- [x] `index.html` — Halaman utama hub ✅
-- [x] `readme.md` — Dokumentasi proyek ✅
-- [x] `changelog.md` — Riwayat versi ✅
-- [ ] `level1/index.html` — Panduan Pemula 🔄 *Dalam pengerjaan*
-- [ ] `level2/index.html` — Presentasi Berkembang 🔄 *Dalam pengerjaan*
-- [ ] `level3/index.html` — Referensi Mahir 🔄 *Dalam pengerjaan*
-
----
-
-## 🤝 Kontribusi
-
-Proyek ini dikelola oleh tim pengembang kurikulum sekolah. Untuk masukan, laporan bug, atau usulan konten:
-- Buat **Issue** di repository GitHub
-- Atau hubungi koordinator melalui email sekolah
-
----
-
-*Panduan STEM Hub Guru Indonesia · v1.0.0 · Mei 2025*
+*v1.2.0 · Mei 2025*
