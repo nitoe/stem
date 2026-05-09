@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Level 3 · Dokumen — Memimpin & Mengembangkan Ekosistem STEM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --navy:#0B1D2E;--navy-mid:#132840;--navy-light:#1D3A52;
+      --teal:#0EA5C9;--teal-dim:#0EA5C920;
+      --amber:#F59E0B;--amber-dim:#F59E0B15;
+      --green:#10B981;--emerald:#34D399;--blue:#38BDF8;--pink:#F472B6;
+      --white:#F8FAFC;--text-main:#E2EAF0;--text-muted:#8BA5BB;--text-faint:#4A6478;
+      --border:#1D3A52;--r:12px;--rl:20px;
+      --ff-serif:'DM Serif Display',Georgia,serif;
+      --ff-sans:'Plus Jakarta Sans',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-sans);background:var(--navy);color:var(--text-main);line-height:1.7}
+    a{color:var(--teal);text-decoration:none}a:hover{color:var(--amber)}
+
+    .page{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+    @media(max-width:900px){.page{grid-template-columns:1fr}}
+
+    .sidebar{background:var(--navy-mid);border-right:1px solid var(--border);padding:26px 20px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+    @media(max-width:900px){.sidebar{display:none}}
+    .sb-back{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:6px 0;margin-bottom:18px;transition:color .2s}
+    .sb-back:hover{color:var(--text-main)}
+    .sb-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--amber-dim);color:var(--amber);border:1px solid #F59E0B30;padding:5px 11px;border-radius:20px;margin-bottom:12px;width:fit-content}
+    .sb-title{font-family:var(--ff-serif);font-size:16px;color:var(--white);line-height:1.3;margin-bottom:4px}
+    .sb-sub{font-size:12px;color:var(--text-faint);margin-bottom:22px}
+    .sb-nav{list-style:none;display:flex;flex-direction:column;gap:2px}
+    .sb-nav a{display:block;font-size:13px;color:var(--text-muted);padding:7px 12px;border-radius:8px;transition:all .2s;border:1px solid transparent}
+    .sb-nav a:hover,.sb-nav a.active{background:var(--navy-light);color:var(--text-main);border-color:var(--border)}
+    .sb-num{font-size:11px;color:var(--text-faint);margin-right:4px}
+    .sb-divider{height:1px;background:var(--border);margin:14px 0}
+    .sb-fmt{margin-top:auto;padding-top:18px}
+    .sb-fmt-link{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--pink);background:#F472B612;border:1px solid #F472B630;padding:9px 12px;border-radius:9px;transition:all .2s}
+    .sb-fmt-link:hover{background:#F472B620;border-color:var(--pink)}
+
+    .mob-nav{display:none;background:rgba(11,29,46,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:11px 18px;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50}
+    @media(max-width:900px){.mob-nav{display:flex}}
+    .mob-nav a{font-size:13px;color:var(--text-muted)}
+    .mob-nav span{font-size:13px;font-weight:600;color:var(--amber)}
+
+    #prog{position:fixed;top:0;left:0;height:2px;z-index:999;width:0%;background:linear-gradient(90deg,var(--amber),var(--teal));transition:width .1s}
+
+    main{padding:52px 64px 80px;max-width:880px}
+    @media(max-width:1000px){main{padding:38px 32px 60px}}
+    @media(max-width:640px){main{padding:26px 18px 48px}}
+
+    .art-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);background:var(--amber-dim);border:1px solid #F59E0B30;padding:5px 13px;border-radius:20px;margin-bottom:18px}
+    .art-h1{font-family:var(--ff-serif);font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.01em;color:var(--white);margin-bottom:12px}
+    .art-desc{font-size:16px;color:var(--text-muted);font-weight:300;line-height:1.6;max-width:620px;margin-bottom:24px}
+    .art-meta{display:flex;flex-wrap:wrap;gap:10px;padding-bottom:32px;border-bottom:1px solid var(--border);margin-bottom:44px}
+    .meta-chip{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--text-faint);background:var(--navy-mid);border:1px solid var(--border);padding:5px 12px;border-radius:20px}
+
+    section{margin-bottom:52px;scroll-margin-top:24px}
+    .sec-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+    h2{font-family:var(--ff-serif);font-size:clamp(22px,3vw,32px);line-height:1.2;color:var(--white);margin-bottom:14px}
+    h3{font-family:var(--ff-serif);font-size:clamp(16px,2vw,21px);line-height:1.25;color:var(--white);margin:26px 0 10px}
+    p{font-size:15px;color:var(--text-muted);line-height:1.75;margin-bottom:14px}
+    p:last-child{margin-bottom:0}
+    strong{color:var(--text-main);font-weight:600}
+
+    .box{border-radius:var(--r);padding:20px 22px;margin:22px 0}
+    .box-amber{background:var(--amber-dim);border-left:3px solid var(--amber)}
+    .box-teal{background:var(--teal-dim);border-left:3px solid var(--teal)}
+    .box-green{background:#10B98112;border-left:3px solid var(--green)}
+    .box-pink{background:#F472B612;border-left:3px solid var(--pink)}
+    .box h4{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px}
+    .box p,.box ul,.box ol{font-size:14px;color:var(--text-muted);margin:0;line-height:1.65}
+    .box ul,.box ol{padding-left:18px}
+    .box li{margin-bottom:5px}
+
+    /* INTEGRASI TANGGA */
+    .integ-ladder{display:flex;flex-direction:column;gap:2px;margin:20px 0;border-radius:var(--rl);overflow:hidden;border:1px solid var(--border)}
+    .integ-rung{display:flex;align-items:stretch;background:var(--navy-mid);transition:background .2s}
+    .integ-rung:hover{background:var(--navy-light)}
+    .integ-level{width:120px;flex-shrink:0;padding:16px 18px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-right:1px solid var(--border)}
+    .il-multi{background:#38BDF815;color:var(--blue)}
+    .il-inter{background:#34D39915;color:var(--emerald)}
+    .il-trans{background:#F59E0B15;color:var(--amber)}
+    .integ-body{padding:16px 20px}
+    .integ-body h4{font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px}
+    .integ-body p{font-size:13px;color:var(--text-muted);line-height:1.55;margin:0}
+    .integ-body .eg{margin-top:6px;font-size:12px;color:var(--text-faint);font-style:italic}
+
+    /* KEMITRAAN GRID */
+    .mitra-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}
+    @media(max-width:640px){.mitra-grid{grid-template-columns:1fr}}
+    .mitra-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;transition:border-color .2s}
+    .mitra-card:hover{border-color:var(--amber)}
+    .mitra-ico{font-size:22px;margin-bottom:8px}
+    .mitra-card h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:6px}
+    .mitra-card p{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:8px}
+    .mitra-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--navy-light);color:var(--text-muted);border:1px solid var(--border);display:inline-block}
+
+    /* PEMANGKU KEPENTINGAN */
+    .stk-list{display:flex;flex-direction:column;gap:2px;border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);margin:20px 0}
+    .stk-item{display:flex;gap:0;background:var(--navy-mid);transition:background .2s}
+    .stk-item:hover{background:var(--navy-light)}
+    .stk-role{width:140px;flex-shrink:0;padding:14px 16px;font-size:12px;font-weight:700;color:var(--amber);border-right:1px solid var(--border);display:flex;align-items:center}
+    .stk-body{padding:14px 18px;font-size:13px;color:var(--text-muted);line-height:1.55;display:flex;align-items:center}
+
+    /* UDL */
+    .udl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+    @media(max-width:640px){.udl-grid{grid-template-columns:1fr}}
+    .udl-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+    .udl-card h4{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px}
+    .udl-card ul{font-size:12px;color:var(--text-muted);padding-left:16px;line-height:1.6}
+    .udl-card li{margin-bottom:4px}
+    .udl-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+    .udl-ico{font-size:20px}
+
+    /* CHECKLIST */
+    .checklist{background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--rl);padding:28px 30px;margin:22px 0}
+    .checklist-title{font-size:14px;font-weight:700;color:var(--white);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .cl-group{margin-bottom:18px}
+    .cl-group-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+    .cl-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+    .cl-item:last-child{border-bottom:none}
+    .cl-box{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+    .cl-box:hover{border-color:var(--amber)}
+    .cl-box.checked{background:var(--amber);border-color:var(--amber)}
+    .cl-box.checked::after{content:'✓';color:#fff;font-size:11px;font-weight:700}
+    .cl-text{font-size:13px;color:var(--text-muted);line-height:1.5}
+
+    /* PLC ROADMAP */
+    .roadmap{display:flex;flex-direction:column;gap:2px;margin:20px 0}
+    .rm-item{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;border-radius:var(--r);background:var(--navy-mid);border:1px solid var(--border)}
+    .rm-phase{font-family:var(--ff-serif);font-size:11px;font-weight:400;color:var(--amber);white-space:nowrap;flex-shrink:0;width:80px;padding-top:2px}
+    .rm-body h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:5px}
+    .rm-body p{font-size:13px;color:var(--text-muted);margin:0;line-height:1.5}
+
+    blockquote{border-left:3px solid var(--amber);padding:14px 18px;margin:20px 0;background:var(--amber-dim);border-radius:0 var(--r) var(--r) 0}
+    blockquote p{font-family:var(--ff-serif);font-size:16px;font-style:italic;color:var(--white);line-height:1.5;margin:0}
+
+    .next-bar{background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--rl);padding:26px 28px;margin-top:44px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .next-bar h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px}
+    .next-bar p{font-size:13px;color:var(--text-muted);margin:0}
+    .next-links{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0}
+    .nl{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;padding:10px 18px;border-radius:9px;border:1px solid;transition:all .2s}
+    .nl-pres{color:var(--pink);border-color:#F472B630;background:#F472B608}.nl-pres:hover{background:#F472B618;border-color:var(--pink);color:var(--pink)}
+    .nl-back{color:var(--emerald);border-color:#34D39930;background:#34D39908}.nl-back:hover{background:#34D39918;border-color:var(--emerald);color:var(--emerald)}
+
+    .divider{height:1px;background:var(--border);margin:44px 0}
+
+    /* SAVE CHECKLIST PROGRESS */
+    #save-cl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--amber);background:var(--amber-dim);border:1px solid #F59E0B30;padding:7px 14px;border-radius:8px;cursor:pointer;margin-bottom:16px;border-style:solid;font-family:var(--ff-sans);transition:all .2s}
+    #save-cl:hover{background:#F59E0B25;border-color:var(--amber)}
+    #cl-status{font-size:12px;color:var(--text-faint);margin-left:8px}
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<div class="mob-nav">
+  <a href="../index.html">← Hub</a>
+  <span>📄 L3 Dokumen</span>
+  <a href="presentasi.html">Presentasi →</a>
+</div>
+
+<div class="page">
+  <aside class="sidebar">
+    <a href="../index.html" class="sb-back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Kembali ke Hub</a>
+    <div class="sb-badge">🌳 Level 3 · Mahir</div>
+    <div class="sb-title">Memimpin & Mengembangkan Ekosistem STEM</div>
+    <div class="sb-sub">Referensi Mendalam + Checklist</div>
+    <ul class="sb-nav">
+      <li><a href="#pendahuluan"><span class="sb-num">01</span> Pendahuluan</a></li>
+      <li><a href="#integrasi"><span class="sb-num">02</span> Integrasi Mendalam</a></li>
+      <li><a href="#kemitraan"><span class="sb-num">03</span> 7 Pilar Kemitraan</a></li>
+      <li><a href="#pemangku"><span class="sb-num">04</span> Peran Pemangku</a></li>
+      <li><a href="#inklusi"><span class="sb-num">05</span> UDL & Inklusi</a></li>
+      <li><a href="#kokurikuler"><span class="sb-num">06</span> Kokurikuler & P5</a></li>
+      <li><a href="#plc"><span class="sb-num">07</span> PLC & Refleksi</a></li>
+      <li><a href="#checklist"><span class="sb-num">08</span> Checklist Mandiri</a></li>
+    </ul>
+    <div class="sb-divider"></div>
+    <div class="sb-fmt">
+      <div style="font-size:11px;color:var(--text-faint);margin-bottom:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Format Lain</div>
+      <a href="presentasi.html" class="sb-fmt-link">🖥️ Lihat Presentasi</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="art-eyebrow">🌳 Level 3 · Mahir · Referensi Mendalam</div>
+    <h1 class="art-h1">Memimpin & Mengembangkan Ekosistem STEM</h1>
+    <p class="art-desc">Untuk guru yang sudah melaksanakan STEM dan ingin memperdalam — membangun kemitraan strategis, mengembangkan integrasi transdisipliner, merancang inklusi, dan memimpin perubahan budaya belajar di sekolah.</p>
+    <div class="art-meta">
+      <div class="meta-chip">📖 Referensi mendalam</div>
+      <div class="meta-chip">⏱ ±50 menit</div>
+      <div class="meta-chip">🎯 Guru berpengalaman STEM</div>
+      <div class="meta-chip">✅ Dilengkapi checklist</div>
+    </div>
+
+    <!-- 01 -->
+    <section id="pendahuluan">
+      <div class="sec-label">01</div>
+      <h2>Melampaui Satu Proyek</h2>
+      <p>Kamu sudah berhasil merancang dan melaksanakan pembelajaran STEM. Muridmu sudah merasakan pengalaman belajar yang berbeda. Langkah berikutnya bukan sekadar menambah proyek baru — melainkan <strong>membangun ekosistem</strong> yang membuat STEM berkelanjutan, inklusif, dan berdampak lebih luas.</p>
+      <p>Level ini membahas dimensi STEM yang lebih dalam: integrasi lintas disiplin yang lebih kuat, kemitraan strategis dengan berbagai pihak, pembelajaran untuk semua murid termasuk berkebutuhan khusus, dan bagaimana menjadi penggerak perubahan budaya belajar di sekolahmu.</p>
+      <div class="box box-amber">
+        <h4>Untuk siapa dokumen ini?</h4>
+        <ul>
+          <li>Guru yang sudah menjalankan minimal 1 proyek STEM di kelas</li>
+          <li>Koordinator STEM atau guru penggerak yang memimpin pengembangan di sekolah</li>
+          <li>Kepala Sekolah atau Wakasek yang ingin memahami dukungan apa yang dibutuhkan tim guru</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 02 INTEGRASI -->
+    <section id="integrasi">
+      <div class="sec-label">02</div>
+      <h2>Dari Multidisipliner ke Transdisipliner</h2>
+      <p>Panduan Kemendikdasmen mengidentifikasi tiga tingkat integrasi dalam pembelajaran STEM. Semakin tinggi levelnya, semakin kuat dan bermakna integrasinya — namun juga semakin menuntut kolaborasi yang lebih dalam antarguru.</p>
+
+      <div class="integ-ladder">
+        <div class="integ-rung">
+          <div class="integ-level il-multi">Multi­disipliner</div>
+          <div class="integ-body">
+            <h4>Disiplin-disiplin diajarkan secara paralel dengan tema yang sama</h4>
+            <p>Setiap guru mengajarkan kontennya sendiri, menggunakan konteks atau tema yang sama sebagai benang merah. Koneksi antar disiplin dibuat eksplisit, tapi murid masih mempelajari tiap mapel secara terpisah.</p>
+            <p class="eg">Contoh: Tema "Air" — IPA mengajarkan siklus air, Matematika mengajarkan volume, IPS mengajarkan distribusi air bersih di Indonesia. Masing-masing guru mengajar sendiri-sendiri.</p>
+          </div>
+        </div>
+        <div class="integ-rung">
+          <div class="integ-level il-inter">Inter­disipliner</div>
+          <div class="integ-body">
+            <h4>Konsep dan metode dari beberapa disiplin digabung untuk memecahkan satu masalah</h4>
+            <p>Guru berkolaborasi merancang satu unit pembelajaran bersama. Murid secara aktif menghubungkan pengetahuan dari berbagai disiplin untuk memahami dan memecahkan masalah yang sama.</p>
+            <p class="eg">Contoh: Guru IPA, Matematika, dan IPS bersama merancang proyek "Kualitas Air Sungai Lokal" — murid mengukur pH (IPA), menganalisis data (Matematika), dan membuat rekomendasi kebijakan (IPS).</p>
+          </div>
+        </div>
+        <div class="integ-rung">
+          <div class="integ-level il-trans">Trans­disipliner</div>
+          <div class="integ-body">
+            <h4>Pembelajaran berpusat pada masalah dunia nyata yang melampaui batas disiplin</h4>
+            <p>Batas antar mapel hilang. Murid dan guru bersama-sama mendefinisikan masalah, memilih pendekatan yang paling tepat dari mana pun asalnya, dan menghasilkan solusi yang berdampak nyata pada komunitas.</p>
+            <p class="eg">Contoh: Komunitas sekolah bersama-sama merancang sistem pengelolaan sampah sekolah yang sesungguhnya diimplementasikan — melibatkan sains, teknologi, desain, ekonomi, sosial, dan komunikasi tanpa sekat mapel.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="box box-teal">
+        <h4>💡 Di mana titik awalmu saat ini?</h4>
+        <p>Tidak ada tekanan untuk langsung transdisipliner. Sebagian besar guru berpengalaman berada di level interdisipliner, dan itu sudah sangat bermakna. Transdisipliner adalah perjalanan bertahun-tahun, bukan target tahun pertama.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 03 KEMITRAAN -->
+    <section id="kemitraan">
+      <div class="sec-label">03</div>
+      <h2>7 Pilar Kemitraan Strategis STEM</h2>
+      <p>Ekosistem STEM yang kuat tidak bisa dibangun hanya oleh guru di dalam kelas. Panduan Kemendikdasmen mengidentifikasi tujuh pilar kemitraan yang bisa memperkaya, memperluas, dan memperkuat dampak pembelajaran STEM:</p>
+
+      <div class="mitra-grid">
+        <div class="mitra-card">
+          <div class="mitra-ico">👩‍🏫</div>
+          <h4>Pendidik Lintas Mata Pelajaran</h4>
+          <p>Kolaborasi antar guru mapel dalam satu sekolah untuk merancang proyek STEM terpadu. Ini adalah kemitraan paling langsung dan paling mudah dimulai.</p>
+          <span class="mitra-tag">Internal sekolah</span>
+        </div>
+        <div class="mitra-card">
+          <div class="mitra-ico">🏭</div>
+          <h4>Dunia Usaha & Industri</h4>
+          <p>Perusahaan lokal atau nasional yang bisa menyediakan konteks masalah nyata, mentor profesional, kunjungan lapangan, atau dukungan bahan dan peralatan.</p>
+          <span class="mitra-tag">Eksternal</span>
+        </div>
+        <div class="mitra-card">
+          <div class="mitra-ico">🏘️</div>
+          <h4>Masyarakat & Pemerintah Lokal</h4>
+          <p>Desa, kelurahan, atau komunitas sekitar sekolah sebagai sumber masalah nyata dan audiens nyata untuk produk murid. Membuat pembelajaran terasa berdampak.</p>
+          <span class="mitra-tag">Komunitas</span>
+        </div>
+        <div class="mitra-card">
+          <div class="mitra-ico">🌱</div>
+          <h4>LSM & Organisasi Nirlaba</h4>
+          <p>Lembaga yang bergerak di bidang lingkungan, kesehatan, pendidikan, atau pemberdayaan masyarakat — sering punya program yang bisa diintegrasikan dengan proyek STEM.</p>
+          <span class="mitra-tag">Eksternal</span>
+        </div>
+        <div class="mitra-card">
+          <div class="mitra-ico">🎓</div>
+          <h4>Perguruan Tinggi</h4>
+          <p>Dosen atau mahasiswa yang bisa menjadi narasumber, mentor, atau mitra riset. Kolaborasi dengan PT membuka akses ke fasilitas lab dan pengetahuan mutakhir.</p>
+          <span class="mitra-tag">Akademik</span>
+        </div>
+        <div class="mitra-card">
+          <div class="mitra-ico">🔬</div>
+          <h4>Praktisi & Ilmuwan STEM</h4>
+          <p>Insinyur, dokter, peneliti, atau programmer yang bisa berbagi pengalaman nyata, menjadi role model, dan menunjukkan relevansi belajar STEM dalam kehidupan karier.</p>
+          <span class="mitra-tag">Profesional</span>
+        </div>
+        <div class="mitra-card">
+          <div class="mitra-ico">👪</div>
+          <h4>Orang Tua & Wali Murid</h4>
+          <p>Sumber daya yang sering terlupakan. Orang tua punya profesi, keahlian, dan akses ke jaringan yang bisa memperkaya ekosistem STEM. Libatkan mereka secara aktif.</p>
+          <span class="mitra-tag">Internal komunitas</span>
+        </div>
+      </div>
+
+      <h3>Cara Membangun Kemitraan yang Efektif</h3>
+      <div class="box box-amber">
+        <ul>
+          <li><strong>Mulai dengan satu mitra, satu proyek</strong> — jangan langsung membangun 7 kemitraan sekaligus. Pilih yang paling mudah dan paling relevan.</li>
+          <li><strong>Buat kesepakatan yang jelas</strong> — apa yang diminta, apa yang ditawarkan, berapa lama, siapa yang bertanggung jawab.</li>
+          <li><strong>Tunjukkan dampak kepada mitra</strong> — dokumentasikan dan bagikan hasil proyek ke mitra. Ini membangun kepercayaan untuk kolaborasi jangka panjang.</li>
+          <li><strong>Libatkan kepala sekolah</strong> — kemitraan formal membutuhkan dukungan institusional agar berkelanjutan.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 04 PEMANGKU -->
+    <section id="pemangku">
+      <div class="sec-label">04</div>
+      <h2>Peran Pemangku Kepentingan</h2>
+      <p>Ekosistem STEM yang sehat membutuhkan kontribusi dari setiap level sistem pendidikan. Berikut peran spesifik masing-masing pemangku kepentingan berdasarkan Panduan Kemendikdasmen:</p>
+
+      <div class="stk-list">
+        <div class="stk-item"><div class="stk-role">Dinas Pendidikan</div><div class="stk-body">Menyusun regulasi pendukung, mengalokasikan anggaran pelatihan STEM, memfasilitasi jaringan antar sekolah, dan membangun pusat sumber belajar STEM daerah.</div></div>
+        <div class="stk-item"><div class="stk-role">Pengawas Sekolah</div><div class="stk-body">Memberikan pembinaan berbasis pemahaman STEM, mendampingi guru dalam siklus refleksi, dan menjadi penghubung antara sekolah dengan kebijakan dinas.</div></div>
+        <div class="stk-item"><div class="stk-role">Kepala Sekolah</div><div class="stk-body">Menciptakan kultur sekolah yang mendukung eksperimen dan inovasi, mengalokasikan waktu kolaborasi antarguru, membangun kemitraan institusional, dan memberi apresiasi nyata kepada guru STEM.</div></div>
+        <div class="stk-item"><div class="stk-role">Guru / Pendidik</div><div class="stk-body">Merancang dan melaksanakan pembelajaran STEM berkualitas, berkolaborasi lintas mapel, terus belajar dan berefleksi, serta menjadi model pemikiran saintifik dan enjinering bagi murid.</div></div>
+        <div class="stk-item"><div class="stk-role">Orang Tua</div><div class="stk-body">Mendukung belajar murid di rumah, terlibat dalam proyek yang membutuhkan koneksi komunitas, berbagi keahlian profesional, dan memahami tujuan pembelajaran STEM agar tidak salah persepsi.</div></div>
+      </div>
+
+      <div class="box box-green">
+        <h4>Peran Guru sebagai Pemimpin Perubahan</h4>
+        <p>Guru STEM yang berpengalaman tidak hanya mengajar — mereka juga <strong>mengajari rekan sejawat</strong>, mendokumentasikan praktik terbaik, menjadi mentor bagi guru junior, dan mengadvokasi kondisi yang mendukung pembelajaran STEM di tingkat sekolah dan daerah.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 05 UDL & INKLUSI -->
+    <section id="inklusi">
+      <div class="sec-label">05</div>
+      <h2>Universal Design for Learning (UDL) & Inklusi</h2>
+      <p>Pembelajaran STEM yang bermakna harus dapat diakses oleh <strong>semua murid</strong> — termasuk mereka dengan disabilitas fisik, kognitif, atau sensorik. Universal Design for Learning (UDL) adalah kerangka yang memandu perancangan pembelajaran yang inklusif sejak awal, bukan sekadar "memodifikasi" setelah terbukti ada murid yang tertinggal.</p>
+
+      <h3>Tiga Prinsip UDL dalam Konteks STEM</h3>
+      <div class="udl-grid">
+        <div class="udl-card">
+          <div class="udl-head"><span class="udl-ico">👁</span><h4>Multiple Means of Representation</h4></div>
+          <ul>
+            <li>Sajikan informasi dalam berbagai format: teks, audio, video, diagram, manipulatif fisik</li>
+            <li>Sediakan kamus visual untuk istilah STEM</li>
+            <li>Gunakan model 3D atau simulasi digital sebagai alternatif teks</li>
+            <li>Pastikan semua materi digital bisa diakses screen reader</li>
+          </ul>
+        </div>
+        <div class="udl-card">
+          <div class="udl-head"><span class="udl-ico">✋</span><h4>Multiple Means of Action & Expression</h4></div>
+          <ul>
+            <li>Izinkan murid memilih cara menunjukkan pemahaman: tulisan, gambar, video, presentasi lisan, model fisik</li>
+            <li>Sediakan pilihan alat: tangan, teknologi asistif, aplikasi</li>
+            <li>Beri fleksibilitas waktu untuk murid yang butuh lebih lama</li>
+            <li>Scaffold instruksi menjadi langkah-langkah kecil yang konkret</li>
+          </ul>
+        </div>
+        <div class="udl-card">
+          <div class="udl-head"><span class="udl-ico">❤️</span><h4>Multiple Means of Engagement</h4></div>
+          <ul>
+            <li>Hubungkan masalah STEM dengan minat dan konteks budaya murid</li>
+            <li>Beri pilihan tingkat tantangan (tingkat mudah–sedang–sulit dalam tugas yang sama)</li>
+            <li>Ciptakan lingkungan yang aman untuk bertanya dan gagal</li>
+            <li>Gunakan kerja tim yang heterogen dan saling melengkapi</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>STEM untuk Satuan Pendidikan Luar Biasa (SLB)</h3>
+      <p>Panduan Kemendikdasmen secara eksplisit mencakup panduan STEM untuk SLB. Prinsip utamanya adalah <strong>adaptasi konteks dan format</strong> — bukan adaptasi tujuan berpikir. Murid dengan hambatan belajar tetap bisa mengembangkan cara berpikir saintifik dan enjinering, dengan dukungan yang tepat.</p>
+      <div class="box box-pink">
+        <h4>Contoh Adaptasi untuk SLB</h4>
+        <ul>
+          <li><strong>Hambatan penglihatan:</strong> Gunakan model tekstur, audio deskripsi, dan pengalaman haptic (meraba) dalam praktik saintifik</li>
+          <li><strong>Hambatan pendengaran:</strong> Instruksi visual, kartu langkah bergambar, video dengan teks/caption</li>
+          <li><strong>Hambatan intelektual:</strong> Proyek lebih konkret dan singkat, lebih banyak scaffolding verbal dan visual, penguatan positif yang lebih sering</li>
+          <li><strong>Autisme:</strong> Struktur rutinitas yang konsisten, pilihan aktivitas yang dapat diprediksi, ruang tenang untuk murid yang mudah overstimulasi</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 06 KOKURIKULER -->
+    <section id="kokurikuler">
+      <div class="sec-label">06</div>
+      <h2>Kokurikuler, Ekstrakurikuler & P5</h2>
+
+      <h3>Projek Penguatan Profil Pelajar Pancasila (P5)</h3>
+      <p>P5 adalah ruang ideal untuk pembelajaran STEM yang lebih panjang, lebih mendalam, dan lebih berdampak. Tema-tema P5 seperti <em>"Gaya Hidup Berkelanjutan," "Rekayasa dan Teknologi,"</em> dan <em>"Kearifan Lokal"</em> sangat kompatibel dengan pendekatan STEM berbasis masalah nyata.</p>
+      <div class="box box-teal">
+        <h4>Cara Mengintegrasikan STEM dalam P5</h4>
+        <ul>
+          <li><strong>Pilih tema yang bermakna lokal:</strong> masalah lingkungan, pangan, energi, atau kesehatan di daerahmu</li>
+          <li><strong>Gunakan alur enjinering sebagai struktur proyek P5:</strong> definisi masalah → riset → rancang → bangun → evaluasi → komunikasi</li>
+          <li><strong>Buat produk yang nyata berdampak:</strong> bukan sekadar poster atau laporan, tapi prototipe, sistem, atau rekomendasi yang bisa ditindaklanjuti</li>
+          <li><strong>Libatkan komunitas sebagai audiens nyata:</strong> presentasi ke orang tua, RT, atau pemerintah desa</li>
+        </ul>
+      </div>
+
+      <h3>Kegiatan Ekstrakurikuler STEM</h3>
+      <p>Ekstrakurikuler STEM memperluas pengalaman murid di luar jam pelajaran:</p>
+      <div class="box box-green">
+        <ul>
+          <li><strong>STEM Club / Robotika:</strong> Wadah murid yang antusias untuk eksplorasi lebih mendalam — pembuatan robot, desain elektronik, pemrograman</li>
+          <li><strong>Olimpiade Sains Nasional (OSN) & Kompetisi:</strong> Persiapan kompetisi sambil memperdalam kompetensi saintifik secara bermakna</li>
+          <li><strong>Lomba Inovasi & Pameran Sains:</strong> Platform murid untuk mempresentasikan solusi STEM kepada audiens lebih luas</li>
+          <li><strong>Kunjungan Industri & Lapangan:</strong> Menghubungkan pembelajaran di kelas dengan dunia nyata secara langsung</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 07 PLC -->
+    <section id="plc">
+      <div class="sec-label">07</div>
+      <h2>Professional Learning Community & Refleksi</h2>
+      <p>Guru yang terus berkembang adalah fondasi ekosistem STEM yang berkelanjutan. <strong>Professional Learning Community (PLC)</strong> adalah komunitas belajar antarguru yang secara rutin berefleksi, berbagi praktik, dan saling mendukung perkembangan profesional.</p>
+
+      <h3>Membangun PLC STEM di Sekolah</h3>
+      <div class="roadmap">
+        <div class="rm-item"><div class="rm-phase">Bulan 1–2</div><div class="rm-body"><h4>Bentuk Tim Inti</h4><p>Identifikasi 3–5 guru dari mapel berbeda yang tertarik berkolaborasi. Mulai dengan pertemuan informal untuk memetakan ketertarikan bersama dan masalah yang ingin dipecahkan.</p></div></div>
+        <div class="rm-item"><div class="rm-phase">Bulan 3–4</div><div class="rm-body"><h4>Rancang & Jalankan Proyek Pertama Bersama</h4><p>Pilih satu konteks masalah, rancang modul sederhana secara kolaboratif, jalankan di kelas masing-masing, dan dokumentasikan hasilnya — termasuk yang tidak berjalan sesuai rencana.</p></div></div>
+        <div class="rm-item"><div class="rm-phase">Bulan 5–6</div><div class="rm-body"><h4>Sesi Refleksi & Perbaikan</h4><p>Adakan "lesson study" — satu guru mengajar, yang lain mengobservasi dengan fokus yang disepakati. Refleksi bersama secara terstruktur: apa yang berhasil, apa yang perlu diubah, mengapa?</p></div></div>
+        <div class="rm-item"><div class="rm-phase">Semester 2+</div><div class="rm-body"><h4>Perluas & Bagikan</h4><p>Undang guru lain untuk bergabung, dokumentasikan praktik terbaik dalam format yang bisa dibagikan ke sekolah lain, dan presentasikan dalam kegiatan KKG/MGMP.</p></div></div>
+      </div>
+
+      <h3>Siklus Refleksi Berkelanjutan</h3>
+      <p>Refleksi bukan kegiatan sekali selesai — ini adalah siklus yang berulang: <strong>Rencanakan → Laksanakan → Amati → Refleksikan → Perbaiki</strong>. Guru STEM yang efektif membangun kebiasaan refleksi setelah setiap proyek atau unit pembelajaran.</p>
+
+      <blockquote><p>"Guru yang paling efektif bukan yang tidak pernah gagal — melainkan yang paling cepat belajar dari kegagalannya dan memperbaiki praktiknya."</p></blockquote>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 08 CHECKLIST -->
+    <section id="checklist">
+      <div class="sec-label">08</div>
+      <h2>Checklist Refleksi Mandiri</h2>
+      <p>Gunakan checklist ini untuk mengevaluasi sejauh mana praktik STEM di sekolahmu telah berkembang. Centang hal-hal yang sudah kamu lakukan, dan gunakan yang belum sebagai target pengembangan berikutnya.</p>
+
+      <button id="save-cl" onclick="saveCL()">💾 Simpan Progress <span id="cl-status"></span></button>
+
+      <div class="checklist">
+        <div class="checklist-title">✅ Checklist Ekosistem STEM Sekolah</div>
+
+        <div class="cl-group">
+          <div class="cl-group-label">Perancangan Pembelajaran</div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Sudah merancang minimal 1 proyek STEM berbasis masalah nyata lokal</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Sudah memetakan CP dari minimal 2 mapel secara bermakna dalam satu proyek</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Menggunakan alur praktik saintifik atau enjinering sebagai struktur pembelajaran</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Memiliki instrumen asesmen autentik per tahap (bukan hanya penilaian produk akhir)</div></div>
+        </div>
+
+        <div class="cl-group">
+          <div class="cl-group-label">Kolaborasi & Kemitraan</div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Sudah berkolaborasi dengan minimal 1 guru mapel lain dalam satu proyek STEM</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Melibatkan minimal 1 pihak eksternal (industri, LSM, PT, komunitas, orang tua) dalam proyek</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Murid mempresentasikan hasil kepada audiens nyata di luar kelas</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Kepala sekolah mengetahui dan mendukung inisiatif STEM yang sedang berjalan</div></div>
+        </div>
+
+        <div class="cl-group">
+          <div class="cl-group-label">Inklusi & Diferensiasi</div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Menyediakan alternatif cara murid menunjukkan pemahaman (bukan hanya tes tertulis)</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Memiliki akomodasi spesifik untuk murid dengan kebutuhan khusus dalam proyek STEM</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Memastikan semua murid (bukan hanya yang "pintar") bisa berpartisipasi bermakna</div></div>
+        </div>
+
+        <div class="cl-group">
+          <div class="cl-group-label">Pengembangan Profesional</div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Melakukan refleksi terstruktur setelah setiap proyek STEM</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Mendokumentasikan praktik terbaik yang bisa dibagikan ke rekan guru</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Tergabung atau berkontribusi dalam komunitas belajar guru (PLC, KKG, MGMP)</div></div>
+          <div class="cl-item"><div class="cl-box" onclick="toggleCL(this)"></div><div class="cl-text">Memiliki rencana pengembangan STEM yang konkret untuk semester/tahun ajaran berikutnya</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEXT BAR -->
+    <div class="next-bar">
+      <div>
+        <h4>Kamu sudah di puncak jalur ini!</h4>
+        <p>Lihat presentasi Level 3 untuk sesi refleksi tim, atau kembali ke Level 2 untuk referensi.</p>
+      </div>
+      <div class="next-links">
+        <a href="../level2/dokumen.html" class="nl nl-back">← Level 2</a>
+        <a href="presentasi.html" class="nl nl-pres">🖥️ Presentasi L3</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const p=document.getElementById('prog');
+  window.addEventListener('scroll',()=>{const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-innerHeight;p.style.width=(s/h*100)+'%'});
+  const secs=document.querySelectorAll('section[id]'),lnks=document.querySelectorAll('.sb-nav a');
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){lnks.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.sb-nav a[href="#${e.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:.3,rootMargin:'-10% 0px -60% 0px'});
+  secs.forEach(s=>obs.observe(s));
+
+  function toggleCL(el) {
+    el.classList.toggle('checked');
+    updateCLStatus();
+  }
+  function updateCLStatus() {
+    const total = document.querySelectorAll('.cl-box').length;
+    const checked = document.querySelectorAll('.cl-box.checked').length;
+    document.getElementById('cl-status').textContent = `${checked}/${total} selesai`;
+  }
+  function saveCL() {
+    const states = [...document.querySelectorAll('.cl-box')].map(b=>b.classList.contains('checked'));
+    localStorage.setItem('stem-cl-l3', JSON.stringify(states));
+    document.getElementById('cl-status').textContent = '✓ Tersimpan!';
+    setTimeout(updateCLStatus, 1500);
+  }
+  // Load saved
+  try {
+    const saved = JSON.parse(localStorage.getItem('stem-cl-l3') || '[]');
+    document.querySelectorAll('.cl-box').forEach((b,i)=>{ if(saved[i]) b.classList.add('checked'); });
+  } catch(e){}
+  updateCLStatus();
+</script>
+</body>
+</html>
