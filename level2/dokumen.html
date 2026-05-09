@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Level 2 · Dokumen — Merancang & Melaksanakan Pembelajaran STEM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --navy:#0B1D2E;--navy-mid:#132840;--navy-light:#1D3A52;
+      --teal:#0EA5C9;--teal-dim:#0EA5C920;
+      --emerald:#34D399;--green:#10B981;--green-dim:#10B98115;
+      --amber:#F59E0B;--blue:#38BDF8;--pink:#F472B6;
+      --white:#F8FAFC;--text-main:#E2EAF0;--text-muted:#8BA5BB;--text-faint:#4A6478;
+      --border:#1D3A52;--r:12px;--rl:20px;
+      --ff-serif:'DM Serif Display',Georgia,serif;
+      --ff-sans:'Plus Jakarta Sans',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-sans);background:var(--navy);color:var(--text-main);line-height:1.7}
+    a{color:var(--teal);text-decoration:none}a:hover{color:var(--amber)}
+
+    .page{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+    @media(max-width:900px){.page{grid-template-columns:1fr}}
+
+    /* SIDEBAR */
+    .sidebar{background:var(--navy-mid);border-right:1px solid var(--border);padding:26px 20px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+    @media(max-width:900px){.sidebar{display:none}}
+    .sb-back{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:6px 0;margin-bottom:18px;transition:color .2s}
+    .sb-back:hover{color:var(--text-main)}
+    .sb-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--green-dim);color:var(--emerald);border:1px solid #34D39930;padding:5px 11px;border-radius:20px;margin-bottom:12px;width:fit-content}
+    .sb-title{font-family:var(--ff-serif);font-size:16px;color:var(--white);line-height:1.3;margin-bottom:4px}
+    .sb-sub{font-size:12px;color:var(--text-faint);margin-bottom:22px}
+    .sb-nav{list-style:none;display:flex;flex-direction:column;gap:2px}
+    .sb-nav a{display:block;font-size:13px;color:var(--text-muted);padding:7px 12px;border-radius:8px;transition:all .2s;border:1px solid transparent}
+    .sb-nav a:hover,.sb-nav a.active{background:var(--navy-light);color:var(--text-main);border-color:var(--border)}
+    .sb-num{font-size:11px;color:var(--text-faint);margin-right:4px}
+    .sb-divider{height:1px;background:var(--border);margin:14px 0}
+    .sb-fmt{margin-top:auto;padding-top:18px}
+    .sb-fmt-link{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--amber);background:#F59E0B12;border:1px solid #F59E0B30;padding:9px 12px;border-radius:9px;transition:all .2s}
+    .sb-fmt-link:hover{background:#F59E0B20;border-color:var(--amber)}
+
+    /* MOBILE NAV */
+    .mob-nav{display:none;background:rgba(11,29,46,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:11px 18px;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50}
+    @media(max-width:900px){.mob-nav{display:flex}}
+    .mob-nav a{font-size:13px;color:var(--text-muted)}
+    .mob-nav span{font-size:13px;font-weight:600;color:var(--emerald)}
+
+    #prog{position:fixed;top:0;left:0;height:2px;z-index:999;width:0%;background:linear-gradient(90deg,var(--emerald),var(--teal));transition:width .1s}
+
+    main{padding:52px 64px 80px;max-width:880px}
+    @media(max-width:1000px){main{padding:38px 32px 60px}}
+    @media(max-width:640px){main{padding:26px 18px 48px}}
+
+    /* ARTICLE HEADER */
+    .art-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--emerald);background:var(--green-dim);border:1px solid #34D39930;padding:5px 13px;border-radius:20px;margin-bottom:18px}
+    .art-h1{font-family:var(--ff-serif);font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.01em;color:var(--white);margin-bottom:12px}
+    .art-desc{font-size:16px;color:var(--text-muted);font-weight:300;line-height:1.6;max-width:620px;margin-bottom:24px}
+    .art-meta{display:flex;flex-wrap:wrap;gap:10px;padding-bottom:32px;border-bottom:1px solid var(--border);margin-bottom:44px}
+    .meta-chip{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--text-faint);background:var(--navy-mid);border:1px solid var(--border);padding:5px 12px;border-radius:20px}
+
+    section{margin-bottom:52px;scroll-margin-top:24px}
+    .sec-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--emerald);margin-bottom:10px}
+    h2{font-family:var(--ff-serif);font-size:clamp(22px,3vw,32px);line-height:1.2;color:var(--white);margin-bottom:14px}
+    h3{font-family:var(--ff-serif);font-size:clamp(16px,2vw,21px);line-height:1.25;color:var(--white);margin:26px 0 10px}
+    p{font-size:15px;color:var(--text-muted);line-height:1.75;margin-bottom:14px}
+    p:last-child{margin-bottom:0}
+    strong{color:var(--text-main);font-weight:600}
+
+    /* BOXES */
+    .box{border-radius:var(--r);padding:20px 22px;margin:22px 0}
+    .box-green{background:var(--green-dim);border-left:3px solid var(--green)}
+    .box-teal{background:var(--teal-dim);border-left:3px solid var(--teal)}
+    .box-amber{background:#F59E0B12;border-left:3px solid var(--amber)}
+    .box-blue{background:#38BDF815;border-left:3px solid var(--blue)}
+    .box h4{font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px}
+    .box p,.box ul,.box ol{font-size:14px;color:var(--text-muted);margin:0;line-height:1.65}
+    .box ul,.box ol{padding-left:18px}
+    .box ul li,.box ol li{margin-bottom:5px}
+
+    /* 4-STEP PERENCANAAN */
+    .steps-plan{display:flex;flex-direction:column;gap:2px;margin:20px 0;border-radius:var(--rl);overflow:hidden;border:1px solid var(--border)}
+    .step-plan{display:flex;gap:0;background:var(--navy-mid);transition:background .2s}
+    .step-plan:hover{background:var(--navy-light)}
+    .step-plan-num{background:linear-gradient(135deg,var(--emerald),var(--teal));color:#fff;font-family:var(--ff-serif);font-size:28px;padding:20px 22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:64px;line-height:1}
+    .step-plan-body{padding:18px 22px}
+    .step-plan-body h4{font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px}
+    .step-plan-body p{font-size:13px;color:var(--text-muted);line-height:1.55;margin:0}
+    .step-plan-body .sub{margin-top:8px;font-size:12px;color:var(--text-faint);font-style:italic}
+
+    /* ALUR ITERATIF */
+    .flow{display:flex;flex-direction:column;gap:2px;margin:20px 0}
+    .flow-item{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;border-radius:var(--r);background:var(--navy-mid);border:1px solid var(--border)}
+    .flow-arrow{color:var(--text-faint);font-size:18px;text-align:center;padding:4px 0;font-style:normal}
+    .flow-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .flow-body h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px}
+    .flow-body p{font-size:13px;color:var(--text-muted);margin:0;line-height:1.5}
+
+    /* MODEL CARDS */
+    .model-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+    @media(max-width:640px){.model-grid{grid-template-columns:1fr}}
+    .model-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:border-color .2s}
+    .model-card:hover{border-color:var(--emerald)}
+    .model-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:10px;background:var(--green-dim);color:var(--emerald);margin-bottom:10px;display:inline-block}
+    .model-card h4{font-size:15px;font-weight:700;color:var(--white);margin-bottom:7px}
+    .model-card p{font-size:13px;color:var(--text-muted);line-height:1.55;margin:0}
+    .model-steps{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+    .model-step-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--navy-light);color:var(--text-muted);border:1px solid var(--border)}
+
+    /* ASESMEN TABLE */
+    .asesmen-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13px}
+    .asesmen-table th{background:var(--navy-light);color:var(--text-main);font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+    .asesmen-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted);vertical-align:top;line-height:1.5}
+    .asesmen-table tr:last-child td{border-bottom:none}
+    .asesmen-table tr:hover td{background:var(--navy-mid)}
+    .at-green{color:var(--emerald);font-weight:600}
+
+    /* TEMPLATE BOX */
+    .template{background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--rl);padding:26px 28px;margin:22px 0}
+    .template-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+    .template-row{display:grid;grid-template-columns:160px 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-bottom:8px}
+    .template-key{background:var(--navy-light);padding:10px 14px;font-size:13px;font-weight:600;color:var(--text-main);display:flex;align-items:center}
+    .template-val{padding:10px 14px;font-size:13px;color:var(--text-muted);background:var(--navy-mid)}
+
+    /* EXAMPLE */
+    .example{background:linear-gradient(135deg,#10B98110,#0EA5C908);border:1px solid #34D39930;border-radius:var(--rl);padding:26px 28px;margin:22px 0}
+    .example-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--emerald);margin-bottom:10px}
+    .example h4{font-family:var(--ff-serif);font-size:19px;color:var(--white);margin-bottom:10px}
+    .example p{font-size:14px;color:var(--text-muted);line-height:1.65;margin-bottom:8px}
+    .example-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .ex-tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--green-dim);color:var(--emerald);border:1px solid #34D39930}
+
+    blockquote{border-left:3px solid var(--emerald);padding:14px 18px;margin:20px 0;background:var(--green-dim);border-radius:0 var(--r) var(--r) 0}
+    blockquote p{font-family:var(--ff-serif);font-size:16px;font-style:italic;color:var(--white);line-height:1.5;margin:0}
+
+    .next-bar{background:var(--navy-mid);border:1px solid var(--border);border-radius:var(--rl);padding:26px 28px;margin-top:44px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .next-bar h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px}
+    .next-bar p{font-size:13px;color:var(--text-muted);margin:0}
+    .next-links{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0}
+    .nl{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;padding:10px 18px;border-radius:9px;border:1px solid;transition:all .2s}
+    .nl-pres{color:var(--amber);border-color:#F59E0B30;background:#F59E0B08}.nl-pres:hover{background:#F59E0B18;border-color:var(--amber);color:var(--amber)}
+    .nl-next{color:var(--amber);border-color:#F59E0B30;background:#F59E0B08}.nl-next:hover{background:#F59E0B18;border-color:var(--amber);color:var(--amber)}
+    .nl-back{color:var(--blue);border-color:#38BDF830;background:#38BDF808}.nl-back:hover{background:#38BDF818;border-color:var(--blue);color:var(--blue)}
+
+    .divider{height:1px;background:var(--border);margin:44px 0}
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<div class="mob-nav">
+  <a href="../index.html">← Hub</a>
+  <span>📄 L2 Dokumen</span>
+  <a href="presentasi.html">Presentasi →</a>
+</div>
+
+<div class="page">
+  <aside class="sidebar">
+    <a href="../index.html" class="sb-back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Kembali ke Hub</a>
+    <div class="sb-badge">🌿 Level 2 · Berkembang</div>
+    <div class="sb-title">Merancang & Melaksanakan Pembelajaran STEM</div>
+    <div class="sb-sub">Dokumen Panduan Praktis</div>
+    <ul class="sb-nav">
+      <li><a href="#pendahuluan"><span class="sb-num">01</span> Pendahuluan</a></li>
+      <li><a href="#perencanaan"><span class="sb-num">02</span> 4 Langkah Perencanaan</a></li>
+      <li><a href="#saintifik"><span class="sb-num">03</span> Alur Praktik Saintifik</a></li>
+      <li><a href="#enjinering"><span class="sb-num">04</span> Alur Praktik Enjinering</a></li>
+      <li><a href="#model"><span class="sb-num">05</span> Model Pembelajaran</a></li>
+      <li><a href="#asesmen"><span class="sb-num">06</span> Asesmen Autentik</a></li>
+      <li><a href="#contoh"><span class="sb-num">07</span> Contoh Modul</a></li>
+      <li><a href="#lingkungan"><span class="sb-num">08</span> Lingkungan Belajar</a></li>
+    </ul>
+    <div class="sb-divider"></div>
+    <div class="sb-fmt">
+      <div style="font-size:11px;color:var(--text-faint);margin-bottom:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Format Lain</div>
+      <a href="presentasi.html" class="sb-fmt-link">🖥️ Lihat Presentasi</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="art-eyebrow">🌿 Level 2 · Berkembang · Dokumen Panduan</div>
+    <h1 class="art-h1">Merancang & Melaksanakan Pembelajaran STEM</h1>
+    <p class="art-desc">Panduan praktis bagi guru yang sudah memahami konsep STEM dan siap merancang pembelajaran nyata — dari perencanaan, pelaksanaan praktik saintifik dan enjinering, pemilihan model, hingga asesmen autentik.</p>
+    <div class="art-meta">
+      <div class="meta-chip">📖 Panduan praktis</div>
+      <div class="meta-chip">⏱ ±40 menit</div>
+      <div class="meta-chip">🎯 Guru yang siap merancang STEM</div>
+      <div class="meta-chip">📚 BSKAP Kemendikdasmen 2025</div>
+    </div>
+
+    <!-- 01 -->
+    <section id="pendahuluan">
+      <div class="sec-label">01</div>
+      <h2>Dari Memahami ke Merancang</h2>
+      <p>Kamu sudah tahu apa itu STEM, mengapa penting, dan apa karakteristiknya. Sekarang pertanyaannya berbeda: <strong>Bagaimana cara merancang pembelajaran STEM yang bermakna, sistematis, dan bisa diterapkan di kelas nyata?</strong></p>
+      <p>Dokumen ini memandu kamu melalui empat langkah perencanaan, dua alur praktik utama (saintifik dan enjinering), pilihan model pembelajaran yang tepat, serta cara mengintegrasikan asesmen autentik di setiap tahap.</p>
+      <div class="box box-green">
+        <h4>Prasyarat Level 2</h4>
+        <p>Sebelum lanjut, pastikan kamu sudah memahami: definisi STEM, 3 karakteristik utama, dan 3 perspektif implementasi. Jika belum, kembali ke <a href="../level1/dokumen.html">Level 1 Dokumen</a> terlebih dahulu.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 02 PERENCANAAN -->
+    <section id="perencanaan">
+      <div class="sec-label">02</div>
+      <h2>4 Langkah Perencanaan Pembelajaran STEM</h2>
+      <p>Panduan Kemendikdasmen merumuskan empat langkah sistematis untuk merencanakan pembelajaran STEM yang terintegrasi dan bermakna:</p>
+
+      <div class="steps-plan">
+        <div class="step-plan">
+          <div class="step-plan-num">1</div>
+          <div class="step-plan-body">
+            <h4>Identifikasi Masalah atau Potensi Lokal</h4>
+            <p>Temukan permasalahan nyata atau potensi lokal yang relevan dengan kehidupan murid dan komunitasnya. Masalah ini menjadi <strong>titik tolak dan motivasi</strong> seluruh pembelajaran.</p>
+            <p class="sub">Tanya dirimu: "Apa masalah nyata di sekitar sekolah/daerah ini yang bisa diselesaikan dengan ilmu pengetahuan?" Contoh: kualitas air sungai, sampah plastik kantin, tanaman obat yang tidak terawat.</p>
+          </div>
+        </div>
+        <div class="step-plan">
+          <div class="step-plan-num">2</div>
+          <div class="step-plan-body">
+            <h4>Analisis Capaian Pembelajaran & Rencana Integrasi</h4>
+            <p>Identifikasi Capaian Pembelajaran (CP) dari <strong>minimal dua mata pelajaran</strong> yang relevan dengan masalah yang dipilih. Peta konten mana yang bisa diintegrasikan secara bermakna, bukan sekadar disebut bersamaan.</p>
+            <p class="sub">Gunakan tabel pemetaan: kolom Mata Pelajaran, CP yang Relevan, Konten yang Diintegrasikan, dan Peran dalam Proyek STEM.</p>
+          </div>
+        </div>
+        <div class="step-plan">
+          <div class="step-plan-num">3</div>
+          <div class="step-plan-body">
+            <h4>Tentukan Strategi Praktik Saintifik &amp; Enjinering</h4>
+            <p>Putuskan apakah pembelajaran akan menggunakan <strong>alur saintifik</strong> (fokus penyelidikan/investigasi), <strong>alur enjinering</strong> (fokus perancangan solusi), atau keduanya secara bertahap.</p>
+            <p class="sub">Alur saintifik cocok saat tujuan utama adalah memahami fenomena. Alur enjinering cocok saat tujuan utama adalah merancang dan menguji solusi. Banyak proyek STEM menggunakan keduanya secara berurutan.</p>
+          </div>
+        </div>
+        <div class="step-plan">
+          <div class="step-plan-num">4</div>
+          <div class="step-plan-body">
+            <h4>Susun Rencana Pembelajaran Lengkap</h4>
+            <p>Tulis rencana yang mencakup: tujuan pembelajaran, alokasi waktu, aktivitas per tahap, bahan dan alat, instrumen asesmen, dan rencana diferensiasi untuk murid dengan kebutuhan berbeda.</p>
+            <p class="sub">Tip manajemen waktu: proyek STEM tidak harus panjang. Proyek 2–3 pertemuan sudah cukup bermakna. Yang penting adalah <em>kedalaman berpikir</em>, bukan durasi.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="template">
+        <div class="template-label">📋 Template Komponen TP STEM</div>
+        <div class="template-row"><div class="template-key">Masalah/Konteks</div><div class="template-val">Masalah nyata atau potensi lokal yang menjadi titik tolak pembelajaran</div></div>
+        <div class="template-row"><div class="template-key">Mapel & CP</div><div class="template-val">Daftar mapel dan CP yang diintegrasikan beserta peran masing-masing</div></div>
+        <div class="template-row"><div class="template-key">Tujuan Pembelajaran</div><div class="template-val">Apa yang murid bisa lakukan/ketahui setelah pembelajaran selesai</div></div>
+        <div class="template-row"><div class="template-key">Alur Praktik</div><div class="template-val">Saintifik / Enjinering / Keduanya — dan langkah-langkahnya</div></div>
+        <div class="template-row"><div class="template-key">Alokasi Waktu</div><div class="template-val">Berapa pertemuan, berapa menit per tahap</div></div>
+        <div class="template-row"><div class="template-key">Bahan & Alat</div><div class="template-val">Daftar bahan yang diperlukan (prioritaskan yang mudah & murah)</div></div>
+        <div class="template-row"><div class="template-key">Asesmen</div><div class="template-val">Instrumen penilaian per tahap (observasi, rubrik, portofolio)</div></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 03 ALUR SAINTIFIK -->
+    <section id="saintifik">
+      <div class="sec-label">03</div>
+      <h2>Alur Praktik Saintifik</h2>
+      <p>Praktik saintifik adalah serangkaian kegiatan yang mencerminkan cara kerja ilmuwan sesungguhnya. Alur ini <strong>tidak linier</strong> — murid bisa melompat kembali ke tahap sebelumnya saat menemukan hasil yang tidak terduga.</p>
+
+      <div class="flow">
+        <div class="flow-item"><div class="flow-ico" style="background:#38BDF815">❓</div><div class="flow-body"><h4>Mengajukan Pertanyaan</h4><p>Murid merumuskan pertanyaan yang bisa diselidiki secara empiris berdasarkan fenomena atau masalah yang diamati. Contoh: "Apakah jenis tanah mempengaruhi kecepatan peresapan air?"</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#34D39915">🔍</div><div class="flow-body"><h4>Menggunakan Model &amp; Membangun Penjelasan</h4><p>Murid mengembangkan model sederhana atau penjelasan awal tentang fenomena berdasarkan pengetahuan yang sudah dimiliki. Ini adalah hipotesis awal mereka.</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#F59E0B15">🧪</div><div class="flow-body"><h4>Merencanakan &amp; Melaksanakan Investigasi</h4><p>Murid merancang prosedur penyelidikan: variabel apa yang dikontrol, diubah, dan diamati. Lalu melaksanakannya dengan mengumpulkan data secara sistematis.</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#0EA5C915">📊</div><div class="flow-body"><h4>Menganalisis &amp; Menginterpretasi Data</h4><p>Murid mengolah data yang dikumpulkan, mencari pola, membuat grafik atau tabel, dan menginterpretasikan apa artinya dalam konteks pertanyaan awal mereka.</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#F472B615">💬</div><div class="flow-body"><h4>Mengonstruksi Penjelasan &amp; Berargumentasi</h4><p>Murid merumuskan kesimpulan berbasis bukti dan mempertahankan penjelasan mereka dengan argumen ilmiah kepada teman atau guru. Debat saintifik termasuk di sini.</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#34D39915">📢</div><div class="flow-body"><h4>Mendapatkan, Mengevaluasi &amp; Mengomunikasikan Informasi</h4><p>Murid menyajikan temuan mereka dalam berbagai bentuk — presentasi, poster, laporan, atau demo — dan memberikan/menerima umpan balik dari audiens.</p></div></div>
+      </div>
+
+      <div class="box box-teal">
+        <h4>🔁 Sifat Iteratif</h4>
+        <p>Praktik saintifik tidak berakhir di satu siklus. Murid mungkin perlu kembali ke tahap "merencanakan investigasi" setelah menganalisis data yang tidak terduga. Ini bukan kegagalan — ini adalah sains sesungguhnya. Dukung dan rayakan sikap "coba lagi" di kelas.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 04 ALUR ENJINERING -->
+    <section id="enjinering">
+      <div class="sec-label">04</div>
+      <h2>Alur Praktik Enjinering</h2>
+      <p>Berbeda dengan saintifik yang berfokus pada <em>pemahaman fenomena</em>, praktik enjinering berfokus pada <strong>perancangan solusi</strong> atas masalah nyata dengan mempertimbangkan kendala dan sumber daya yang ada.</p>
+
+      <div class="flow">
+        <div class="flow-item"><div class="flow-ico" style="background:#F59E0B15">🎯</div><div class="flow-body"><h4>Mendefinisikan Masalah</h4><p>Murid mengartikulasikan masalah secara spesifik: apa yang harus diselesaikan, siapa penggunanya, apa kriteria keberhasilan, dan apa batasannya (bahan, biaya, waktu).</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#38BDF815">🔎</div><div class="flow-body"><h4>Riset &amp; Eksplorasi</h4><p>Murid mencari informasi yang relevan: solusi yang sudah ada, prinsip sains yang mendukung, dan inspirasi dari alam atau produk yang sudah ada (biomimikri).</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#34D39915">✏️</div><div class="flow-body"><h4>Merancang Solusi</h4><p>Murid membuat sketsa atau prototipe awal dari solusi yang diusulkan. Didorong untuk membuat lebih dari satu alternatif desain sebelum memilih yang terbaik.</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#0EA5C915">🔨</div><div class="flow-body"><h4>Membangun &amp; Menguji</h4><p>Murid mewujudkan desain menjadi prototipe nyata, lalu mengujinya terhadap kriteria yang sudah ditetapkan. Data pengujian dicatat secara sistematis.</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#F472B615">🔄</div><div class="flow-body"><h4>Mengevaluasi &amp; Memperbaiki</h4><p>Berdasarkan hasil uji, murid mengidentifikasi kelemahan dan merancang perbaikan. Siklus "bangun-uji-perbaiki" ini diulang hingga solusi memenuhi kriteria keberhasilan.</p></div></div>
+        <div class="flow-item"><div class="flow-ico" style="background:#34D39915">📢</div><div class="flow-body"><h4>Mengomunikasikan Solusi</h4><p>Murid mempresentasikan solusi akhir, proses perancangan, dan pelajaran yang didapat kepada audiens yang relevan — termasuk apa yang berhasil dan apa yang gagal.</p></div></div>
+      </div>
+
+      <div class="box box-amber">
+        <h4>⚙️ Enjinering vs Saintifik — Kapan Menggunakan Mana?</h4>
+        <ul>
+          <li><strong>Gunakan alur saintifik</strong> saat tujuan utama adalah <em>memahami</em> — "Mengapa benda mengapung?" "Bagaimana tumbuhan merespons cahaya?"</li>
+          <li><strong>Gunakan alur enjinering</strong> saat tujuan utama adalah <em>merancang solusi</em> — "Buat filter air yang efektif dari bahan sederhana" "Rancang struktur yang tahan angin"</li>
+          <li><strong>Gunakan keduanya</strong> untuk proyek yang lebih kaya: murid pertama menyelidiki fenomena (saintifik), lalu menggunakan pemahaman itu untuk merancang solusi (enjinering).</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 05 MODEL -->
+    <section id="model">
+      <div class="sec-label">05</div>
+      <h2>Model Pembelajaran STEM</h2>
+      <p>Panduan Kemendikdasmen merekomendasikan beberapa model yang terbukti efektif untuk pembelajaran STEM. Pilihlah sesuai konteks, jenjang, dan sumber daya yang tersedia:</p>
+
+      <div class="model-grid">
+        <div class="model-card">
+          <div class="model-tag">PjBL — Lucas (2007)</div>
+          <h4>Project-Based Learning Generik</h4>
+          <p>Model dasar pembelajaran berbasis proyek yang dimulai dari pertanyaan esensial, berlanjut ke perencanaan proyek kolaboratif, dan diakhiri presentasi produk.</p>
+          <div class="model-steps"><span class="model-step-tag">Pertanyaan Esensial</span><span class="model-step-tag">Perencanaan</span><span class="model-step-tag">Pelaksanaan</span><span class="model-step-tag">Presentasi</span></div>
+        </div>
+        <div class="model-card">
+          <div class="model-tag">PjBL STEM — Laboy-Rush (2010)</div>
+          <h4>PjBL dengan Penekanan STEM</h4>
+          <p>Modifikasi PjBL yang secara eksplisit mengintegrasikan praktik saintifik dan enjinering dalam tahapan proyeknya.</p>
+          <div class="model-steps"><span class="model-step-tag">Refleksi</span><span class="model-step-tag">Riset</span><span class="model-step-tag">Penemuan</span><span class="model-step-tag">Aplikasi</span><span class="model-step-tag">Komunikasi</span></div>
+        </div>
+        <div class="model-card">
+          <div class="model-tag">SEAMEO 4-Stage (2022)</div>
+          <h4>Model STEM SEAMEO</h4>
+          <p>Model regional yang dikembangkan oleh SEAMEO untuk konteks Asia Tenggara, dengan penekanan pada konteks lokal dan kolaborasi komunitas.</p>
+          <div class="model-steps"><span class="model-step-tag">Kontekstualisasi</span><span class="model-step-tag">Investigasi</span><span class="model-step-tag">Aksi</span><span class="model-step-tag">Refleksi</span></div>
+        </div>
+        <div class="model-card">
+          <div class="model-tag">Siklus 5E</div>
+          <h4>Engage–Explore–Explain–Elaborate–Evaluate</h4>
+          <p>Model yang populer untuk pembelajaran sains, sangat cocok dikombinasikan dengan alur saintifik. Setiap tahap memiliki peran kognitif yang berbeda.</p>
+          <div class="model-steps"><span class="model-step-tag">Engage</span><span class="model-step-tag">Explore</span><span class="model-step-tag">Explain</span><span class="model-step-tag">Elaborate</span><span class="model-step-tag">Evaluate</span></div>
+        </div>
+      </div>
+
+      <div class="box box-green">
+        <h4>💡 Tips Pemilihan Model</h4>
+        <ul>
+          <li><strong>Baru mulai?</strong> Gunakan Siklus 5E — strukturnya jelas dan mudah diikuti.</li>
+          <li><strong>Ingin proyek autentik?</strong> Coba PjBL STEM Laboy-Rush — alurnya komprehensif.</li>
+          <li><strong>Konteks Asia/lokal penting?</strong> Pertimbangkan SEAMEO 4-Stage.</li>
+          <li><strong>Bukan hanya sains?</strong> Gunakan PjBL Lucas yang lebih generik dan fleksibel.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 06 ASESMEN -->
+    <section id="asesmen">
+      <div class="sec-label">06</div>
+      <h2>Asesmen Autentik dalam STEM</h2>
+      <p>Asesmen dalam pembelajaran STEM tidak hanya mengukur hasil akhir — melainkan <strong>proses berpikir dan praktik sepanjang alur pembelajaran</strong>. Setiap tahap praktik saintifik maupun enjinering memiliki peluang asesmen yang berbeda.</p>
+
+      <table class="asesmen-table">
+        <tr>
+          <th>Tahap Pembelajaran</th>
+          <th>Jenis Asesmen</th>
+          <th>Instrumen</th>
+        </tr>
+        <tr>
+          <td><strong>Mengajukan Pertanyaan</strong></td>
+          <td>Observasi proses berpikir</td>
+          <td>Catatan anekdotal, lembar observasi</td>
+        </tr>
+        <tr>
+          <td><strong>Merancang Investigasi/Solusi</strong></td>
+          <td>Penilaian rancangan</td>
+          <td>Rubrik desain: kelayakan, kreativitas, pertimbangan kendala</td>
+        </tr>
+        <tr>
+          <td><strong>Mengumpulkan Data / Membangun</strong></td>
+          <td>Penilaian kinerja</td>
+          <td>Checklist prosedur, rubrik kerja tim, jurnal belajar</td>
+        </tr>
+        <tr>
+          <td><strong>Menganalisis &amp; Mengevaluasi</strong></td>
+          <td>Penilaian pemahaman konsep</td>
+          <td>Tes tertulis singkat, pertanyaan refleksi, exit ticket</td>
+        </tr>
+        <tr>
+          <td><strong>Mengomunikasikan</strong></td>
+          <td>Penilaian presentasi/produk</td>
+          <td>Rubrik presentasi, penilaian antar-teman (peer assessment)</td>
+        </tr>
+        <tr>
+          <td><strong>Keseluruhan Proyek</strong></td>
+          <td>Portofolio</td>
+          <td>Kumpulan dokumentasi proses + refleksi mandiri murid</td>
+        </tr>
+      </table>
+
+      <h3>Bagaimana Guru Mapel yang Berbeda Menilai?</h3>
+      <p>Dalam proyek STEM kolaboratif, setiap guru mapel menilai kontribusi disiplinnya sendiri menggunakan rubrik yang sudah disepakati bersama. Kuncinya: <strong>setiap guru menilai aspek yang relevan dengan mapelnya</strong>, bukan menilai proyek secara keseluruhan sendirian.</p>
+      <div class="box box-blue">
+        <h4>Contoh Pembagian Asesmen — Proyek Filter Air</h4>
+        <ul>
+          <li><strong class="at-green">Guru IPA</strong> menilai: ketepatan konsep filtrasi, kualitas data pengamatan, akurasi hipotesis</li>
+          <li><strong class="at-green">Guru Matematika</strong> menilai: ketepatan pengukuran, pengolahan data, grafik hasil uji</li>
+          <li><strong class="at-green">Guru Bahasa</strong> menilai: kualitas laporan tertulis, kemampuan argumentasi saat presentasi</li>
+          <li><strong class="at-green">Semua guru</strong> menilai: kolaborasi, sikap ilmiah, kemampuan refleksi</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 07 CONTOH MODUL -->
+    <section id="contoh">
+      <div class="sec-label">07</div>
+      <h2>Contoh Modul dari Panduan Resmi</h2>
+      <p>Berikut contoh-contoh nyata dari Panduan Kemendikdasmen 2025 yang bisa langsung dijadikan referensi atau diadaptasi:</p>
+
+      <div class="example">
+        <div class="example-label">🏫 SD Kelas 5</div>
+        <h4>Perahu Penyelamat dari Bahan Daur Ulang</h4>
+        <p><strong>Masalah:</strong> Bagaimana merancang perahu kecil dari bahan bekas yang mampu mengangkut beban maksimal tanpa tenggelam?</p>
+        <p><strong>Alur:</strong> Murid menyelidiki prinsip Archimedes (saintifik), lalu merancang dan menguji beberapa desain perahu dari styrofoam, kardus, dan botol plastik (enjinering).</p>
+        <div class="example-tags"><span class="ex-tag">IPA — daya apung</span><span class="ex-tag">Matematika — volume & berat</span><span class="ex-tag">SBdP — desain</span></div>
+      </div>
+
+      <div class="example">
+        <div class="example-label">🏫 SMP Kelas 8</div>
+        <h4>Mengatasi Pencemaran Air Sungai Lokal</h4>
+        <p><strong>Masalah:</strong> Air sungai di dekat sekolah terlihat keruh dan berbau. Bagaimana kita bisa membuat sistem filtrasi sederhana yang efektif?</p>
+        <p><strong>Alur:</strong> Murid mengambil sampel air, menguji kualitasnya (saintifik), merancang sistem filter berlapis dari pasir/kerikil/arang aktif, menguji efektivitasnya (enjinering), dan mempresentasikan solusi kepada warga setempat.</p>
+        <div class="example-tags"><span class="ex-tag">IPA — kimia air</span><span class="ex-tag">Matematika — persentase kejernihan</span><span class="ex-tag">IPS — dampak sosial</span></div>
+      </div>
+
+      <div class="example">
+        <div class="example-label">🏫 SMA Kelas 11</div>
+        <h4>Sensor Energi Listrik Ruangan Kelas</h4>
+        <p><strong>Masalah:</strong> Berapa energi yang terbuang sia-sia di kelas kita? Bagaimana merancang sistem monitoring sederhana?</p>
+        <p><strong>Alur:</strong> Murid mempelajari konsep daya dan energi listrik (saintifik), memprogram mikrokontroler Arduino untuk membaca sensor arus (Teknologi), merancang rangkaian (Enjinering), menghitung potensi penghematan (Matematika), dan mempresentasikan rekomendasi ke kepala sekolah.</p>
+        <div class="example-tags"><span class="ex-tag">Fisika — energi & daya</span><span class="ex-tag">Matematika — statistik</span><span class="ex-tag">TIK — pemrograman</span></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 08 LINGKUNGAN -->
+    <section id="lingkungan">
+      <div class="sec-label">08</div>
+      <h2>Menciptakan Lingkungan Belajar STEM</h2>
+      <p>Lingkungan belajar bukan hanya tentang ruang fisik — melainkan juga <strong>budaya kelas</strong> yang mendukung eksplorasi, kegagalan produktif, dan kolaborasi.</p>
+
+      <h3>Lingkungan Fisik</h3>
+      <p>Kelas STEM yang ideal mendukung <em>kerja kelompok</em>, <em>akses mudah ke bahan</em>, dan <em>display karya proses</em> (bukan hanya hasil akhir). Tapi ingat: ini bisa dimulai dengan menggeser meja menjadi kelompok. Tidak perlu merenovasi ruangan.</p>
+
+      <h3>Budaya Kelas</h3>
+      <div class="box box-green">
+        <ul>
+          <li><strong>Rayakan pertanyaan, bukan hanya jawaban benar</strong> — "Itu pertanyaan yang sangat menarik!" lebih berharga dari "Betul!"</li>
+          <li><strong>Normalkan kegagalan</strong> — "Apa yang kamu pelajari dari percobaan yang tidak berhasil ini?"</li>
+          <li><strong>Dorong murid untuk mengajari satu sama lain</strong> — peer teaching memperdalam pemahaman lebih dari mendengarkan guru</li>
+          <li><strong>Beri waktu untuk refleksi</strong> — 5 menit di akhir sesi untuk jurnal belajar sangat berharga</li>
+        </ul>
+      </div>
+
+      <h3>Lingkungan Digital</h3>
+      <p>Teknologi digital bukan syarat mutlak STEM, tapi bisa memperkaya: simulasi online gratis (PhET), spreadsheet untuk analisis data, kamera HP untuk dokumentasi proses, dan platform berbagi seperti Padlet untuk portofolio digital.</p>
+
+      <blockquote><p>"Lingkungan belajar STEM yang terbaik adalah yang membuat murid merasa aman untuk mencoba, gagal, dan mencoba lagi."</p></blockquote>
+    </section>
+
+    <!-- NEXT BAR -->
+    <div class="next-bar">
+      <div>
+        <h4>Lanjutkan perjalananmu</h4>
+        <p>Lihat presentasi Level 2 untuk sesi workshop, atau lanjut ke Level 3.</p>
+      </div>
+      <div class="next-links">
+        <a href="../level1/dokumen.html" class="nl nl-back">← Level 1</a>
+        <a href="presentasi.html" class="nl nl-pres">🖥️ Presentasi L2</a>
+        <a href="../level3/dokumen.html" class="nl nl-next">Level 3 →</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const p=document.getElementById('prog');
+  window.addEventListener('scroll',()=>{const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-innerHeight;p.style.width=(s/h*100)+'%'});
+  const secs=document.querySelectorAll('section[id]'),lnks=document.querySelectorAll('.sb-nav a');
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){lnks.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.sb-nav a[href="#${e.target.id}"]`);if(a)a.classList.add('active')}})},{threshold:.3,rootMargin:'-10% 0px -60% 0px'});
+  secs.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
