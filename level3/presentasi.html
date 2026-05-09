@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Level 3 · Presentasi — Memimpin Ekosistem STEM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --navy:#0B1D2E;--navy-mid:#132840;--navy-light:#1D3A52;
+      --teal:#0EA5C9;--teal-dim:#0EA5C920;
+      --amber:#F59E0B;--amber-dim:#F59E0B15;
+      --green:#10B981;--emerald:#34D399;--blue:#38BDF8;--pink:#F472B6;
+      --white:#F8FAFC;--text-main:#E2EAF0;--text-muted:#8BA5BB;--text-faint:#4A6478;
+      --border:#1D3A52;
+      --ff-serif:'DM Serif Display',Georgia,serif;
+      --ff-sans:'Plus Jakarta Sans',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--ff-sans);background:var(--navy);color:var(--text-main);overflow:hidden;height:100vh;user-select:none}
+
+    #topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(11,29,46,.95);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100;height:48px}
+    .tb-left{display:flex;align-items:center;gap:12px}
+    .tb-back{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);text-decoration:none;transition:color .2s;padding:4px 8px;border-radius:6px;border:1px solid transparent}
+    .tb-back:hover{color:var(--text-main);border-color:var(--border)}
+    .tb-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--amber-dim);color:var(--amber);border:1px solid #F59E0B30;padding:3px 10px;border-radius:20px}
+    .tb-title{font-size:13px;color:var(--text-muted)}
+    .tb-right{display:flex;align-items:center;gap:10px}
+    .tb-counter{font-size:13px;font-weight:600;color:var(--text-muted);min-width:60px;text-align:right}
+    .tb-btn{background:var(--navy-light);border:1px solid var(--border);color:var(--text-muted);padding:6px 14px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;font-family:var(--ff-sans);transition:all .2s}
+    .tb-btn:hover{background:var(--navy-mid);color:var(--text-main)}
+    .tb-btn.active{background:var(--amber-dim);color:var(--amber);border-color:#F59E0B40}
+    #doc-link{font-size:12px;font-weight:600;color:var(--text-faint);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:7px;transition:all .2s}
+    #doc-link:hover{color:var(--text-main);border-color:var(--teal)}
+
+    #progress-bar{position:fixed;bottom:0;left:0;right:0;height:3px;background:var(--navy-light);z-index:100}
+    #progress-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--teal));transition:width .3s ease;width:0%}
+
+    #slides-wrap{position:fixed;top:48px;left:0;right:0;bottom:3px;display:flex;align-items:stretch}
+    #slide-panel{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden}
+
+    #notes-panel{width:320px;background:var(--navy-mid);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:width .3s ease}
+    #notes-panel.hidden{width:0;border-left:none}
+    .notes-hdr{padding:14px 18px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;flex-shrink:0}
+    #notes-content{padding:18px 16px;overflow-y:auto;flex:1}
+    .note-section{margin-bottom:16px}
+    .note-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+    .note-text{font-size:13px;color:var(--text-muted);line-height:1.6}
+    .note-text strong{color:var(--text-main)}
+    .note-text ul{padding-left:16px;margin-top:4px}
+    .note-text ul li{margin-bottom:4px}
+    .note-tip{background:#F59E0B10;border:1px solid #F59E0B25;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:var(--amber);line-height:1.5}
+    .note-act{background:#10B98110;border:1px solid #10B98125;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px;color:var(--emerald);line-height:1.5}
+    .note-ref{background:#38BDF810;border:1px solid #38BDF825;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px;color:var(--blue);line-height:1.5}
+
+    .slide{background:var(--navy-mid);border:1px solid var(--border);border-radius:20px;width:100%;max-width:900px;aspect-ratio:16/9;padding:46px 54px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+    .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--teal),var(--pink))}
+    .slide.cover{background:linear-gradient(135deg,#0B1D2E,#181008,#0B1D2E);text-align:center;align-items:center}
+    .slide.cover::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,#F59E0B10,transparent 60%),radial-gradient(ellipse at 70% 30%,#F472B608,transparent 50%)}
+    .slide-num{position:absolute;bottom:18px;right:22px;font-size:11px;font-weight:600;color:var(--text-faint)}
+
+    .s-eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;position:relative;z-index:1}
+    .s-title{font-family:var(--ff-serif);font-size:clamp(22px,3vw,40px);line-height:1.1;color:var(--white);margin-bottom:10px;position:relative;z-index:1}
+    .s-title em{font-style:italic;color:var(--amber)}
+    .s-sub{font-size:clamp(13px,1.5vw,16px);color:var(--text-muted);font-weight:300;line-height:1.6;max-width:600px;position:relative;z-index:1}
+    .s-sub.c{text-align:center;margin:0 auto}
+
+    .s-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;flex:1}
+    .s-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;flex:1}
+
+    .s-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+    .s-card h4{font-size:clamp(12px,1.3vw,14px);font-weight:700;color:var(--white);margin-bottom:5px}
+    .s-card p{font-size:clamp(11px,1.1vw,12px);color:var(--text-muted);line-height:1.5;margin:0}
+    .s-card .stag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:8px;margin-bottom:8px;display:inline-block}
+
+    .s-ladder{display:flex;flex-direction:column;gap:6px;margin-top:12px;flex:1}
+    .s-rung{display:flex;gap:0;border-radius:9px;overflow:hidden;border:1px solid var(--border)}
+    .s-rung-lv{width:110px;flex-shrink:0;padding:10px 12px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-right:1px solid var(--border)}
+    .lv-m{background:#38BDF812;color:var(--blue)}
+    .lv-i{background:#34D39912;color:var(--emerald)}
+    .lv-t{background:#F59E0B12;color:var(--amber)}
+    .s-rung-body{padding:10px 14px;font-size:clamp(11px,1.2vw,13px);color:var(--text-muted);line-height:1.4}
+    .s-rung-body strong{color:var(--text-main)}
+
+    .s-flow{display:flex;flex-direction:column;gap:6px;margin-top:12px;flex:1}
+    .s-flow-item{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:8px 12px}
+    .sfi-ico{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+    .sfi-body h5{font-size:clamp(11px,1.2vw,13px);font-weight:700;color:var(--white)}
+    .sfi-body p{font-size:clamp(10px,1vw,11px);color:var(--text-muted);margin:0}
+
+    .s-hl{background:linear-gradient(135deg,#F59E0B10,#0EA5C908);border:1px solid #F59E0B25;border-radius:10px;padding:12px 16px;margin-top:10px}
+    .s-hl p{font-size:clamp(12px,1.3vw,14px);color:var(--text-main);margin:0;line-height:1.5}
+    .s-hl span{color:var(--amber)}
+
+    .s-quote{border-left:3px solid var(--amber);padding:12px 16px;background:var(--amber-dim);border-radius:0 10px 10px 0;margin-top:14px}
+    .s-quote p{font-family:var(--ff-serif);font-size:clamp(14px,1.8vw,20px);font-style:italic;color:var(--white);line-height:1.45;margin:0}
+    .s-quote cite{display:block;font-size:11px;color:var(--text-muted);margin-top:7px;font-style:normal}
+
+    .s-check-list{display:flex;flex-direction:column;gap:5px;margin-top:12px;flex:1}
+    .s-check-item{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px}
+    .s-check-ico{color:var(--amber);flex-shrink:0;font-size:13px;margin-top:1px}
+    .s-check-txt{font-size:clamp(11px,1.2vw,13px);color:var(--text-muted);line-height:1.4}
+    .s-check-txt strong{color:var(--text-main)}
+
+    .s-mitra{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;flex:1}
+    .sm-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center}
+    .sm-ico{font-size:20px;margin-bottom:5px}
+    .sm-card h5{font-size:clamp(10px,1.1vw,12px);font-weight:700;color:var(--white);margin-bottom:4px}
+    .sm-card p{font-size:clamp(9px,.9vw,10px);color:var(--text-muted);line-height:1.4;margin:0}
+
+    .rm-list{display:flex;flex-direction:column;gap:7px;margin-top:12px;flex:1}
+    .rm-item{display:flex;gap:12px;align-items:flex-start;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px}
+    .rm-phase{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);white-space:nowrap;flex-shrink:0;width:72px;padding-top:2px}
+    .rm-body h5{font-size:clamp(11px,1.2vw,13px);font-weight:700;color:var(--white);margin-bottom:3px}
+    .rm-body p{font-size:clamp(10px,1vw,11px);color:var(--text-muted);margin:0;line-height:1.4}
+
+    #nav-prev,#nav-next{position:fixed;top:50%;transform:translateY(-50%);background:rgba(11,29,46,.7);border:1px solid var(--border);color:var(--text-muted);width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:50;transition:all .2s;backdrop-filter:blur(8px)}
+    #nav-prev:hover,#nav-next:hover{background:var(--navy-mid);color:var(--text-main);border-color:var(--amber)}
+    #nav-prev{left:10px}#nav-next{right:10px}
+    #nav-prev:disabled,#nav-next:disabled{opacity:.2;cursor:not-allowed}
+    #kb-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--text-faint);display:flex;gap:8px;align-items:center;pointer-events:none;opacity:.5}
+    .kb{background:var(--navy-light);border:1px solid var(--border);padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600}
+    .slide{animation:si .3s ease}
+    @keyframes si{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+  </style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="tb-left">
+    <a href="../index.html" class="tb-back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg> Hub</a>
+    <div class="tb-badge">🌳 L3 Presentasi</div>
+    <div class="tb-title">Memimpin & Mengembangkan Ekosistem STEM</div>
+  </div>
+  <div class="tb-right">
+    <button class="tb-btn active" id="toggle-notes">📝 Catatan</button>
+    <span class="tb-counter" id="counter">1 / 11</span>
+    <a href="dokumen.html" id="doc-link">📄 Dokumen</a>
+  </div>
+</div>
+
+<div id="slides-wrap">
+  <div id="slide-panel"></div>
+  <div id="notes-panel">
+    <div class="notes-hdr">📝 Catatan Presenter</div>
+    <div id="notes-content"></div>
+  </div>
+</div>
+
+<button id="nav-prev" onclick="go(-1)" disabled><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+<button id="nav-next" onclick="go(1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+<div id="kb-hint"><span class="kb">←</span> Prev <span class="kb">→</span> Next <span class="kb">N</span> Catatan</div>
+
+<script>
+const slides = [
+  {
+    html:`<div class="slide cover">
+      <div class="s-eyebrow">Level 3 · Mahir · Sesi Refleksi & Pengembangan</div>
+      <h1 class="s-title">Memimpin & Mengembangkan<br><em>Ekosistem STEM</em></h1>
+      <p class="s-sub c">Dari satu proyek ke perubahan budaya sekolah —<br>kemitraan, inklusi, dan kepemimpinan pembelajaran.</p>
+      <div class="slide-num">1 / 11</div>
+    </div>`,
+    notes:{tujuan:"Sesi ini untuk guru berpengalaman STEM. Nada berbeda dari L1/L2 — lebih peer-to-peer, bukan top-down.",cara:["Mulai dengan: <strong>'Ceritakan satu hal yang paling berhasil dari proyek STEM terakhirmu.'</strong>","Dengarkan beberapa jawaban sebelum masuk ke slide berikutnya.","Framing: kita di sini untuk refleksi bersama, bukan pelatihan dasar."],tip:"Ruang ini lebih produktif jika fasilitator tidak mendominasi — banyak peserta punya pengalaman berharga yang perlu diangkat ke permukaan."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Dari Proyek ke Ekosistem</div>
+      <h2 class="s-title">Melampaui Satu Proyek STEM</h2>
+      <div class="s-2col">
+        <div>
+          <p style="font-size:12px;color:var(--text-faint);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">Satu Proyek (L1–L2)</p>
+          <div class="s-check-list" style="flex:0">
+            <div class="s-check-item"><div class="s-check-ico">✓</div><div class="s-check-txt">1 masalah nyata ditetapkan</div></div>
+            <div class="s-check-item"><div class="s-check-ico">✓</div><div class="s-check-txt">CP dari beberapa mapel dipetakan</div></div>
+            <div class="s-check-item"><div class="s-check-ico">✓</div><div class="s-check-txt">Murid melakukan praktik saintifik/enjinering</div></div>
+            <div class="s-check-item"><div class="s-check-ico">✓</div><div class="s-check-txt">Asesmen autentik per tahap dilakukan</div></div>
+          </div>
+        </div>
+        <div>
+          <p style="font-size:12px;color:var(--amber);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">Ekosistem (L3 — Target Kita)</p>
+          <div class="s-check-list" style="flex:0">
+            <div class="s-check-item" style="border-color:#F59E0B30"><div class="s-check-ico">→</div><div class="s-check-txt">Integrasi transdisipliner yang berkelanjutan</div></div>
+            <div class="s-check-item" style="border-color:#F59E0B30"><div class="s-check-ico">→</div><div class="s-check-txt">Kemitraan strategis dengan 7 pilar</div></div>
+            <div class="s-check-item" style="border-color:#F59E0B30"><div class="s-check-ico">→</div><div class="s-check-txt">Inklusi nyata untuk semua murid</div></div>
+            <div class="s-check-item" style="border-color:#F59E0B30"><div class="s-check-ico">→</div><div class="s-check-txt">PLC yang hidup & refleksi berkala</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="s-hl"><p>Ekosistem STEM tumbuh secara bertahap — <span>tidak ada yang langsung sempurna di semester pertama</span>.</p></div>
+      <div class="slide-num">2 / 11</div>
+    </div>`,
+    notes:{tujuan:"Menunjukkan perbedaan antara 'melakukan STEM' dan 'membangun ekosistem STEM'.",cara:["Tanya: <strong>'Di mana posisimu sekarang — proyek individual atau sudah membangun ekosistem?'</strong>","Tidak ada jawaban yang salah. Ini untuk refleksi diri, bukan evaluasi."],tip:"Dorong peserta untuk jujur. Banyak guru berpengalaman masih di level 'satu proyek' dan itu normal."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Integrasi yang Lebih Dalam</div>
+      <h2 class="s-title">Tangga Integrasi Disiplin</h2>
+      <div class="s-ladder">
+        <div class="s-rung"><div class="s-rung-lv lv-m">Multi­disipliner</div><div class="s-rung-body"><strong>Disiplin paralel, tema sama.</strong> Setiap guru mengajar sendiri dengan konteks yang sama. Murid membuat koneksi sendiri (atau tidak).</div></div>
+        <div class="s-rung"><div class="s-rung-lv lv-i">Inter­disipliner</div><div class="s-rung-body"><strong>Guru berkolaborasi, satu masalah bersama.</strong> Murid secara aktif menggunakan konsep dari berbagai disiplin untuk memecahkan masalah yang sama.</div></div>
+        <div class="s-rung"><div class="s-rung-lv lv-t">Trans­disipliner</div><div class="s-rung-body"><strong>Batas mapel hilang.</strong> Murid dan guru bersama mendefinisikan masalah dan solusi — menghasilkan dampak nyata di komunitas.</div></div>
+      </div>
+      <div class="s-hl" style="margin-top:12px"><p>Pertanyaan: <span>Di tingkat mana proyek STEM terakhirmu berada? Apa yang dibutuhkan untuk naik satu tingkat?</span></p></div>
+      <div class="slide-num">3 / 11</div>
+    </div>`,
+    notes:{tujuan:"Memberi peserta kerangka untuk menilai kedalaman integrasi yang sudah mereka lakukan.",cara:["Diskusi berpasangan 5 menit: di tingkat mana proyekmu? Apa hambatan untuk naik tingkat?","Bagikan beberapa hasil diskusi ke grup."],tip:"Transdisipliner bukan tujuan semua orang — ada sekolah yang kondisinya sangat mendukung interdisipliner, dan itu sudah sangat baik. Jangan buat peserta merasa tidak cukup.",act:"Diskusi 5 menit: pasangan berbagi di tingkat mana proyek STEM mereka dan hambatan terbesar untuk naik tingkat."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Kemitraan Strategis</div>
+      <h2 class="s-title">7 Pilar Kemitraan Ekosistem STEM</h2>
+      <div class="s-mitra">
+        <div class="sm-card"><div class="sm-ico">👩‍🏫</div><h5>Guru Lintas Mapel</h5><p>Kolaborasi internal paling langsung</p></div>
+        <div class="sm-card"><div class="sm-ico">🏭</div><h5>Dunia Industri</h5><p>Konteks nyata & mentor profesional</p></div>
+        <div class="sm-card"><div class="sm-ico">🏘️</div><h5>Masyarakat & Pemda</h5><p>Masalah lokal & audiens nyata</p></div>
+        <div class="sm-card"><div class="sm-ico">🌱</div><h5>LSM & Nirlaba</h5><p>Program & sumber daya tambahan</p></div>
+        <div class="sm-card" style="grid-column:1/2"><div class="sm-ico">🎓</div><h5>Perguruan Tinggi</h5><p>Fasilitas, riset & mentor ahli</p></div>
+        <div class="sm-card"><div class="sm-ico">🔬</div><h5>Praktisi STEM</h5><p>Role model karier nyata</p></div>
+        <div class="sm-card"><div class="sm-ico">👪</div><h5>Orang Tua</h5><p>Keahlian & jaringan komunitas</p></div>
+      </div>
+      <div class="s-hl" style="margin-top:10px"><p><span>Mulai dengan satu mitra.</span> Bangun kepercayaan, tunjukkan dampak, lalu perluas jaringan secara bertahap.</p></div>
+      <div class="slide-num">4 / 11</div>
+    </div>`,
+    notes:{tujuan:"Menunjukkan spektrum mitra yang bisa dibangun — dan menyederhanakan langkah awalnya.",cara:["Tanya: <strong>'Mitra mana yang sudah pernah kamu libatkan dalam proyek STEM?'</strong>","<strong>'Mitra mana yang paling potensial di daerahmu tapi belum pernah dicoba?'</strong>","Minta peserta identifikasi 1 mitra yang akan mereka hubungi dalam 1 bulan ke depan."],tip:"Kemitraan dengan industri sering terasa menakutkan. Tunjukkan bahwa satu email sederhana sudah cukup untuk memulai — dan banyak perusahaan senang diajak bermitra dengan sekolah.",act:"Setiap peserta tulis: 1 mitra potensial + 1 langkah konkret minggu depan."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Peran Sistem</div>
+      <h2 class="s-title">Siapa Melakukan Apa?</h2>
+      <div class="s-flow">
+        <div class="s-flow-item"><div class="sfi-ico" style="background:#F59E0B15">🏛</div><div class="sfi-body"><h5>Dinas Pendidikan</h5><p>Regulasi pendukung, anggaran pelatihan, jaringan antar sekolah, pusat sumber belajar STEM daerah</p></div></div>
+        <div class="s-flow-item"><div class="sfi-ico" style="background:#38BDF815">🔍</div><div class="sfi-body"><h5>Pengawas Sekolah</h5><p>Pembinaan berbasis STEM, pendampingan siklus refleksi, penghubung sekolah dengan kebijakan</p></div></div>
+        <div class="s-flow-item"><div class="sfi-ico" style="background:#34D39915">🏫</div><div class="sfi-body"><h5>Kepala Sekolah</h5><p>Kultur inovasi, waktu kolaborasi guru, kemitraan institusional, apresiasi nyata tim STEM</p></div></div>
+        <div class="s-flow-item"><div class="sfi-ico" style="background:#0EA5C915">👩‍🏫</div><div class="sfi-body"><h5>Guru / Pendidik</h5><p>Merancang pembelajaran STEM, berkolaborasi, refleksi & dokumentasi, menjadi model berpikir saintifik</p></div></div>
+        <div class="s-flow-item"><div class="sfi-ico" style="background:#F472B615">👪</div><div class="sfi-body"><h5>Orang Tua</h5><p>Mendukung belajar di rumah, terlibat dalam proyek, berbagi keahlian, memahami tujuan STEM</p></div></div>
+      </div>
+      <div class="slide-num">5 / 11</div>
+    </div>`,
+    notes:{tujuan:"Mengingatkan peserta bahwa guru bukan satu-satunya yang bertanggung jawab atas ekosistem STEM.",cara:["Tanya: <strong>'Dukungan apa dari kepala sekolah atau dinas yang paling kamu butuhkan saat ini tapi belum ada?'</strong>","Ini bisa jadi bahan advokasi yang konkret kepada pimpinan sekolah."],tip:"Banyak guru menanggung beban pengembangan STEM sendirian. Sesi ini bisa menjadi momen untuk menormalisasi bahwa sistem perlu ikut berperan."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Universal Design for Learning</div>
+      <h2 class="s-title">STEM untuk Semua Murid</h2>
+      <div class="s-3col">
+        <div class="s-card" style="border-color:#38BDF840">
+          <div class="stag" style="background:#38BDF815;color:var(--blue)">Representasi</div>
+          <h4>Berbagai Cara Menyajikan Info</h4>
+          <p>Teks, audio, video, model 3D, manipulatif fisik, diagram. Murid bisa memilih format yang paling membantu mereka memahami.</p>
+        </div>
+        <div class="s-card" style="border-color:#34D39940">
+          <div class="stag" style="background:#34D39915;color:var(--emerald)">Aksi & Ekspresi</div>
+          <h4>Berbagai Cara Menunjukkan Pemahaman</h4>
+          <p>Tulisan, gambar, video, model fisik, presentasi lisan, demonstrasi. Fleksibilitas waktu untuk yang butuh lebih lama.</p>
+        </div>
+        <div class="s-card" style="border-color:#F59E0B40">
+          <div class="stag" style="background:#F59E0B15;color:var(--amber)">Keterlibatan</div>
+          <h4>Berbagai Cara Memotivasi</h4>
+          <p>Hubungkan STEM dengan minat murid. Pilihan tingkat tantangan. Lingkungan aman untuk gagal. Kolaborasi tim heterogen.</p>
+        </div>
+      </div>
+      <div class="s-hl" style="margin-top:12px"><p>UDL bukan tentang menurunkan standar — melainkan tentang <span>membuka lebih banyak jalur</span> untuk mencapai standar yang sama.</p></div>
+      <div class="slide-num">6 / 11</div>
+    </div>`,
+    notes:{tujuan:"Menggeser paradigma dari 'inklusi sebagai tambahan' ke 'inklusi sebagai desain awal'.",cara:["Tanya: <strong>'Apakah ada murid di kelasmu yang tidak bisa berpartisipasi penuh dalam proyek STEM terakhir? Mengapa?'</strong>","Diskusi: modifikasi apa yang mungkin bisa dilakukan untuk murid tersebut?"],tip:"Ingat: UDL menguntungkan SEMUA murid, bukan hanya yang berkebutuhan khusus. Fleksibilitas format selalu meningkatkan engagement secara keseluruhan.",act:"Studi kasus 7 menit: kelompok kecil memodifikasi satu proyek STEM untuk mengakomodasi murid dengan satu jenis hambatan belajar tertentu."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Kokurikuler & P5</div>
+      <h2 class="s-title">STEM Melampaui Jam Pelajaran</h2>
+      <div class="s-2col">
+        <div>
+          <div class="s-card" style="margin-bottom:10px;border-color:#34D39940">
+            <div class="stag" style="background:#34D39915;color:var(--emerald)">P5 — Projek Penguatan</div>
+            <h4>Ruang Ideal untuk STEM Mendalam</h4>
+            <p>Tema "Gaya Hidup Berkelanjutan", "Rekayasa & Teknologi", "Kearifan Lokal" sangat kompatibel dengan pendekatan STEM berbasis masalah nyata.</p>
+          </div>
+          <div class="s-card" style="border-color:#38BDF840">
+            <div class="stag" style="background:#38BDF815;color:var(--blue)">Ekstrakurikuler</div>
+            <h4>STEM Club, Robotika, Olimpiade</h4>
+            <p>Wadah murid yang antusias untuk eksplorasi lebih mendalam di luar jam wajib. Platform untuk kompetisi dan pameran inovasi.</p>
+          </div>
+        </div>
+        <div>
+          <div class="s-card" style="border-color:#F59E0B40;margin-bottom:10px">
+            <div class="stag" style="background:#F59E0B15;color:var(--amber)">Kunci P5 + STEM</div>
+            <h4>Produk yang Nyata Berdampak</h4>
+            <p>Bukan hanya poster atau laporan — prototipe nyata, sistem yang bisa diimplementasikan, atau rekomendasi yang ditindaklanjuti komunitas.</p>
+          </div>
+          <div class="s-card" style="border-color:#F472B640">
+            <div class="stag" style="background:#F472B615;color:var(--pink)">Audiens Nyata</div>
+            <h4>Di Luar Kelas & Sekolah</h4>
+            <p>Presentasi ke warga, RT, pemerintah desa, atau mitra industri. Murid merasakan dampak nyata dari karya mereka.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-num">7 / 11</div>
+    </div>`,
+    notes:{tujuan:"Menunjukkan bahwa STEM punya ruang natural di P5 yang sudah ada — tidak perlu menambah beban.",cara:["Tanya: <strong>'Apakah sekolahmu sudah menjalankan P5? Tema apa yang dipakai?'</strong>","Diskusi: bagaimana proyek STEM bisa diintegrasikan ke tema P5 yang sudah berjalan?"],tip:"P5 adalah peluang besar yang sering dilewatkan oleh guru STEM. Tunjukkan bahwa P5 adalah 'izin resmi' untuk melakukan proyek STEM lintas mapel yang lebih panjang dan mendalam."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Professional Learning Community</div>
+      <h2 class="s-title">Membangun PLC STEM di Sekolah</h2>
+      <div class="rm-list">
+        <div class="rm-item"><div class="rm-phase">Bulan 1–2</div><div class="rm-body"><h5>Bentuk Tim Inti</h5><p>3–5 guru lintas mapel, pertemuan informal, petakan ketertarikan & masalah yang ingin dipecahkan bersama</p></div></div>
+        <div class="rm-item"><div class="rm-phase">Bulan 3–4</div><div class="rm-body"><h5>Proyek Pertama Bersama</h5><p>Pilih satu konteks masalah, rancang modul kolaboratif sederhana, jalankan & dokumentasikan — termasuk yang gagal</p></div></div>
+        <div class="rm-item"><div class="rm-phase">Bulan 5–6</div><div class="rm-body"><h5>Lesson Study & Refleksi</h5><p>Satu guru mengajar, lainnya observasi. Refleksi terstruktur: apa berhasil, apa perlu diubah, mengapa?</p></div></div>
+        <div class="rm-item"><div class="rm-phase">Semester 2+</div><div class="rm-body"><h5>Perluas & Bagikan</h5><p>Undang guru lain, dokumentasikan praktik terbaik, presentasikan di KKG/MGMP, jadilah sumber belajar sekolah lain</p></div></div>
+      </div>
+      <div class="slide-num">8 / 11</div>
+    </div>`,
+    notes:{tujuan:"Memberikan roadmap konkret untuk memulai PLC dari nol.",cara:["Tanya: <strong>'Apakah ada PLC atau kelompok belajar guru di sekolahmu? Bagaimana kondisinya?'</strong>","Untuk yang sudah punya PLC: <strong>'Seberapa sering bertemu? Apa yang biasanya dibahas?'</strong>","Tantang: <strong>'Apa satu perubahan kecil yang bisa membuat PLC-mu lebih berdampak?'</strong>"],tip:"PLC yang terlalu formal sering mati. Yang berhasil biasanya dimulai dengan sangat informal — kopi, makan siang, atau percakapan di koridor yang berkembang menjadi kolaborasi nyata.",act:"Peserta yang belum punya PLC: identifikasi 2 rekan guru untuk diajak ngobrol minggu ini. Peserta yang sudah punya PLC: apa satu perbaikan yang bisa dilakukan pertemuan berikutnya?"}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Refleksi Berkelanjutan</div>
+      <h2 class="s-title">Siklus Perbaikan yang Tidak Pernah Berhenti</h2>
+      <div class="s-2col">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="s-card" style="border-color:#F59E0B40">
+            <h4 style="color:var(--amber)">🔄 Siklus Refleksi</h4>
+            <p>Rencanakan → Laksanakan → Amati → Refleksikan → Perbaiki → Rencanakan lagi</p>
+          </div>
+          <div class="s-card">
+            <h4>Pertanyaan Refleksi Kunci</h4>
+            <p style="margin-bottom:5px">• Apa yang berhasil dan mengapa?</p>
+            <p style="margin-bottom:5px">• Apa yang tidak berjalan dan mengapa?</p>
+            <p style="margin-bottom:5px">• Apa yang akan saya ubah di proyek berikutnya?</p>
+            <p>• Siapa yang bisa saya ajak berdiskusi tentang ini?</p>
+          </div>
+        </div>
+        <div>
+          <div class="s-quote">
+            <p>"Guru yang paling efektif bukan yang tidak pernah gagal — melainkan yang paling cepat belajar dari kegagalannya dan memperbaiki praktiknya."</p>
+          </div>
+          <div class="s-card" style="margin-top:10px;border-color:#34D39940">
+            <h4 style="color:var(--emerald)">📄 Dokumentasi = Aset</h4>
+            <p>Setiap refleksi yang didokumentasikan adalah aset profesional. Kumpulkan, organisasikan, dan bagikan — ini adalah portofoliomu sebagai guru pengembang.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-num">9 / 11</div>
+    </div>`,
+    notes:{tujuan:"Menginternalisasi refleksi sebagai kebiasaan profesional, bukan kegiatan wajib yang melelahkan.",cara:["Minta peserta ingat: <strong>'Kapan terakhir kali kamu melakukan refleksi terstruktur setelah proyek STEM?'</strong>","Diskusi: format refleksi apa yang paling mungkin konsisten kamu lakukan? (jurnal singkat, voice memo, diskusi dengan rekan, dll.)"],tip:"Refleksi tidak harus panjang. Lima kalimat setelah satu proyek, dilakukan konsisten, lebih bermakna dari laporan 5 halaman yang ditulis setahun sekali."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Self Assessment</div>
+      <h2 class="s-title">Di Mana Posisimu Sekarang?</h2>
+      <div class="s-check-list">
+        <div class="s-check-item"><div class="s-check-ico">▢</div><div class="s-check-txt"><strong>Perencanaan:</strong> Sudah merancang proyek STEM berbasis masalah nyata dengan CP terpetakan dari minimal 2 mapel</div></div>
+        <div class="s-check-item"><div class="s-check-ico">▢</div><div class="s-check-txt"><strong>Asesmen:</strong> Menggunakan instrumen asesmen autentik di setiap tahap praktik, bukan hanya di produk akhir</div></div>
+        <div class="s-check-item"><div class="s-check-ico">▢</div><div class="s-check-txt"><strong>Kolaborasi:</strong> Berkolaborasi dengan minimal 1 guru mapel lain dan minimal 1 pihak eksternal</div></div>
+        <div class="s-check-item"><div class="s-check-ico">▢</div><div class="s-check-txt"><strong>Inklusi:</strong> Memiliki akomodasi nyata untuk semua murid dalam proyek STEM — tidak ada yang tertinggal</div></div>
+        <div class="s-check-item"><div class="s-check-ico">▢</div><div class="s-check-txt"><strong>Refleksi:</strong> Melakukan refleksi terstruktur setelah setiap proyek dan mendokumentasikannya</div></div>
+        <div class="s-check-item"><div class="s-check-ico">▢</div><div class="s-check-txt"><strong>Komunitas:</strong> Terlibat aktif dalam PLC atau komunitas belajar guru — berbagi dan belajar dari rekan sejawat</div></div>
+      </div>
+      <div class="slide-num">10 / 11</div>
+    </div>`,
+    notes:{tujuan:"Sesi refleksi diri untuk mengidentifikasi area pengembangan yang paling prioritas.",cara:["Minta peserta beri tanda pada yang sudah mereka lakukan.","Diskusi berpasangan: <strong>'Dari yang belum, mana yang paling ingin kamu kembangkan dalam 3 bulan ke depan?'</strong>","Beberapa peserta bagikan pilihan mereka."],tip:"Ini bukan evaluasi kinerja — ini instrumen refleksi diri yang murni. Tegaskan bahwa tidak ada yang menyampaikan hasil ini ke atasan.",act:"Setiap peserta pilih 1 area prioritas & tulis 1 langkah konkret pertama yang akan dilakukan."}
+  },
+  {
+    html:`<div class="slide">
+      <div class="s-eyebrow">Penutup</div>
+      <h2 class="s-title">Kamu Sudah Memulai — Teruslah Bergerak</h2>
+      <div class="s-3col">
+        <div class="s-card" style="text-align:center;padding:18px 14px;border-color:#38BDF840">
+          <div style="font-size:28px;margin-bottom:8px">📄</div>
+          <h4>Baca Dokumen L3</h4>
+          <p style="margin-top:6px">Checklist mandiri, referensi kemitraan, panduan UDL, dan roadmap PLC lengkap</p>
+        </div>
+        <div class="s-card" style="text-align:center;padding:18px 14px;border-color:#34D39940">
+          <div style="font-size:28px;margin-bottom:8px">🤝</div>
+          <h4>Hubungi 1 Mitra Baru</h4>
+          <p style="margin-top:6px">Satu email atau percakapan dengan mitra potensial yang belum pernah dilibatkan</p>
+        </div>
+        <div class="s-card" style="text-align:center;padding:18px 14px;border-color:#F59E0B40">
+          <div style="font-size:28px;margin-bottom:8px">🔄</div>
+          <h4>Refleksi Proyek Terakhir</h4>
+          <p style="margin-top:6px">Tulis 5 kalimat refleksi setelah proyek STEM berikutmu — lalu bagikan ke satu rekan</p>
+        </div>
+      </div>
+      <div class="s-hl" style="margin-top:12px"><p>"Ekosistem STEM yang kuat dibangun satu proyek, satu kemitraan, dan satu refleksi pada satu waktu." <span>Terimakasih sudah hadir.</span></p></div>
+      <div class="slide-num">11 / 11</div>
+    </div>`,
+    notes:{tujuan:"Menutup dengan energi positif dan 3 tindakan konkret yang bisa diambil langsung.",cara:["Minta setiap peserta nyatakan satu komitmen yang akan mereka ambil dalam 2 minggu ke depan.","Akhiri dengan apresiasi — guru yang hadir di sesi ini adalah guru yang memilih untuk terus berkembang.","Informasikan bahwa dokumen referensi lengkap tersedia di hub online."],tip:"Jangan tutup sesi tanpa memastikan setiap peserta punya minimal 1 aksi konkret. Komitmen yang diucapkan di depan rekan lebih mungkin dilaksanakan."}
+  }
+];
+
+let cur = 0, notesOpen = true;
+
+function render() {
+  const s = slides[cur];
+  document.getElementById('slide-panel').innerHTML = s.html;
+  let nc = `<div class="note-section"><div class="note-label">Tujuan Slide</div><div class="note-text">${s.notes.tujuan}</div></div>`;
+  if (s.notes.cara) nc += `<div class="note-section"><div class="note-label">Cara Membawakan</div><div class="note-text"><ul>${s.notes.cara.map(c=>`<li>${c}</li>`).join('')}</ul></div></div>`;
+  if (s.notes.tip) nc += `<div class="note-tip"><strong>💡 Tips:</strong> ${s.notes.tip}</div>`;
+  if (s.notes.act) nc += `<div class="note-act"><strong>🎯 Aktivitas:</strong> ${s.notes.act}</div>`;
+  document.getElementById('notes-content').innerHTML = nc;
+  document.getElementById('counter').textContent = `${cur+1} / ${slides.length}`;
+  document.getElementById('progress-fill').style.width = ((cur+1)/slides.length*100)+'%';
+  document.getElementById('nav-prev').disabled = cur === 0;
+  document.getElementById('nav-next').disabled = cur === slides.length-1;
+}
+
+function go(d) { const n=cur+d; if(n>=0&&n<slides.length){cur=n;render();} }
+
+document.getElementById('toggle-notes').addEventListener('click', () => {
+  notesOpen = !notesOpen;
+  document.getElementById('notes-panel').classList.toggle('hidden', !notesOpen);
+  document.getElementById('toggle-notes').classList.toggle('active', notesOpen);
+});
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(-1);
+  if(e.key==='n'||e.key==='N') document.getElementById('toggle-notes').click();
+});
+render();
+</script>
+</body>
+</html>
