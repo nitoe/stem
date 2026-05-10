@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Kelasku Terlalu Berisik · STEM Kelas 4 · SDM01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --ink:#0D0D12; --ink-mid:#1C1C28; --ink-light:#2A2A3D;
+      --indigo:#4338CA; --indigo-bright:#6366F1; --indigo-soft:#EEF2FF; --indigo-glow:rgba(99,102,241,.18);
+      --violet:#7C3AED; --violet-soft:#F5F3FF;
+      --amber:#D97706; --amber-bright:#F59E0B; --amber-soft:#FFFBEB; --amber-glow:rgba(245,158,11,.15);
+      --teal:#0D9488; --teal-soft:#F0FDFA;
+      --rose:#BE123C; --rose-soft:#FFF1F2;
+      --slate:#64748B; --slate-soft:#F8FAFC;
+      --white:#FFFFFF; --off:#F9FAFB;
+      --border:#E2E8F0; --border-dark:#CBD5E1;
+      --text:#1E293B; --text-mid:#475569; --text-mute:#94A3B8; --text-faint:#CBD5E1;
+      --shadow:0 1px 12px rgba(13,13,18,.07); --shadow-md:0 6px 28px rgba(13,13,18,.11); --shadow-lg:0 12px 48px rgba(13,13,18,.14);
+      --r:12px; --rl:20px;
+      --ff-display:'Syne',system-ui,sans-serif;
+      --ff-body:'Inter',system-ui,sans-serif;
+      --ff-mono:'DM Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-body);background:var(--white);color:var(--text);line-height:1.65;overflow-x:hidden}
+    a{color:var(--indigo);text-decoration:none;transition:color .2s}
+    a:hover{color:var(--violet)}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+    /* ── PROGRESS ── */
+    #prog{position:fixed;top:0;left:0;height:3px;z-index:999;width:0%;background:linear-gradient(90deg,var(--indigo-bright),var(--violet),var(--amber-bright));transition:width .1s}
+
+    /* ── SOUND WAVE ANIMATION (background decoration) ── */
+    .wave-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .wave-svg{position:absolute;bottom:0;width:200%;height:180px;opacity:.04;animation:wave-drift 18s linear infinite}
+    .wave-svg2{animation-delay:-9s;animation-duration:24s;opacity:.025}
+    @keyframes wave-drift{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ── NAV ── */
+    nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(13,13,18,.05)}
+    .nav-in{max-width:1100px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .nav-logo{display:flex;align-items:center;gap:10px}
+    .nav-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:16px}
+    .nav-brand{font-family:var(--ff-display);font-size:13px;font-weight:800;color:var(--ink);line-height:1.2}
+    .nav-brand span{display:block;font-size:11px;font-weight:500;color:var(--text-mute);font-family:var(--ff-body)}
+    .nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+    .nav-links a{font-size:12px;font-weight:600;color:var(--text-mute);transition:color .2s}
+    .nav-links a:hover{color:var(--ink)}
+    .nav-chip{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--indigo-soft);color:var(--indigo);border:1px solid #C7D2FE}
+    @media(max-width:700px){.nav-links{display:none}}
+
+    /* ── HERO ── */
+    .hero{padding:80px 0 72px;position:relative;z-index:1;overflow:hidden}
+    .hero-accent{position:absolute;top:-80px;right:-120px;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle at center,var(--indigo-glow),transparent 60%);pointer-events:none}
+    .hero-accent2{position:absolute;bottom:-100px;left:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle at center,var(--amber-glow),transparent 60%);pointer-events:none}
+
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);background:var(--indigo-soft);padding:5px 14px;border-radius:20px;border:1px solid #C7D2FE;margin-bottom:24px;opacity:0;animation:fu .7s .1s ease forwards}
+    .hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--indigo-bright);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.6)}}
+
+    .hero h1{font-family:var(--ff-display);font-size:clamp(32px,5.2vw,62px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);max-width:820px;margin-bottom:20px;opacity:0;animation:fu .7s .2s ease forwards}
+    .hero h1 .hl{color:var(--indigo-bright);position:relative;display:inline-block}
+    .hero h1 .hl::after{content:'';position:absolute;left:0;right:0;bottom:-4px;height:3px;background:linear-gradient(90deg,var(--indigo-bright),var(--violet));border-radius:2px;opacity:.5}
+
+    .hero-desc{font-size:clamp(14px,1.8vw,17px);color:var(--text-mid);max-width:680px;font-weight:400;margin-bottom:40px;line-height:1.7;opacity:0;animation:fu .7s .3s ease forwards}
+
+    .hero-pills{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px;opacity:0;animation:fu .7s .4s ease forwards}
+    .hpill{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:11px;box-shadow:var(--shadow)}
+    .hpill-ico{font-size:22px;flex-shrink:0}
+    .hpill-body strong{display:block;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:1px}
+    .hpill-body span{font-size:11px;color:var(--text-mute);font-weight:500}
+
+    /* Sound wave visualizer (purely decorative) */
+    .wave-vis{display:flex;align-items:center;gap:3px;height:48px;margin-bottom:48px;opacity:0;animation:fu .7s .5s ease forwards}
+    .wave-bar{width:4px;border-radius:2px;background:linear-gradient(180deg,var(--indigo-bright),var(--violet));opacity:.6}
+
+    /* ── SECTION HEADER ── */
+    .sh{text-align:center;margin-bottom:52px}
+    .sh-pill{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--indigo);background:var(--indigo-soft);padding:5px 14px;border-radius:20px;border:1px solid #C7D2FE;margin-bottom:14px}
+    .sh h2{font-family:var(--ff-display);font-size:clamp(22px,3.5vw,38px);line-height:1.15;color:var(--ink);margin-bottom:12px}
+    .sh p{font-size:15px;color:var(--text-mid);max-width:540px;margin:0 auto;line-height:1.65}
+
+    /* ── MASALAH ── */
+    .masalah-sec{padding:0 0 0;position:relative;z-index:1}
+    .masalah-panel{background:var(--ink-mid);border-radius:var(--rl);padding:52px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+    .masalah-panel::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.12) 0%,transparent 50%,rgba(245,158,11,.06) 100%);pointer-events:none}
+    .masalah-decor{position:absolute;right:-40px;top:-40px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.12),transparent 65%);pointer-events:none}
+    .m-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#A5B4FC;background:rgba(99,102,241,.12);padding:4px 13px;border-radius:20px;border:1px solid rgba(165,180,252,.2);margin-bottom:18px}
+    .masalah-panel h3{font-family:var(--ff-display);font-size:clamp(18px,2.8vw,26px);color:#fff;line-height:1.35;margin-bottom:18px;position:relative;z-index:1;max-width:700px}
+    .masalah-panel p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.65);max-width:700px;position:relative;z-index:1}
+    .masalah-sila{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+    .sila-chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;padding:8px 16px;border-radius:20px;border:1px solid}
+    .s2{background:rgba(245,158,11,.1);color:#FCD34D;border-color:rgba(252,211,77,.2)}
+    .s3{background:rgba(99,102,241,.1);color:#A5B4FC;border-color:rgba(165,180,252,.2)}
+    @media(max-width:640px){.masalah-panel{padding:28px 22px}}
+
+    /* ── STEM 4-GRID ── */
+    .stem-sec{padding:80px 0;position:relative;z-index:1}
+    .stem-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:680px){.stem-grid{grid-template-columns:1fr}}
+    .stem-card{border-radius:var(--rl);padding:30px 26px;border:1px solid var(--border);transition:box-shadow .25s,transform .25s;position:relative;overflow:hidden;background:var(--white)}
+    .stem-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+    .stem-badge{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:14px;border:1px solid}
+    .sc-s .stem-badge{background:var(--teal-soft);color:var(--teal);border-color:#99F6E4}
+    .sc-t .stem-badge{background:var(--indigo-soft);color:var(--indigo);border-color:#C7D2FE}
+    .sc-e .stem-badge{background:var(--amber-soft);color:var(--amber);border-color:#FDE68A}
+    .sc-m .stem-badge{background:var(--rose-soft);color:var(--rose);border-color:#FECDD3}
+    .sc-s{border-top:3px solid var(--teal)}
+    .sc-t{border-top:3px solid var(--indigo-bright)}
+    .sc-e{border-top:3px solid var(--amber-bright)}
+    .sc-m{border-top:3px solid var(--rose)}
+    .stem-card h4{font-family:var(--ff-display);font-size:17px;color:var(--ink);margin-bottom:5px}
+    .stem-card .sub{font-size:12px;color:var(--text-mute);font-weight:500;margin-bottom:12px;font-style:italic}
+    .stem-card p,.stem-card ul{font-size:13px;line-height:1.7;color:var(--text-mid)}
+    .stem-card ul{padding-left:16px}
+    .stem-card ul li{margin-bottom:5px}
+    .stem-ghost{position:absolute;right:16px;bottom:8px;font-family:var(--ff-display);font-size:60px;font-weight:800;opacity:.045;line-height:1;letter-spacing:-.02em;color:var(--ink)}
+
+    /* Sound waves decorative bars */
+    .sound-bars{display:flex;align-items:flex-end;gap:4px;height:44px;margin-top:14px}
+    .sb{border-radius:3px 3px 0 0;min-width:5px;transition:height .4s ease}
+    .sb-teal{background:var(--teal);opacity:.6}
+    .sb-ind{background:var(--indigo-bright);opacity:.6}
+    .sb-amb{background:var(--amber-bright);opacity:.6}
+
+    /* ── TIMELINE 6-PERTEMUAN ── */
+    .tl-sec{padding:0 0 80px;position:relative;z-index:1}
+    .tl-wrap{position:relative}
+    .tl-wrap::before{content:'';position:absolute;left:40px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--indigo-bright),var(--violet),var(--amber-bright));opacity:.25}
+    @media(max-width:600px){.tl-wrap::before{left:20px}}
+
+    .tl-item{display:flex;gap:22px;margin-bottom:3px;padding:14px 14px 14px 0;border-radius:14px;transition:background .2s}
+    .tl-item:hover{background:#F8FAFF}
+    @media(max-width:600px){.tl-item{gap:12px}}
+
+    .tl-node{flex-shrink:0;width:80px;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1}
+    @media(max-width:600px){.tl-node{width:40px}}
+    .tl-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-weight:800;font-size:15px;border:2px solid;background:var(--white)}
+    .t1 .tl-num{border-color:var(--indigo-bright);color:var(--indigo)}
+    .t2 .tl-num{border-color:var(--teal);color:var(--teal)}
+    .t3 .tl-num{border-color:var(--teal);color:var(--teal)}
+    .t4 .tl-num{border-color:var(--violet);color:var(--violet)}
+    .t5 .tl-num{border-color:var(--amber);color:var(--amber)}
+    .t6 .tl-num{border-color:var(--rose);color:var(--rose)}
+    .tl-phase{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.2}
+    @media(max-width:600px){.tl-phase{display:none}}
+
+    .tl-card{flex:1;background:var(--white);border-radius:14px;border:1px solid var(--border);padding:20px 24px;box-shadow:var(--shadow)}
+    .t1 .tl-card{border-left:3px solid var(--indigo-bright)}
+    .t2 .tl-card{border-left:3px solid var(--teal)}
+    .t3 .tl-card{border-left:3px solid var(--teal)}
+    .t4 .tl-card{border-left:3px solid var(--violet)}
+    .t5 .tl-card{border-left:3px solid var(--amber)}
+    .t6 .tl-card{border-left:3px solid var(--rose)}
+
+    .tl-pert{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:3px}
+    .tl-title{font-family:var(--ff-display);font-size:17px;color:var(--ink);margin-bottom:10px;line-height:1.25}
+    .tl-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+    .tl-chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--off);color:var(--text-mute);border:1px solid var(--border)}
+    .tl-acts{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .tl-acts li{font-size:13px;color:var(--text-mid);padding-left:16px;position:relative;line-height:1.5}
+    .tl-acts li::before{content:'›';position:absolute;left:0;color:var(--text-faint);font-weight:700}
+
+    /* ── SIFAT BUNYI EXPLAINER ── */
+    .bunyi-sec{padding:80px 0;background:linear-gradient(180deg,var(--slate-soft),var(--white));position:relative;z-index:1}
+    .bunyi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:700px){.bunyi-grid{grid-template-columns:1fr}}
+    .bunyi-card{background:var(--white);border-radius:14px;border:1px solid var(--border);padding:26px 22px;text-align:center;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+    .bunyi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+    .bunyi-ico{font-size:36px;margin-bottom:14px;display:block}
+    .bunyi-no{font-family:var(--ff-mono);font-size:10px;font-weight:500;color:var(--text-faint);letter-spacing:.1em;margin-bottom:6px;text-transform:uppercase}
+    .bunyi-card h4{font-family:var(--ff-display);font-size:16px;color:var(--ink);margin-bottom:8px}
+    .bunyi-card p{font-size:13px;color:var(--text-mid);line-height:1.6}
+    .bunyi-tip{margin-top:12px;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;display:inline-block}
+    .bt-1{background:var(--indigo-soft);color:var(--indigo)}
+    .bt-2{background:var(--amber-soft);color:var(--amber)}
+    .bt-3{background:var(--teal-soft);color:var(--teal)}
+
+    /* ── KRITERIA ── */
+    .kriteria-sec{padding:0 0 80px;position:relative;z-index:1}
+    .krit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:640px){.krit-grid{grid-template-columns:1fr}}
+    .krit-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+    .krit-ico{width:42px;height:42px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:19px}
+    .krit-card h4{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+    .krit-card p{font-size:13px;color:var(--text-mid);line-height:1.55}
+
+    /* ── DUA SOLUSI CARDS ── */
+    .solusi-sec{padding:80px 0;position:relative;z-index:1;background:var(--slate-soft)}
+    .sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:640px){.sol-grid{grid-template-columns:1fr}}
+    .sol-card{background:var(--white);border-radius:var(--rl);border:1px solid var(--border);padding:32px 28px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+    .sol-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+    .sol-panel::before{background:linear-gradient(90deg,var(--violet),var(--indigo-bright))}
+    .sol-agree::before{background:linear-gradient(90deg,var(--amber-bright),var(--teal))}
+    .sol-ico{font-size:38px;margin-bottom:16px;display:block}
+    .sol-label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;display:block}
+    .sol-panel .sol-label{color:var(--violet)}
+    .sol-agree .sol-label{color:var(--amber)}
+    .sol-card h3{font-family:var(--ff-display);font-size:20px;color:var(--ink);margin-bottom:10px;line-height:1.25}
+    .sol-card p{font-size:13px;color:var(--text-mid);line-height:1.65;margin-bottom:16px}
+    .sol-steps{list-style:none;display:flex;flex-direction:column;gap:7px}
+    .sol-steps li{font-size:13px;color:var(--text-mid);padding-left:24px;position:relative;line-height:1.5}
+    .sol-steps li::before{position:absolute;left:0;font-size:11px;font-weight:800;padding:2px 5px;border-radius:5px;line-height:1}
+    .sol-panel .sol-steps li::before{content:attr(data-step);background:var(--indigo-soft);color:var(--indigo)}
+    .sol-agree .sol-steps li::before{content:attr(data-step);background:var(--amber-soft);color:var(--amber)}
+
+    /* ── RUBRIK ── */
+    .rubrik-sec{padding:80px 0;position:relative;z-index:1}
+    .rubrik-wrap{overflow-x:auto;border-radius:var(--rl);border:1px solid var(--border);box-shadow:var(--shadow-md)}
+    table{width:100%;border-collapse:collapse;background:var(--white);font-size:13px;min-width:720px}
+    thead tr{background:var(--ink-mid)}
+    th{padding:13px 15px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+    td{padding:12px 15px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5;color:var(--text-mid)}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:var(--off)}
+    .aspek{font-weight:700;color:var(--ink);font-size:13px}
+    .s4{font-weight:700;color:var(--teal)}
+    .s3{font-weight:700;color:var(--indigo)}
+    .s2{font-weight:700;color:var(--amber)}
+    .s1{font-weight:700;color:var(--rose)}
+
+    /* ── NILAI KATEGORI ── */
+    .nilai-sec{padding:0 0 80px;position:relative;z-index:1}
+    .nilai-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media(max-width:700px){.nilai-row{grid-template-columns:1fr 1fr}}
+    .nk{border-radius:14px;padding:22px 18px;text-align:center;border:1px solid}
+    .nk-m{background:var(--teal-soft);border-color:#99F6E4;color:var(--teal)}
+    .nk-c{background:var(--indigo-soft);border-color:#C7D2FE;color:var(--indigo)}
+    .nk-b{background:var(--amber-soft);border-color:#FDE68A;color:var(--amber)}
+    .nk-p{background:var(--rose-soft);border-color:#FECDD3;color:var(--rose)}
+    .nk .range{font-family:var(--ff-mono);font-size:19px;margin-bottom:5px}
+    .nk .label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .nk .desc{font-size:11px;margin-top:7px;opacity:.8;line-height:1.4}
+
+    /* ── TINDAK LANJUT ── */
+    .tindak-sec{padding:80px 0;background:var(--slate-soft);position:relative;z-index:1}
+    .tindak-grid{display:flex;flex-direction:column;gap:12px}
+    .tindak-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex}
+    .tc-stripe{width:4px;flex-shrink:0}
+    .tc-teal .tc-stripe{background:var(--teal)}
+    .tc-ind .tc-stripe{background:var(--indigo-bright)}
+    .tc-amb .tc-stripe{background:var(--amber-bright)}
+    .tc-rose .tc-stripe{background:#F87171}
+    .tc-body{padding:18px 22px;flex:1}
+    .tc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+    .tc-hdr h4{font-size:15px;font-weight:700;color:var(--ink)}
+    .tc-badge{font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;border:1px solid}
+    .tc-teal .tc-badge{background:var(--teal-soft);color:var(--teal);border-color:#99F6E4}
+    .tc-ind .tc-badge{background:var(--indigo-soft);color:var(--indigo);border-color:#C7D2FE}
+    .tc-amb .tc-badge{background:var(--amber-soft);color:var(--amber);border-color:#FDE68A}
+    .tc-rose .tc-badge{background:var(--rose-soft);color:var(--rose);border-color:#FECDD3}
+    .tc-body ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .tc-body ul li{font-size:13px;color:var(--text-mid);padding-left:18px;position:relative;line-height:1.55}
+    .tc-body ul li::before{content:'→';position:absolute;left:0;font-weight:700;color:var(--text-faint)}
+
+    /* ── KEMITRAAN ── */
+    .mitra-sec{padding:80px 0;position:relative;z-index:1}
+    .mitra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:700px){.mitra-grid{grid-template-columns:1fr}}
+    .mitra-card{background:var(--ink-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:26px 22px;transition:background .2s;position:relative;overflow:hidden}
+    .mitra-card:hover{background:var(--ink-light)}
+    .mitra-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.06),transparent);pointer-events:none}
+    .mitra-ico{font-size:28px;margin-bottom:12px;display:block}
+    .mitra-card h4{font-family:var(--ff-display);font-size:15px;color:#fff;margin-bottom:7px}
+    .mitra-card p{font-size:13px;line-height:1.6;color:rgba(255,255,255,.6)}
+
+    /* ── QUOTE ── */
+    .quote-sec{padding:0 0 80px;position:relative;z-index:1}
+    .q-box{background:linear-gradient(135deg,var(--indigo-soft),var(--violet-soft));border:1px solid #C7D2FE;border-radius:var(--rl);padding:40px 44px;position:relative;overflow:hidden}
+    .q-box::before{font-family:var(--ff-display);content:'"';position:absolute;top:-10px;left:24px;font-size:130px;line-height:1;color:var(--indigo-bright);opacity:.1;pointer-events:none}
+    .q-box blockquote{font-family:var(--ff-display);font-size:clamp(16px,2.3vw,21px);color:var(--ink);font-style:italic;line-height:1.5;margin-bottom:12px;position:relative;z-index:1}
+    .q-box blockquote em{color:var(--indigo);font-style:normal}
+    .q-box cite{font-size:13px;color:var(--text-mute);font-style:normal}
+    @media(max-width:600px){.q-box{padding:28px 22px}}
+
+    /* ── FOOTER ── */
+    footer{padding:52px 0 32px;border-top:1px solid var(--border);position:relative;z-index:1}
+    .ft-in{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+    @media(max-width:600px){.ft-in{grid-template-columns:1fr}}
+    .ft-brand{font-family:var(--ff-display);font-size:18px;color:var(--ink);margin-bottom:8px}
+    .ft-desc{font-size:13px;color:var(--text-mid);max-width:380px;line-height:1.6;margin-bottom:10px}
+    .ft-meta{font-size:11px;color:var(--text-mute)}
+    .ft-links{display:flex;flex-direction:column;gap:7px;list-style:none}
+    .ft-links a{font-size:13px;color:var(--text-mute)}.ft-links a:hover{color:var(--ink)}
+    .ft-bot{margin-top:32px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .ft-bot p{font-size:12px;color:var(--text-mute)}
+    .ft-ver{font-size:11px;font-weight:700;background:var(--off);color:var(--text-mute);padding:3px 10px;border-radius:6px;border:1px solid var(--border)}
+
+    /* ── UTILITIES ── */
+    .div{height:1px;background:var(--border)}
+    @keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+    .rev.in{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- Animated wave background -->
+<div class="wave-bg" aria-hidden="true">
+  <svg class="wave-svg" viewBox="0 0 1440 180" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 90 Q180 20 360 90 Q540 160 720 90 Q900 20 1080 90 Q1260 160 1440 90 Q1620 20 1800 90 Q1980 160 2160 90 Q2340 20 2520 90 Q2700 160 2880 90" stroke="#6366F1" stroke-width="3" fill="none"/>
+    <path d="M0 110 Q180 40 360 110 Q540 180 720 110 Q900 40 1080 110 Q1260 180 1440 110 Q1620 40 1800 110 Q1980 180 2160 110 Q2340 40 2520 110 Q2700 180 2880 110" stroke="#7C3AED" stroke-width="2" fill="none"/>
+  </svg>
+  <svg class="wave-svg wave-svg2" viewBox="0 0 1440 180" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 70 Q240 150 480 70 Q720 -10 960 70 Q1200 150 1440 70 Q1680 -10 1920 70 Q2160 150 2400 70 Q2640 -10 2880 70" stroke="#F59E0B" stroke-width="2" fill="none"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-mark">🔊</div>
+      <div class="nav-brand">Kelasku Terlalu Berisik <span>STEM Kelas 4 · SDM01 Kukusan</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#stem">Integrasi STEM</a></li>
+      <li><a href="#alur">Alur 6 Pertemuan</a></li>
+      <li><a href="#solusi">Dua Solusi</a></li>
+      <li><a href="#asesmen">Asesmen</a></li>
+      <li><a href="index.html">← Hub SDM01</a></li>
+    </ul>
+    <span class="nav-chip">PKn · IPAS · Matematika</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-accent"></div><div class="hero-accent2"></div>
+  <div class="wrap">
+    <div class="hero-tag"><span class="dot"></span>Kelas 4 (Fase B) · SD Muhammadiyah 01 Kukusan</div>
+    <h1>Kelas yang Kondusif:<br>Menyelidiki <span class="hl">Kebisingan</span><br>dan Merancang Solusinya</h1>
+    <p class="hero-desc">Tema: <em>Kelasku Terlalu Berisik</em> — Murid kelas 4 menyelidiki penyebab dan pola kebisingan di kelasnya, mempelajari sifat bunyi secara langsung, menganalisis data yang mereka kumpulkan sendiri, lalu merancang dua solusi nyata: panel peredam bunyi dan sistem kesepakatan kelas.</p>
+    <div class="hero-pills">
+      <div class="hpill"><div class="hpill-ico">📚</div><div class="hpill-body"><strong>PKn · IPAS · Matematika</strong><span>3 Mata Pelajaran Terintegrasi</span></div></div>
+      <div class="hpill"><div class="hpill-ico">🏫</div><div class="hpill-body"><strong>Fase B / Kelas IV</strong><span>Sekolah Dasar</span></div></div>
+      <div class="hpill"><div class="hpill-ico">⏱️</div><div class="hpill-body"><strong>24 JP · 6 Pertemuan</strong><span>4 JP per Pertemuan</span></div></div>
+      <div class="hpill"><div class="hpill-ico">⚙️</div><div class="hpill-body"><strong>Model 5E Bybee</strong><span>Praktik Pedagogis</span></div></div>
+    </div>
+    <!-- decorative sound visualizer -->
+    <div class="wave-vis" aria-hidden="true" id="wavevis">
+    </div>
+  </div>
+</section>
+
+<!-- MASALAH -->
+<section class="masalah-sec" style="padding:0 0 80px;position:relative;z-index:1">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📋 Konteks Masalah</div>
+      <h2>Mengapa Kelas Berisik Bukan Masalah Sepele?</h2>
+      <p>Kebisingan yang tidak dikelola menyentuh persoalan hak dan kewajiban setiap murid sebagai warga kelas.</p>
+    </div>
+    <div class="masalah-panel rev">
+      <div class="masalah-decor"></div>
+      <div class="m-tag">💡 Latar Belakang Proyek</div>
+      <h3>Kelas yang berisik jarang diselesaikan tuntas karena pendekatannya hanya reaktif: guru menegur, murid diam sebentar, lalu kondisi kembali seperti semula.</h3>
+      <p>Dari sudut pandang Pancasila, kebisingan menyentuh persoalan hak dan kewajiban. Setiap murid berhak belajar dalam suasana kondusif — dan setiap murid berkewajiban menjaga agar haknya tidak melanggar hak orang lain. Dalam proyek ini, murid kelas 4 menyelidiki <strong style="color:rgba(255,255,255,.9)">kapan dan mengapa kelas mereka berisik</strong> melalui data nyata, mempelajari sifat bunyi secara ilmiah, lalu merancang dua solusi yang saling melengkapi: panel peredam bunyi berbasis sains dan sistem kesepakatan kelas berbasis nilai Pancasila.</p>
+      <div class="masalah-sila">
+        <div class="sila-chip s2">⭐ Sila ke-2 — Kemanusiaan yang Adil dan Beradab</div>
+        <div class="sila-chip s3">⭐ Sila ke-3 — Persatuan Indonesia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- STEM INTEGRATION -->
+<section class="stem-sec" id="stem">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🔬 Integrasi STEM</div>
+      <h2>Sains · Teknologi · Enjinering · Matematika</h2>
+      <p>Setiap disiplin berkontribusi nyata dalam menyelidiki kebisingan dan merancang solusinya — bukan label, tapi aksi.</p>
+    </div>
+    <div class="stem-grid rev">
+
+      <div class="stem-card sc-s">
+        <div class="stem-badge">🔬 Sains · IPAS</div>
+        <h4>Menyelidiki Sifat Bunyi</h4>
+        <div class="sub">3 percobaan langsung di kelas</div>
+        <ul>
+          <li><strong>Merambat:</strong> bunyi melalui udara, benda padat, dan cair — dibuktikan dengan menempel telinga ke meja.</li>
+          <li><strong>Memantul:</strong> buku keras vs buku terbuka, permukaan keras memperkuat bunyi.</li>
+          <li><strong>Diserap:</strong> kain, busa, kertas diremas — menguji bahan mana yang paling efektif.</li>
+        </ul>
+        <div class="sound-bars">
+          <div class="sb sb-teal" style="height:18px"></div>
+          <div class="sb sb-teal" style="height:30px"></div>
+          <div class="sb sb-teal" style="height:22px"></div>
+          <div class="sb sb-teal" style="height:38px"></div>
+          <div class="sb sb-teal" style="height:15px"></div>
+          <div class="sb sb-teal" style="height:28px"></div>
+        </div>
+        <div class="stem-ghost">S</div>
+      </div>
+
+      <div class="stem-card sc-t">
+        <div class="stem-badge">💻 Teknologi</div>
+        <h4>Dua Alat Sederhana</h4>
+        <div class="sub">Lembar observasi & kartu sinyal visual</div>
+        <ul>
+          <li><strong>Lembar observasi turus (tally marks)</strong> — dirancang bersama murid di Pertemuan 1 agar konsisten dan dapat diulang.</li>
+          <li><strong>Kartu sinyal visual</strong> — kartu merah (harap tenang), kartu hijau (boleh diskusi); teknologi non-verbal untuk manajemen kebisingan.</li>
+        </ul>
+        <p style="margin-top:10px;font-size:12px;font-style:italic;color:var(--text-mute)">Teknologi tidak selalu alat elektronik — lembar observasi yang baik pun adalah teknologi.</p>
+        <div class="stem-ghost">T</div>
+      </div>
+
+      <div class="stem-card sc-e">
+        <div class="stem-badge">⚙️ Enjinering</div>
+        <h4>Siklus Desain Dua Produk</h4>
+        <div class="sub">Panel peredam bunyi + Kesepakatan kelas</div>
+        <ul>
+          <li>Identifikasi masalah dari data → pilih bahan berdasarkan sifat bunyi → buat panel → uji → revisi.</li>
+          <li>Kesepakatan: identifikasi kebutuhan → rancang + sinyal → sepakati demokratis → evaluasi bersama.</li>
+          <li>Murid mengalami bahwa solusi teknik perlu diuji dan diperbaiki — bukan langsung sempurna.</li>
+        </ul>
+        <div class="stem-ghost">E</div>
+      </div>
+
+      <div class="stem-card sc-m">
+        <div class="stem-badge">📊 Matematika</div>
+        <h4>Turus, Tabel, Piktogram</h4>
+        <div class="sub">Data sebagai dasar keputusan solusi</div>
+        <ul>
+          <li>Catat sumber kebisingan menggunakan turus pada 2 sesi berbeda (pelajaran langsung vs. kerja kelompok).</li>
+          <li>Susun tabel frekuensi dan buat piktogram — setiap gambar mewakili jumlah tertentu.</li>
+          <li>Dari piktogram: identifikasi sumber kebisingan paling sering dan kapan kebisingan tertinggi → jadi dasar memilih solusi.</li>
+        </ul>
+        <div class="stem-ghost">M</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- SIFAT BUNYI -->
+<section class="bunyi-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🔬 Konsep Sains Kunci · Pertemuan 4</div>
+      <h2>Tiga Sifat Bunyi yang Perlu Dikuasai</h2>
+      <p>Pemahaman ini menjadi dasar ilmiah dalam memilih bahan panel peredam — bukan sekadar mencoba-coba.</p>
+    </div>
+    <div class="bunyi-grid rev">
+      <div class="bunyi-card">
+        <span class="bunyi-ico">〰️</span>
+        <div class="bunyi-no">Sifat 01</div>
+        <h4>Bunyi Merambat melalui Zat</h4>
+        <p>Bunyi dapat merambat melalui gas (udara), zat cair, dan zat padat. Bunyi tidak dapat merambat di ruang hampa — karena tidak ada zat perantara.</p>
+        <span class="bunyi-tip bt-1">Percobaan: telinga di meja vs. telinga di udara</span>
+      </div>
+      <div class="bunyi-card">
+        <span class="bunyi-ico">↩️</span>
+        <div class="bunyi-no">Sifat 02</div>
+        <h4>Bunyi Memantul pada Permukaan Keras</h4>
+        <p>Permukaan keras seperti tembok, papan kayu, dan meja memantulkan bunyi — sehingga suara terdengar lebih keras atau bergema.</p>
+        <span class="bunyi-tip bt-2">Percobaan: tepuk di depan buku tertutup vs. buku terbuka</span>
+      </div>
+      <div class="bunyi-card">
+        <span class="bunyi-ico">🧽</span>
+        <div class="bunyi-no">Sifat 03</div>
+        <h4>Bunyi Diserap oleh Bahan Lunak dan Berpori</h4>
+        <p>Bahan seperti busa, kain tebal, kertas diremas, dan kapas menyerap sebagian gelombang bunyi — suara terdengar lebih pelan di belakang bahan tersebut.</p>
+        <span class="bunyi-tip bt-3">Percobaan: karton vs. karton berlapis kain vs. kertas diremas</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALUR 6 PERTEMUAN -->
+<section class="tl-sec" id="alur" style="padding-top:80px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📅 Alur Pembelajaran · Model 5E</div>
+      <h2>Enam Pertemuan, Dua Produk Nyata</h2>
+      <p>Dari merasakan kebisingan hingga memasang panel dan menyepakati aturan kelas — setiap pertemuan membangun fondasi berikutnya.</p>
+    </div>
+    <div class="tl-wrap rev">
+
+      <div class="tl-item t1">
+        <div class="tl-node"><div class="tl-num">1</div><div class="tl-phase">Engagement</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 1 · Engagement</div>
+          <div class="tl-title">"Apa yang Kita Rasakan saat Kelas Berisik?"</div>
+          <div class="tl-chips"><span class="tl-chip">🧠 Memahami</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Guru diam selama 30 detik — murid merasakan sendiri suara-suara di kelas, lalu berbagi apa yang mereka dengar.</li>
+            <li>Diskusi: hak atas suasana kondusif dan kewajiban yang muncul dari hak tersebut. Kaitkan dengan Sila ke-2 dan ke-3.</li>
+            <li>Kelas merancang format Lembar Kerja 1 (Observasi) bersama: kolom sumber suara, kapan terjadi, seberapa sering (turus).</li>
+            <li>Murid langsung berlatih mengisi LK 1 di sisa sesi; tugas mandiri: catat kebisingan dalam satu sesi pelajaran esok hari.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item t2">
+        <div class="tl-node"><div class="tl-num">2</div><div class="tl-phase">Exploration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 2 · Exploration</div>
+          <div class="tl-title">"Dari Mana Datangnya Kebisingan di Kelas Kita?"</div>
+          <div class="tl-chips"><span class="tl-chip">🔍 Memahami</span><span class="tl-chip">📍 Berkesadaran · Bermakna</span></div>
+          <ul class="tl-acts">
+            <li>Kumpulkan catatan mandiri; setiap murid berbagi satu temuan yang paling mengejutkan dari pengamatannya.</li>
+            <li>Pengantar singkat: sumber bunyi di kelas (benda bergerak, suara manusia, sumber luar kelas).</li>
+            <li><strong>Sesi A</strong> (10–12 menit): catat kebisingan selama pelajaran berlangsung menggunakan turus.</li>
+            <li><strong>Sesi B</strong> (10–12 menit): catat kebisingan saat kerja kelompok / transisi. Bandingkan pola kedua sesi.</li>
+            <li>Refleksi: sumber kebisingan mana yang paling mudah dikurangi? Mana yang paling sulit? Mengapa?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item t3">
+        <div class="tl-node"><div class="tl-num">3</div><div class="tl-phase">Exploration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 3 · Exploration</div>
+          <div class="tl-title">"Membaca Data: Kapan dan Apa yang Paling Sering Berisik?"</div>
+          <div class="tl-chips"><span class="tl-chip">📊 Memahami</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Gabungkan data seluruh kelompok di papan — visualkan betapa banyaknya informasi yang sudah dikumpulkan.</li>
+            <li><strong>Lembar Kerja 3</strong>: susun tabel frekuensi (baris = jenis sumber, kolom = Sesi A & B, isi = jumlah).</li>
+            <li>Buat <strong>piktogram</strong>: murid menentukan nilai simbol (misalnya 1 gambar = 2 kejadian), lalu gambar simbolnya sendiri.</li>
+            <li>Tulis 2–3 kalimat kesimpulan: pola apa yang terlihat? Apa yang perlu diprioritaskan dalam solusi?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item t4">
+        <div class="tl-node"><div class="tl-num">4</div><div class="tl-phase">Explanation</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 4 · Explanation</div>
+          <div class="tl-title">"Bagaimana Bunyi Bisa Menjadi Lebih Pelan?"</div>
+          <div class="tl-chips"><span class="tl-chip">🧪 Memahami</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Video animasi 5–8 menit tentang rambatan dan penyerapan bunyi, atau demonstrasi langsung (ketuk meja, tempel telinga).</li>
+            <li>Tiga percobaan: permukaan keras vs. lunak, berbagai bahan peredam pada jarak 30 cm, rambatan bunyi lewat benda padat.</li>
+            <li><strong>Lembar Kerja 4</strong>: catat hasil ketiga percobaan dan tulis rekomendasi bahan untuk panel — sertakan alasan ilmiah: "Karena bahan ini... sehingga bunyi akan..."</li>
+            <li>Persiapan P5: setiap kelompok mengidentifikasi bahan yang akan dibawa ke Pertemuan 5.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item t5">
+        <div class="tl-node"><div class="tl-num">5</div><div class="tl-phase">Elaboration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 5 · Elaboration</div>
+          <div class="tl-title">"Merancang dan Menguji Dua Solusi Kebisingan Kelas"</div>
+          <div class="tl-chips"><span class="tl-chip">🛠️ Mengaplikasi</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li><strong>Tugas A — Panel Peredam:</strong> sketsa → buat → uji (tepuk tangan dengan/tanpa panel) → catat hasil → revisi jika perlu.</li>
+            <li><strong>Tugas B — Kesepakatan Kelas:</strong> identifikasi 3–5 situasi kelas → tentukan hak &amp; kewajiban → rancang min. 2 kartu sinyal visual.</li>
+            <li>Seluruh kelas menyepakati sistem kesepakatan secara demokratis — guru memfasilitasi tanpa memilihkan, setiap suara didengar.</li>
+            <li>Lembar Kerja 5: sketsa panel + hasil uji + catatan revisi + rancangan kesepakatan &amp; kartu sinyal.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item t6">
+        <div class="tl-node"><div class="tl-num">6</div><div class="tl-phase">Evaluation</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 6 · Evaluation — Asesmen Sumatif</div>
+          <div class="tl-title">"Presentasi Hasil Proyek dan Refleksi"</div>
+          <div class="tl-chips"><span class="tl-chip">🎤 Merefleksi</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Tampilkan kembali perjalanan proyek: pertanyaan P1, data P2–3, hasil percobaan P4, produk P5.</li>
+            <li><strong>Presentasi individu</strong> (4–6 menit): kontribusi pribadi, data, analisis sifat bunyi, dan kaitan dengan Pancasila — bukan sekadar mengulang presentasi kelompok.</li>
+            <li>Laporan tertulis: tabel frekuensi, piktogram, penjelasan sifat bunyi, deskripsi dua solusi, refleksi Pancasila, komitmen tindak lanjut.</li>
+            <li>Guru menutup: panel dan kesepakatan kelas yang dirancang akan mulai diterapkan — dan dievaluasi bersama setelah dua minggu.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DUA SOLUSI -->
+<section class="solusi-sec" id="solusi">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🛠️ Produk Proyek</div>
+      <h2>Dua Solusi yang Saling Melengkapi</h2>
+      <p>Panel peredam menjawab kebisingan fisik; kesepakatan kelas menjawab kebisingan sosial. Keduanya diperlukan.</p>
+    </div>
+    <div class="sol-grid rev">
+      <div class="sol-card sol-panel">
+        <span class="sol-ico">🔇</span>
+        <span class="sol-label">Solusi 1 · Enjinering</span>
+        <h3>Panel Peredam Bunyi Sederhana</h3>
+        <p>Dibuat dari bahan yang tersedia di sekolah (karton, kain bekas, kertas diremas, busa/spon). Ukuran maksimal 30 × 30 cm. Tidak menggunakan listrik atau bahan berbahaya.</p>
+        <ul class="sol-steps">
+          <li data-step="1">Gambar sketsa panel (ukuran, bahan, susunan lapisan) di LK 5 sebelum membuat.</li>
+          <li data-step="2">Buat panel sesuai sketsa menggunakan bahan yang tersedia.</li>
+          <li data-step="3">Uji: satu murid tepuk tangan 30 cm di depan panel, murid lain catat apakah suara terdengar lebih pelan dari sisi belakang.</li>
+          <li data-step="4">Jika tidak ada perbedaan: diskusikan revisi — tambah lapisan, ganti bahan, susun ulang.</li>
+        </ul>
+      </div>
+      <div class="sol-card sol-agree">
+        <span class="sol-ico">🤝</span>
+        <span class="sol-label">Solusi 2 · Pancasila</span>
+        <h3>Sistem Kesepakatan Kelas dengan Kartu Sinyal</h3>
+        <p>Kesepakatan berbasis hak dan kewajiban yang disusun secara demokratis — berlaku untuk seluruh murid, termasuk guru, tanpa pengecualian.</p>
+        <ul class="sol-steps">
+          <li data-step="1">Identifikasi 3–5 situasi kelas yang memerlukan aturan berbeda (penjelasan guru, kerja kelompok, membaca mandiri, transisi).</li>
+          <li data-step="2">Tentukan hak dan kewajiban murid dalam setiap situasi — pastikan seimbang.</li>
+          <li data-step="3">Rancang minimal 2 kartu sinyal: tentukan simbol, warna, dan makna yang disepakati bersama.</li>
+          <li data-step="4">Sepakati sistem secara demokratis — setiap suara didengar, setiap perbedaan didiskusikan bersama.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KRITERIA -->
+<section class="kriteria-sec" style="padding-top:80px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">✅ Kriteria Keberhasilan</div>
+      <h2>Lima Ukuran Keberhasilan Proyek</h2>
+    </div>
+    <div class="krit-grid rev">
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--teal-soft)">🔕</div>
+        <div><h4>Panel Peredam Berfungsi</h4><p>Suara tepukan terdengar lebih pelan di sisi belakang panel dibandingkan tanpa panel, berdasarkan penilaian anggota kelompok secara konsisten.</p></div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--indigo-soft)">♻️</div>
+        <div><h4>Bahan Panel Sesuai Batasan</h4><p>Dibuat dari bahan sekolah, ukuran ≤ 30×30 cm, tidak menggunakan listrik atau bahan berbahaya.</p></div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--amber-soft)">📜</div>
+        <div><h4>Kesepakatan Kelas Tersusun</h4><p>Memuat hak dan kewajiban yang seimbang, berlaku semua murid, disertai minimal 2 kartu sinyal visual yang maknanya disepakati bersama.</p></div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--rose-soft)">📊</div>
+        <div><h4>Data Kebisingan Tersajikan</h4><p>Tabel frekuensi dan piktogram dari data dua sesi dapat dibaca dan diinterpretasikan oleh orang lain.</p></div>
+      </div>
+      <div class="krit-card" style="grid-column:1/-1">
+        <div class="krit-ico" style="background:var(--violet-soft)">🧬</div>
+        <div><h4>Rancangan Didukung Penjelasan Sains</h4><p>Pemilihan bahan panel dan penempatan solusi dapat dijelaskan menggunakan konsep sifat bunyi yang dipelajari di Pertemuan 4 — bukan sekadar "kayaknya bagus".</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:56px"></div>
+
+<!-- RUBRIK ASESMEN -->
+<section class="rubrik-sec" id="asesmen">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📋 Asesmen Sumatif · Pertemuan 6</div>
+      <h2>Rubrik Penilaian Proyek</h2>
+      <p>Penilaian proyek terintegrasi PKn, IPAS, dan Matematika. Nilai = (Skor ÷ 24) × 100</p>
+    </div>
+    <div class="rubrik-wrap rev">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:16%">Aspek</th>
+            <th style="width:18%">Indikator</th>
+            <th style="width:16%"><span class="s4">Skor 4</span> — Mahir</th>
+            <th style="width:16%"><span class="s3">Skor 3</span> — Cakap</th>
+            <th style="width:17%"><span class="s2">Skor 2</span> — Berkembang</th>
+            <th style="width:17%"><span class="s1">Skor 1</span> — Bimbingan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="aspek">📊 Penyajian Data<br><small style="font-weight:400;color:var(--text-mute)">Matematika</small></td>
+            <td>Ketepatan tabel, piktogram & kesimpulan</td>
+            <td>Tabel & piktogram dua sesi tersaji lengkap dan tepat, dengan kalimat kesimpulan yang akurat.</td>
+            <td>Tabel & piktogram dua sesi dengan kesalahan kecil yang tidak mengubah kesimpulan.</td>
+            <td>Tersaji dari satu sesi saja, atau kesimpulan tidak sepenuhnya didukung data.</td>
+            <td>Tidak tersaji, atau mengandung kesalahan yang membuat data tidak dapat dibaca.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🔬 Sifat Bunyi<br><small style="font-weight:400;color:var(--text-mute)">IPAS</small></td>
+            <td>Ketepatan & kedalaman penjelasan ilmiah</td>
+            <td>Menyebut dan menjelaskan min. 2 sifat bunyi yang relevan, dihubungkan dengan pemilihan bahan panel secara logis.</td>
+            <td>Menyebut dan menjelaskan 1 sifat bunyi dengan hubungan ke bahan panel yang cukup logis.</td>
+            <td>Menyebut sifat bunyi tapi tidak menghubungkannya dengan alasan pemilihan bahan.</td>
+            <td>Tidak menjelaskan sifat bunyi, atau penjelasan tidak berkaitan dengan proyek.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🛠️ Dua Solusi<br><small style="font-weight:400;color:var(--text-mute)">Enjinering</small></td>
+            <td>Kelengkapan & keterlaksanaan</td>
+            <td>Panel dibuat dan diuji hasilnya dapat dijelaskan; kesepakatan memuat hak-kewajiban seimbang dan min. 2 kartu sinyal.</td>
+            <td>Panel dibuat (meski belum optimal); kesepakatan ada tapi kartu sinyal belum lengkap.</td>
+            <td>Salah satu solusi terlengkapi; solusi lain hanya rancangan tanpa produk nyata.</td>
+            <td>Tidak ada solusi yang terlengkapi sebagai produk nyata.</td>
+          </tr>
+          <tr>
+            <td class="aspek">⭐ Nilai Pancasila<br><small style="font-weight:400;color:var(--text-mute)">PKn</small></td>
+            <td>Kekonkretan keterkaitan</td>
+            <td>Menjelaskan keterkaitan min. 2 sila Pancasila dengan contoh konkret dari pengalaman proyek — bukan hanya definisi sila.</td>
+            <td>Menjelaskan keterkaitan 1 sila Pancasila dengan satu contoh konkret.</td>
+            <td>Menyebut nama sila tapi tidak menghubungkannya dengan pengalaman konkret.</td>
+            <td>Tidak menjelaskan keterkaitan, atau penjelasan tidak relevan dengan proyek.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🎤 Presentasi</td>
+            <td>Struktur, kejelasan & penggunaan data/produk</td>
+            <td>Runtut, mengacu pada data atau produk dalam penjelasan, durasi 4–6 menit.</td>
+            <td>Cukup runtut, mengacu pada data atau produk, durasi sesuai.</td>
+            <td>Sebagian runtut atau tidak mengacu pada data/produk dalam penjelasan.</td>
+            <td>Tidak terstruktur dan tidak mengacu pada data atau produk yang dibuat.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🪞 Refleksi</td>
+            <td>Kekonkretan & kedalaman</td>
+            <td>Komitmen tindak lanjut spesifik dan dapat dilakukan, disertai penjelasan mengapa komitmen itu dipilih.</td>
+            <td>Satu komitmen tindak lanjut secara umum, dengan keterkaitan nilai Pancasila yang cukup jelas.</td>
+            <td>Refleksi ada tapi komitmen tidak spesifik atau tidak berkaitan dengan proyek.</td>
+            <td>Tidak menulis refleksi bermakna, atau tidak berkaitan dengan pengalaman proyek.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- NILAI KATEGORI -->
+<section class="nilai-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🏆 Kategori Pencapaian</div>
+      <h2>Standar Kelulusan Proyek</h2>
+      <p>Murid dikatakan berhasil jika berada pada kategori <strong>Cakap</strong> — skor 3 di setiap indikator rubrik.</p>
+    </div>
+    <div class="nilai-row rev">
+      <div class="nk nk-m"><div class="range">84–100</div><div class="label">🌟 Mahir</div><div class="desc">Rancang panel lebih efektif, kembangkan piktogram jadi poster permanen, jadi koordinator evaluasi dua mingguan</div></div>
+      <div class="nk nk-c"><div class="range">69–83</div><div class="label">✅ Cakap</div><div class="desc">Kumpulkan data kebisingan 1 minggu kemudian, buat piktogram berdampingan, analisis apakah kondisi berubah</div></div>
+      <div class="nk nk-b"><div class="range">54–68</div><div class="label">📈 Berkembang</div><div class="desc">Bimbingan tabel & piktogram, diskusi terbimbing tentang pemilihan bahan berdasarkan sifat bunyi</div></div>
+      <div class="nk nk-p"><div class="range">0–53</div><div class="label">🤝 Perlu Bimbingan</div><div class="desc">Remedial tatap muka: tabel dari data yang sudah ada, diskusi lisan tentang kontribusi selama proyek</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TINDAK LANJUT -->
+<section class="tindak-sec" id="tindaklanjut">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🗺️ Rencana Tindak Lanjut</div>
+      <h2>Setelah Proyek: Langkah Selanjutnya</h2>
+    </div>
+    <div class="tindak-grid rev">
+      <div class="tindak-card tc-teal">
+        <div class="tc-stripe"></div>
+        <div class="tc-body">
+          <div class="tc-hdr"><h4>🌟 Pengayaan — Mahir (84–100)</h4><span class="tc-badge">Mahir</span></div>
+          <ul>
+            <li>Rancang panel peredam versi lebih besar atau lebih efektif dengan variasi bahan berbeda; dokumentasikan dan presentasikan hasilnya kepada kelas sebagai referensi.</li>
+            <li>Menjadi koordinator evaluasi berkala kesepakatan kelas: pimpin sesi evaluasi dua mingguan — apakah kesepakatan masih dijalankan? Apa yang perlu diperbarui?</li>
+            <li>Kembangkan piktogram dari LK 3 menjadi poster permanen yang ditempel di kelas.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tindak-card tc-ind">
+        <div class="tc-stripe"></div>
+        <div class="tc-body">
+          <div class="tc-hdr"><h4>✅ Penguatan — Cakap (69–83)</h4><span class="tc-badge">Cakap</span></div>
+          <ul>
+            <li>Kumpulkan data kebisingan satu minggu setelah proyek selesai menggunakan format yang sama. Buat piktogram berdampingan (sebelum vs. sesudah), lalu tulis satu paragraf analisis: apakah kondisi berubah setelah solusi diterapkan?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tindak-card tc-amb">
+        <div class="tc-stripe"></div>
+        <div class="tc-body">
+          <div class="tc-hdr"><h4>📈 Remedi — Berkembang (54–68)</h4><span class="tc-badge">Berkembang</span></div>
+          <ul>
+            <li>Bimbingan terstruktur untuk melengkapi tabel frekuensi atau piktogram menggunakan data yang sudah dikumpulkan selama proyek.</li>
+            <li>Diskusi terbimbing: "Dari percobaan bahan yang kamu lakukan, mengapa kamu memilih bahan itu? Hubungkan dengan sifat bunyi yang kamu pelajari."</li>
+            <li>Melengkapi bagian laporan yang masih kosong dengan panduan pertanyaan dari pendidik.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tindak-card tc-rose">
+        <div class="tc-stripe"></div>
+        <div class="tc-body">
+          <div class="tc-hdr"><h4>🤝 Remedial Tatap Muka — Perlu Bimbingan (0–53)</h4><span class="tc-badge">Perlu Bimbingan</span></div>
+          <ul>
+            <li>Remedial: membuat tabel frekuensi dari data yang sudah ada (tidak perlu mengumpulkan data baru) dengan pendampingan langsung pendidik, langkah per langkah.</li>
+            <li>Diskusi personal: guru menanyakan secara lisan apa yang dikerjakan murid selama proyek, lalu membantu menuangkannya dalam laporan sederhana.</li>
+            <li>Melihat kembali catatan percobaan bahan di LK 4 bersama pendidik, mendiskusikan mengapa bahan tertentu lebih baik menggunakan bahasa sederhana.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEMITRAAN -->
+<section class="mitra-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🤝 Kemitraan Pembelajaran</div>
+      <h2>Belajar Bersama Komunitas</h2>
+    </div>
+    <div class="mitra-grid rev">
+      <div class="mitra-card">
+        <span class="mitra-ico">👨‍👩‍👧</span>
+        <h4>Orang Tua Murid</h4>
+        <p>Mendukung murid dalam menerapkan kesadaran terhadap kebisingan di rumah — memperkuat pemahaman tentang hak dan kewajiban dalam lingkungan bersama di luar sekolah.</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">👩‍🏫</span>
+        <h4>Guru Mata Pelajaran Lain</h4>
+        <p>Diajak berbagi: seberapa sering kebisingan kelas mengganggu pembelajaran yang mereka ampu? Perspektif ini membantu murid memahami bahwa dampak kebisingan dirasakan lebih luas dari yang dibayangkan.</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">🏫</span>
+        <h4>Kelas sebagai Laboratorium</h4>
+        <p>Kondisi nyata kelas adalah objek penelitian dan juga tempat uji coba solusi. Murid tidak hanya belajar tentang bunyi secara abstrak — mereka menggunakannya untuk memperbaiki lingkungan belajar mereka sendiri.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-sec">
+  <div class="wrap">
+    <div class="q-box rev">
+      <blockquote>"Solusi yang baik menjawab masalah yang <em>nyata berdasarkan data</em> — bukan masalah yang diasumsikan. Jika data menunjukkan sumber kebisingan terbesar adalah percakapan saat kerja kelompok, maka solusinya harus menjawab itu."</blockquote>
+      <cite>— Catatan Pendidik, Perencanaan STEM Kelas 4 · SDM01 Kukusan</cite>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="ft-brand">Kelasku Terlalu Berisik · Kelas 4 SDM01</div>
+        <p class="ft-desc">Perencanaan pembelajaran STEM terintegrasi PKn, IPAS, dan Matematika untuk kelas 4 SD Muhammadiyah 01 Kukusan. Model 5E Bybee · 24 JP · 6 Pertemuan.</p>
+        <p class="ft-meta">SD Muhammadiyah 01 Kukusan · Berdasarkan Panduan STEM Kemendikdasmen 2025</p>
+      </div>
+      <ul class="ft-links">
+        <li><a href="index.html">🏠 Hub SDM01</a></li>
+        <li><a href="aksi-hijau-stem-kelas5.html">🌱 Kelas 6 · Aksi Hijau</a></li>
+        <li><a href="sistem-kebersihan-kelas5.html">🧹 Kelas 5 · Sistem Kebersihan</a></li>
+        <li><a href="kelasku-terlalu-berisik.html">🔊 Kelas 4 · Kelasku Berisik</a></li>
+        <li><a href="jusnya-tidak-enak.html">🥤 Kelas 3 · Jusnya Tidak Enak</a></li>
+        <li><a href="../index.html">↖ Hub Utama STEM</a></li>
+      </ul>
+    </div>
+    <div class="ft-bot">
+      <p>SD Muhammadiyah 01 Kukusan · Kepentingan pendidikan non-komersial</p>
+      <span class="ft-ver">v1.0.0 · Mei 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Progress bar
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-innerHeight;
+  prog.style.width=(s/h*100)+'%';
+});
+// Scroll reveal
+const obs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}
+}),{threshold:.08});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+
+// Generate wave visualizer bars
+const vis=document.getElementById('wavevis');
+if(vis){
+  const heights=[12,28,44,36,20,38,24,44,32,18,40,28,16,34,22,42,30,14,38,26,44,20,36,12,28,44,18,32,40,24];
+  heights.forEach(h=>{
+    const b=document.createElement('div');
+    b.className='wave-bar';
+    b.style.height=h+'px';
+    b.style.animationDelay=Math.random()*2+'s';
+    vis.appendChild(b);
+  });
+  // Animate bars
+  let t=0;
+  function animBars(){
+    t+=.04;
+    vis.querySelectorAll('.wave-bar').forEach((b,i)=>{
+      const h=20+Math.sin(t+i*.4)*16+Math.sin(t*.7+i*.3)*8;
+      b.style.height=Math.max(6,h)+'px';
+    });
+    requestAnimationFrame(animBars);
+  }
+  animBars();
+}
+</script>
+</body>
+</html>
