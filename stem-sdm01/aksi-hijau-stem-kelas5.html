@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aksi Hijau Si Penyelamat Bumi · Perencanaan STEM Kelas 5</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #EEF6FA;
+      --bg2:      #F8FBFD;
+      --surface:  #FFFFFF;
+      --surface2: #F0F7FC;
+      --navy:     #0B1D2E;
+      --navy-mid: #1D3A52;
+      --teal:     #0EA5C9;
+      --teal-dim: #0EA5C920;
+      --teal-soft:#E0F5FB;
+      --green:    #059669;
+      --green-dim:#ECFDF5;
+      --amber:    #D97706;
+      --amber-dim:#FFFBEB;
+      --amber-soft:#FEF3C7;
+      --pink:     #DB2777;
+      --pink-dim: #FDF2F8;
+      --blue:     #0369A1;
+      --blue-dim: #EFF6FF;
+      --text:     #0B1D2E;
+      --text-mid: #334155;
+      --text-mute:#64748B;
+      --text-faint:#94A3B8;
+      --border:   #CBD5E1;
+      --border-l: #E2E8F0;
+      --shadow:   0 2px 12px rgba(11,29,46,.08);
+      --shadow-md:0 4px 24px rgba(11,29,46,.12);
+      --r:        14px;
+      --rl:       22px;
+      --ff-serif: 'DM Serif Display', Georgia, serif;
+      --ff-sans:  'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    *,*::before,*::after { box-sizing:border-box;margin:0;padding:0 }
+    html { scroll-behavior:smooth }
+    body { font-family:var(--ff-sans);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden }
+    a { color:var(--teal);text-decoration:none;transition:color .2s }
+    a:hover { color:var(--amber) }
+
+    /* PROGRESS BAR */
+    #prog { position:fixed;top:0;left:0;height:3px;z-index:999;width:0%;background:linear-gradient(90deg,var(--teal),var(--green),var(--amber));transition:width .1s }
+
+    /* PARTICLE CANVAS — very faint for light theme */
+    #bg { position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.12 }
+
+    .wrap { position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:0 24px }
+    .div  { height:1px;background:var(--border-l);margin:0 24px }
+
+    /* ─── NAV ─── */
+    nav { position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-l);box-shadow:0 1px 8px rgba(11,29,46,.06) }
+    .nav-in { max-width:1160px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px }
+    .nav-logo { display:flex;align-items:center;gap:10px }
+    .nav-mark { width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#0EA5C9,#059669);display:flex;align-items:center;justify-content:center;font-size:18px }
+    .nav-brand { font-size:14px;font-weight:700;color:var(--navy);line-height:1.2 }
+    .nav-brand span { display:block;font-size:11px;font-weight:400;color:var(--text-mute) }
+    .nav-links { display:flex;align-items:center;gap:24px;list-style:none }
+    .nav-links a { font-size:13px;font-weight:500;color:var(--text-mute) }
+    .nav-links a:hover { color:var(--navy) }
+    .nav-badge { font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--teal-dim);color:var(--teal);border:1px solid #0EA5C940 }
+    @media(max-width:800px){ .nav-links { display:none } }
+
+    /* ─── HERO ─── */
+    .hero { padding:80px 0 64px;text-align:center;position:relative;z-index:1;overflow:hidden }
+    .hero::before {
+      content:'';position:absolute;inset:-40% -20%;z-index:0;
+      background:radial-gradient(ellipse 70% 60% at 50% 0%, #0EA5C914 0%, transparent 70%),
+                 radial-gradient(ellipse 50% 40% at 80% 80%, #05966910 0%, transparent 60%),
+                 radial-gradient(ellipse 40% 30% at 10% 70%, #D9770608 0%, transparent 60%);
+      pointer-events:none;
+    }
+    .hero > * { position:relative;z-index:1 }
+    .eyebrow { display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);background:var(--teal-soft);padding:6px 16px;border-radius:20px;border:1px solid #0EA5C940;margin-bottom:24px;opacity:0;animation:fu .7s .1s ease forwards }
+    .eyebrow-dot { width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.6)} }
+    .hero h1 { font-family:var(--ff-serif);font-size:clamp(34px,5.5vw,62px);line-height:1.08;letter-spacing:-.02em;color:var(--navy);max-width:780px;margin:0 auto 14px;opacity:0;animation:fu .7s .2s ease forwards }
+    .hero h1 em { font-style:italic;color:var(--teal) }
+    .hero-misi { display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--text-mid);font-weight:300;margin-bottom:8px;opacity:0;animation:fu .7s .3s ease forwards }
+    .hero-sub { font-size:clamp(14px,1.8vw,17px);color:var(--text-mute);max-width:600px;margin:0 auto 28px;line-height:1.7;opacity:0;animation:fu .7s .35s ease forwards }
+    .hero-meta { display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:36px;opacity:0;animation:fu .7s .4s ease forwards }
+    .meta-chip { display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;padding:6px 14px;border-radius:20px;background:var(--surface);border:1px solid var(--border-l);color:var(--text-mid);box-shadow:var(--shadow) }
+    .meta-chip span { font-size:16px }
+    .hero-cta { display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:0;animation:fu .7s .5s ease forwards }
+    .btn { display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-sans);font-size:14px;font-weight:600;padding:12px 24px;border-radius:10px;cursor:pointer;transition:all .2s;border:none;text-decoration:none }
+    .btn-p { background:var(--teal);color:#fff;box-shadow:0 4px 18px rgba(14,165,201,.3) }
+    .btn-p:hover { background:#0891b2;color:#fff;transform:translateY(-2px) }
+    .btn-g { background:var(--surface);color:var(--text-mid);border:1px solid var(--border);box-shadow:var(--shadow) }
+    .btn-g:hover { background:var(--surface2);color:var(--navy) }
+
+    /* ─── STEM PILLARS ─── */
+    .pillars { padding:0 0 56px;z-index:1;position:relative }
+    .p-row { display:flex;gap:0;border-radius:var(--rl);overflow:hidden;border:1px solid var(--border-l);box-shadow:var(--shadow);opacity:0;animation:fu .8s .55s ease forwards }
+    .p-col { flex:1;padding:20px 16px 22px;text-align:center;background:var(--surface);transition:background .2s;cursor:default }
+    .p-col:hover { background:var(--surface2) }
+    .p-col + .p-col { border-left:1px solid var(--border-l) }
+    .p-ico { font-size:26px;margin-bottom:6px;display:block }
+    .p-let { font-family:var(--ff-serif);font-size:28px;margin-bottom:3px;line-height:1 }
+    .p-lbl { font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mute) }
+    .ps .p-let { color:#0369A1 } .pt .p-let { color:#059669 } .pe .p-let { color:#D97706 } .pm .p-let { color:#DB2777 }
+
+    /* ─── SECTION HEADER ─── */
+    .sh { text-align:center;margin-bottom:44px }
+    .sh-lbl { font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px }
+    .sh h2 { font-family:var(--ff-serif);font-size:clamp(24px,3.5vw,38px);line-height:1.15;color:var(--navy);max-width:560px;margin:0 auto 12px }
+    .sh p { font-size:15px;color:var(--text-mute);max-width:540px;margin:0 auto;font-weight:300 }
+
+    /* ─── INFO CARDS (identitas/identifikasi) ─── */
+    .info-sec { padding:64px 0 0;z-index:1;position:relative }
+    .info-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px }
+    @media(max-width:720px){ .info-grid { grid-template-columns:1fr 1fr } }
+    @media(max-width:480px){ .info-grid { grid-template-columns:1fr } }
+    .info-card { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow);transition:box-shadow .2s,transform .2s }
+    .info-card:hover { box-shadow:var(--shadow-md);transform:translateY(-2px) }
+    .ic-ico { font-size:28px;margin-bottom:10px }
+    .ic-lbl { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:4px }
+    .ic-val { font-size:15px;font-weight:700;color:var(--navy);line-height:1.4 }
+    .ic-val small { display:block;font-size:13px;font-weight:400;color:var(--text-mute);margin-top:2px }
+
+    /* ─── PROFIL LULUSAN ─── */
+    .profil-pills { display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px }
+    .pp { display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;border:1px solid }
+    .pp-kritis { background:var(--blue-dim);color:var(--blue);border-color:#93C5FD }
+    .pp-kolaborasi { background:var(--green-dim);color:var(--green);border-color:#6EE7B7 }
+    .pp-mandiri { background:var(--amber-dim);color:var(--amber);border-color:#FCD34D }
+    .pp-komuni { background:var(--pink-dim);color:var(--pink);border-color:#F9A8D4 }
+
+    /* ─── MASALAH KONTEN ─── */
+    .masalah-sec { padding:64px 0 0;z-index:1;position:relative }
+    .masalah-box { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--rl);padding:36px 40px;box-shadow:var(--shadow);position:relative;overflow:hidden }
+    .masalah-box::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--green)) }
+    .masalah-inner { display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start }
+    @media(max-width:680px){ .masalah-inner { grid-template-columns:1fr } }
+    .masalah-text p { font-size:15px;color:var(--text-mid);line-height:1.75;margin-bottom:14px }
+    .stat-chips { display:flex;flex-wrap:wrap;gap:10px;margin-top:20px }
+    .stat-chip { text-align:center;padding:12px 18px;background:var(--surface2);border:1px solid var(--border-l);border-radius:12px;min-width:130px }
+    .stat-chip .val { font-family:var(--ff-serif);font-size:22px;color:var(--teal);line-height:1 }
+    .stat-chip .desc { font-size:11px;color:var(--text-mute);margin-top:4px;line-height:1.4 }
+    .kriteria-wrap { display:flex;flex-direction:column;gap:10px }
+    .krit-item { display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:var(--surface2);border-radius:12px;border:1px solid var(--border-l) }
+    .krit-ico { font-size:20px;flex-shrink:0;margin-top:2px }
+    .krit-title { font-size:13px;font-weight:700;color:var(--navy);margin-bottom:2px }
+    .krit-desc { font-size:12px;color:var(--text-mute);line-height:1.5 }
+    .batasan-box { margin-top:20px;padding:16px 18px;background:var(--amber-dim);border:1px solid #FCD34D;border-radius:12px }
+    .batasan-box h4 { font-size:13px;font-weight:700;color:var(--amber);margin-bottom:8px;display:flex;align-items:center;gap:6px }
+    .batasan-box ul { list-style:none;padding:0 }
+    .batasan-box li { font-size:13px;color:var(--text-mid);padding:3px 0;display:flex;align-items:baseline;gap:6px }
+    .batasan-box li::before { content:'•';color:var(--amber);font-size:16px;flex-shrink:0 }
+
+    /* ─── TUJUAN & STEM INTEGRATION ─── */
+    .tujuan-sec { padding:64px 0 0;z-index:1;position:relative }
+    .tp-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px }
+    @media(max-width:640px){ .tp-grid { grid-template-columns:1fr } }
+    .tp-card { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r);padding:26px 24px;box-shadow:var(--shadow) }
+    .tp-card h4 { font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:10px }
+    .tp-card p { font-size:14px;color:var(--text-mid);line-height:1.65 }
+    .ipas-h { color:var(--blue) } .mtk-h { color:var(--pink) }
+
+    /* STEM integration wheel display */
+    .stem-integ { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--rl);padding:36px;box-shadow:var(--shadow);margin-top:8px }
+    .stem-integ h3 { font-family:var(--ff-serif);font-size:20px;color:var(--navy);margin-bottom:24px;text-align:center }
+    .stem-cols { display:grid;grid-template-columns:repeat(4,1fr);gap:14px }
+    @media(max-width:700px){ .stem-cols { grid-template-columns:1fr 1fr } }
+    @media(max-width:400px){ .stem-cols { grid-template-columns:1fr } }
+    .stem-col { border-radius:12px;padding:18px 16px;border:1px solid }
+    .sc-s { background:var(--blue-dim);border-color:#BFDBFE }
+    .sc-t { background:var(--green-dim);border-color:#A7F3D0 }
+    .sc-e { background:var(--amber-dim);border-color:#FDE68A }
+    .sc-m { background:var(--pink-dim);border-color:#FBCFE8 }
+    .sc-head { display:flex;align-items:center;gap:8px;margin-bottom:10px }
+    .sc-letter { font-family:var(--ff-serif);font-size:22px;line-height:1 }
+    .sc-s .sc-letter { color:var(--blue) } .sc-t .sc-letter { color:var(--green) }
+    .sc-e .sc-letter { color:var(--amber) } .sc-m .sc-letter { color:var(--pink) }
+    .sc-name { font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-mute) }
+    .sc-body p { font-size:12px;color:var(--text-mid);line-height:1.6;margin-bottom:6px }
+    .sc-goal { font-size:11px;font-style:italic;color:var(--text-mute);border-top:1px solid;margin-top:8px;padding-top:8px;line-height:1.5 }
+    .sc-s .sc-goal { border-color:#BFDBFE } .sc-t .sc-goal { border-color:#A7F3D0 }
+    .sc-e .sc-goal { border-color:#FDE68A } .sc-m .sc-goal { border-color:#FBCFE8 }
+
+    /* ─── DESAIN PEDAGOGI ─── */
+    .pedagogi-sec { padding:64px 0 0;z-index:1;position:relative }
+    .peda-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px }
+    @media(max-width:720px){ .peda-grid { grid-template-columns:1fr } }
+    .peda-card { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r);padding:24px 22px;box-shadow:var(--shadow) }
+    .peda-card h4 { font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:7px }
+    .peda-card p, .peda-card li { font-size:13px;color:var(--text-mid);line-height:1.6 }
+    .peda-card ul { list-style:none;padding:0;display:flex;flex-direction:column;gap:6px }
+    .peda-card li { display:flex;align-items:flex-start;gap:6px }
+    .peda-card li::before { content:'→';color:var(--teal);flex-shrink:0;font-weight:700 }
+
+    /* 5E model strip */
+    .model-5e { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--rl);padding:28px 32px;box-shadow:var(--shadow);margin-top:16px }
+    .model-5e h4 { font-size:14px;font-weight:700;color:var(--text-mute);margin-bottom:16px;text-transform:uppercase;letter-spacing:.1em }
+    .e5-track { display:flex;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--border-l) }
+    @media(max-width:600px){ .e5-track { flex-direction:column } }
+    .e5-item { flex:1;padding:14px 10px;text-align:center;border-right:1px solid var(--border-l);transition:background .2s }
+    .e5-item:last-child { border-right:none }
+    .e5-item:hover { background:var(--surface2) }
+    .e5-n { font-family:var(--ff-serif);font-size:18px;margin-bottom:3px }
+    .e5-l { font-size:11px;font-weight:600;color:var(--text-mute) }
+    .e51 .e5-n { color:#0369A1 } .e52 .e5-n { color:#059669 } .e53 .e5-n { color:#7C3AED }
+    .e54 .e5-n { color:#D97706 } .e55 .e5-n { color:#DB2777 }
+
+    /* ─── LANGKAH PEMBELAJARAN ─── */
+    .langkah-sec { padding:64px 0 0;z-index:1;position:relative }
+    .pertemuan-list { display:flex;flex-direction:column;gap:14px }
+    .ptr { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s }
+    .ptr:hover { box-shadow:var(--shadow-md) }
+    .ptr-hdr { padding:20px 24px;display:flex;align-items:flex-start;gap:16px;cursor:pointer;user-select:none }
+    .ptr-num { width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-serif);font-size:16px;color:#fff;flex-shrink:0;font-weight:700 }
+    .ptr-meta { flex:1 }
+    .ptr-phase { font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px }
+    .ptr-title { font-family:var(--ff-serif);font-size:17px;color:var(--navy);line-height:1.25;margin-bottom:4px }
+    .ptr-tags { display:flex;flex-wrap:wrap;gap:5px }
+    .ptr-tag { font-size:11px;font-weight:500;padding:2px 8px;border-radius:10px;background:var(--surface2);color:var(--text-mute);border:1px solid var(--border-l) }
+    .ptr-chevron { font-size:14px;color:var(--text-faint);transition:transform .3s;flex-shrink:0;margin-top:3px }
+    .ptr.open .ptr-chevron { transform:rotate(180deg) }
+    .ptr-body { display:none;padding:0 24px 22px;border-top:1px solid var(--border-l) }
+    .ptr.open .ptr-body { display:block }
+    .ptr-steps { list-style:none;padding:16px 0 0;display:flex;flex-direction:column;gap:8px }
+    .ptr-steps li { display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text-mid);line-height:1.6 }
+    .step-n { min-width:22px;height:22px;border-radius:50%;background:var(--bg);border:1px solid var(--border-l);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-mute);flex-shrink:0;margin-top:1px }
+    .ptr-note { margin-top:12px;padding:10px 14px;background:var(--teal-soft);border-radius:10px;border-left:3px solid var(--teal) }
+    .ptr-note p { font-size:12px;color:var(--navy);line-height:1.55 }
+    .ptr-note strong { color:var(--teal) }
+
+    /* Phase colors */
+    .phase-eng .ptr-num { background:linear-gradient(135deg,#0369A1,#0EA5C9) }
+    .phase-eng .ptr-phase { color:#0369A1 }
+    .phase-exp .ptr-num { background:linear-gradient(135deg,#059669,#34D399) }
+    .phase-exp .ptr-phase { color:#059669 }
+    .phase-expl .ptr-num { background:linear-gradient(135deg,#7C3AED,#A78BFA) }
+    .phase-expl .ptr-phase { color:#7C3AED }
+    .phase-elab .ptr-num { background:linear-gradient(135deg,#D97706,#FBBF24) }
+    .phase-elab .ptr-phase { color:#D97706 }
+    .phase-eval .ptr-num { background:linear-gradient(135deg,#DB2777,#F472B6) }
+    .phase-eval .ptr-phase { color:#DB2777 }
+
+    /* ─── ASESMEN ─── */
+    .asesmen-sec { padding:64px 0 0;z-index:1;position:relative }
+    .ases-table-wrap { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--rl);overflow:hidden;box-shadow:var(--shadow) }
+    .ases-table { width:100%;border-collapse:collapse }
+    .ases-table th { background:var(--navy);color:#fff;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:14px 18px;text-align:left }
+    .ases-table td { font-size:13px;padding:14px 18px;border-bottom:1px solid var(--border-l);color:var(--text-mid);vertical-align:top }
+    .ases-table tr:last-child td { border-bottom:none }
+    .ases-table tr:hover td { background:var(--surface2) }
+    .ases-mapel { font-weight:700;color:var(--navy) }
+    .ases-badge { display:inline-flex;font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px }
+    .f-badge { background:var(--teal-soft);color:var(--teal) }
+    .s-badge { background:var(--amber-soft);color:var(--amber) }
+    .ptr-badge { display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:8px;background:var(--surface2);color:var(--text-mute);border:1px solid var(--border-l);margin-right:4px }
+
+    /* ─── RUBRIK ─── */
+    .rubrik-sec { padding:64px 0 0;z-index:1;position:relative }
+    .rubrik-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:16px }
+    @media(max-width:640px){ .rubrik-grid { grid-template-columns:1fr } }
+    .rubrik-card { background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r);padding:24px;box-shadow:var(--shadow) }
+    .rubrik-card h4 { font-size:14px;font-weight:700;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px }
+    .score-row { display:grid;grid-template-columns:60px 1fr;gap:10px;margin-bottom:8px;align-items:start }
+    .score-badge { display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:10px;font-family:var(--ff-serif);font-size:18px;font-weight:700;flex-shrink:0 }
+    .s4 { background:#ECFDF5;color:#059669 } .s3 { background:#EFF6FF;color:#0369A1 }
+    .s2 { background:#FFFBEB;color:#D97706 } .s1 { background:#FDF2F8;color:#DB2777 }
+    .score-text p { font-size:12px;color:var(--text-mid);line-height:1.55 }
+    .score-text strong { color:var(--navy);font-size:13px }
+
+    /* ─── RTL (Rencana Tindak Lanjut) ─── */
+    .rtl-sec { padding:64px 0 0;z-index:1;position:relative }
+    .rtl-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:12px }
+    @media(max-width:900px){ .rtl-grid { grid-template-columns:1fr 1fr } }
+    @media(max-width:480px){ .rtl-grid { grid-template-columns:1fr } }
+    .rtl-card { border-radius:var(--r);padding:22px 18px;border:1px solid }
+    .rtl-mahir { background:var(--blue-dim);border-color:#93C5FD }
+    .rtl-cakap { background:var(--green-dim);border-color:#6EE7B7 }
+    .rtl-berk  { background:var(--amber-dim);border-color:#FCD34D }
+    .rtl-perlu { background:var(--pink-dim);border-color:#F9A8D4 }
+    .rtl-score { font-family:var(--ff-serif);font-size:20px;margin-bottom:2px }
+    .rtl-mahir .rtl-score { color:var(--blue) } .rtl-cakap .rtl-score { color:var(--green) }
+    .rtl-berk  .rtl-score { color:var(--amber)} .rtl-perlu .rtl-score { color:var(--pink) }
+    .rtl-label { font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mute);margin-bottom:12px }
+    .rtl-items { list-style:none;padding:0;display:flex;flex-direction:column;gap:6px }
+    .rtl-items li { font-size:12px;color:var(--text-mid);line-height:1.5;display:flex;gap:5px }
+    .rtl-items li::before { content:'✓';font-weight:700;flex-shrink:0 }
+    .rtl-mahir .rtl-items li::before { color:var(--blue) }
+    .rtl-cakap .rtl-items li::before { color:var(--green) }
+    .rtl-berk  .rtl-items li::before { color:var(--amber) }
+    .rtl-perlu .rtl-items li::before { color:var(--pink) }
+
+    /* ─── NILAI INTERVAL ─── */
+    .nilai-strip { display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border-l);margin-top:24px;box-shadow:var(--shadow) }
+    .nilai-cell { padding:16px 12px;text-align:center;border-right:1px solid var(--border-l) }
+    .nilai-cell:last-child { border-right:none }
+    .nilai-range { font-family:var(--ff-serif);font-size:15px;margin-bottom:4px }
+    .nilai-kat { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em }
+    .n1 { background:#EFF6FF } .n1 .nilai-range { color:var(--blue) } .n1 .nilai-kat { color:var(--blue) }
+    .n2 { background:#ECFDF5 } .n2 .nilai-range { color:var(--green) } .n2 .nilai-kat { color:var(--green) }
+    .n3 { background:#FFFBEB } .n3 .nilai-range { color:var(--amber) } .n3 .nilai-kat { color:var(--amber) }
+    .n4 { background:#FDF2F8 } .n4 .nilai-range { color:var(--pink) } .n4 .nilai-kat { color:var(--pink) }
+
+    /* ─── QUOTE ─── */
+    .quote-sec { padding:64px 0 80px;z-index:1;position:relative }
+    .quote-box { background:linear-gradient(135deg,var(--teal-soft),var(--green-dim));border:1px solid #A7F3D0;border-radius:var(--rl);padding:44px 48px;text-align:center;position:relative;overflow:hidden }
+    .quote-box::before { content:'"';position:absolute;top:-20px;left:28px;font-family:var(--ff-serif);font-size:160px;color:var(--teal);opacity:.08;line-height:1;pointer-events:none }
+    .quote-text { font-family:var(--ff-serif);font-size:clamp(16px,2.2vw,22px);color:var(--navy);line-height:1.5;font-style:italic;margin-bottom:16px;position:relative;z-index:1;max-width:700px;margin-left:auto;margin-right:auto }
+    .quote-text span { color:var(--teal);font-style:normal }
+    .quote-src { font-size:13px;color:var(--text-mute);position:relative;z-index:1 }
+
+    /* ─── FOOTER ─── */
+    footer { padding:48px 0 28px;border-top:1px solid var(--border-l);position:relative;z-index:1;background:var(--surface) }
+    .ft-in { display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start }
+    @media(max-width:600px){ .ft-in { grid-template-columns:1fr } }
+    .ft-brand { font-family:var(--ff-serif);font-size:18px;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:8px }
+    .ft-desc { font-size:13px;color:var(--text-mute);max-width:380px;line-height:1.6;margin-bottom:10px }
+    .ft-meta { font-size:12px;color:var(--text-faint) }
+    .ft-links { display:flex;flex-direction:column;gap:8px;list-style:none }
+    .ft-links a { font-size:13px;color:var(--text-mute) } .ft-links a:hover { color:var(--navy) }
+    .ft-bot { margin-top:32px;padding-top:14px;border-top:1px solid var(--border-l);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap }
+    .ft-bot p { font-size:12px;color:var(--text-faint) }
+    .ver { font-size:11px;font-weight:600;background:var(--surface2);color:var(--text-mute);padding:3px 10px;border-radius:6px;border:1px solid var(--border-l) }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fu { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .rev { opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease }
+    .rev.in { opacity:1;transform:translateY(0) }
+
+    /* ─── DIGITAL TOOLS ─── */
+    .tools-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px }
+    @media(max-width:600px){ .tools-grid { grid-template-columns:1fr 1fr } }
+    .tool-chip { display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border-l);border-radius:10px;font-size:12px;font-weight:500;color:var(--text-mid) }
+
+    /* ─── SECTION SPACER ─── */
+    section { padding-bottom:0 }
+    .sec-space { height:64px }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+<canvas id="bg"></canvas>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-mark">🌿</div>
+      <div class="nav-brand">Aksi Hijau Si Penyelamat Bumi <span>Perencanaan STEM · Kelas V SD</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#identitas">Identitas</a></li>
+      <li><a href="#tujuan">Tujuan</a></li>
+      <li><a href="#langkah">Langkah</a></li>
+      <li><a href="#asesmen">Asesmen</a></li>
+    </ul>
+    <span class="nav-badge">Kemendikdasmen 2025</span>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> Contoh Perencanaan Pembelajaran SD · STEM Terintegrasi</div>
+    <h1>🌱 <em>Aksi Hijau</em><br>Si Penyelamat Bumi</h1>
+    <p class="hero-misi">🎯 Misi menyelamatkan tumbuhan untuk keberlangsungan ekosistem yang lebih baik di masa depan</p>
+    <p class="hero-sub">Proyek berbasis STEM terintegrasi yang mengajak murid kelas 5 memahami dampak perubahan iklim, merancang mini greenhouse, dan menyajikan data lingkungan secara ilmiah.</p>
+    <div class="hero-meta">
+      <div class="meta-chip"><span>📚</span> IPAS & Matematika</div>
+      <div class="meta-chip"><span>🏫</span> Fase C / Kelas V</div>
+      <div class="meta-chip"><span>⏱️</span> 28 JP · 7 Pertemuan</div>
+      <div class="meta-chip"><span>🌡️</span> Topik: Perubahan Iklim</div>
+    </div>
+    <div class="hero-cta">
+      <a href="#langkah" class="btn btn-p">Lihat Alur Pembelajaran ↓</a>
+      <a href="#asesmen" class="btn btn-g">Asesmen & Rubrik</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEM PILLARS -->
+<section class="pillars">
+  <div class="wrap">
+    <div class="p-row">
+      <div class="p-col ps"><span class="p-ico">🔬</span><div class="p-let">S</div><div class="p-lbl">Sains</div></div>
+      <div class="p-col pt"><span class="p-ico">📡</span><div class="p-let">T</div><div class="p-lbl">Teknologi</div></div>
+      <div class="p-col pe"><span class="p-ico">⚙️</span><div class="p-let">E</div><div class="p-lbl">Enjinering</div></div>
+      <div class="p-col pm"><span class="p-ico">📊</span><div class="p-let">M</div><div class="p-lbl">Matematika</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ═══ IDENTITAS & IDENTIFIKASI ═══ -->
+<section class="info-sec" id="identitas">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Bagian 1 & 2</div>
+      <h2>Identitas & Identifikasi</h2>
+      <p>Informasi dasar perencanaan dan dimensi profil lulusan yang dikembangkan melalui proyek ini.</p>
+    </div>
+    <div class="info-grid rev">
+      <div class="info-card">
+        <div class="ic-ico">📚</div>
+        <div class="ic-lbl">Mata Pelajaran</div>
+        <div class="ic-val">IPAS & Matematika<small>Ilmu Pengetahuan Alam dan Sosial</small></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-ico">🎓</div>
+        <div class="ic-lbl">Fase / Kelas</div>
+        <div class="ic-val">Fase C<small>Kelas V (Lima) SD</small></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-ico">⏱️</div>
+        <div class="ic-lbl">Alokasi Waktu</div>
+        <div class="ic-val">28 Jam Pelajaran<small>7 Pertemuan</small></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-ico">🌿</div>
+        <div class="ic-lbl">Topik</div>
+        <div class="ic-val">Perubahan Iklim<small>Climate Change & Ekosistem</small></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-ico">🧭</div>
+        <div class="ic-lbl">Model Pembelajaran</div>
+        <div class="ic-val">STEM Bybee (5E)<small>Engagement → Evaluation</small></div>
+      </div>
+      <div class="info-card">
+        <div class="ic-ico">🏆</div>
+        <div class="ic-lbl">Produk Akhir</div>
+        <div class="ic-val">Mini Greenhouse<small>+ Laporan & Presentasi Data</small></div>
+      </div>
+    </div>
+
+    <div class="sec-space"></div>
+    <div class="sh rev">
+      <div class="sh-lbl">Dimensi Profil Lulusan</div>
+      <h2>Kompetensi yang Dikembangkan</h2>
+    </div>
+    <div class="profil-pills rev" style="margin-bottom:8px">
+      <span class="pp pp-kritis">🧠 Penalaran Kritis</span>
+      <span class="pp pp-kolaborasi">🤝 Kolaborasi</span>
+      <span class="pp pp-mandiri">💪 Kemandirian</span>
+      <span class="pp pp-komuni">🗣️ Komunikasi</span>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:64px"></div>
+
+<!-- ═══ KONTEN MASALAH ═══ -->
+<section class="masalah-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Bagian 3 · Desain Pembelajaran</div>
+      <h2>Konten Masalah & Kriteria</h2>
+      <p>Konteks permasalahan nyata yang menjadi landasan proyek STEM ini.</p>
+    </div>
+    <div class="masalah-box rev">
+      <div class="masalah-inner">
+        <div class="masalah-text">
+          <p>Indonesia yang beriklim tropis kini mulai merasakan dampak nyata perubahan iklim global dengan <strong>mundurnya musim hujan hingga 20–30 hari di 63,8% wilayah</strong> (BMKG, 2023) serta <strong>kenaikan suhu rata-rata 0,8°C</strong> pada 2024, dengan tren peningkatan 1,02°C dalam 44 tahun terakhir (BMKG, 2024).</p>
+          <p>Kenaikan suhu ini mempercepat penguapan, menyebabkan tanah cepat kering, dan tanaman lebih mudah layu bahkan mati. Padahal, tanaman sangat penting sebagai sumber pangan, penghasil oksigen, dan penjaga keseimbangan ekosistem.</p>
+          <p>Melalui proyek <strong>"Aksi Hijau Si Penyelamat Bumi"</strong>, murid kelas 5 diajak untuk memahami bagaimana perubahan iklim berdampak pada tanaman dan lingkungan, merancang greenhouse, serta menganalisis data cuaca secara matematis.</p>
+          <div class="stat-chips">
+            <div class="stat-chip">
+              <div class="val">20–30</div>
+              <div class="desc">Hari mundurnya musim hujan di 63,8% wilayah Indonesia</div>
+            </div>
+            <div class="stat-chip">
+              <div class="val">0,8°C</div>
+              <div class="desc">Kenaikan suhu rata-rata Indonesia tahun 2024</div>
+            </div>
+            <div class="stat-chip">
+              <div class="val">1,02°C</div>
+              <div class="desc">Tren peningkatan dalam 44 tahun terakhir</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-family:var(--ff-serif);font-size:18px;color:var(--navy);margin-bottom:14px">✅ Kriteria Keberhasilan</h3>
+          <div class="kriteria-wrap">
+            <div class="krit-item">
+              <div class="krit-ico">🏗️</div>
+              <div>
+                <div class="krit-title">Berdiri Kokoh</div>
+                <div class="krit-desc">Tidak roboh saat diuji di depan kipas angin meja kecepatan sedang, jarak 20 cm selama 30 detik.</div>
+              </div>
+            </div>
+            <div class="krit-item">
+              <div class="krit-ico">🔒</div>
+              <div>
+                <div class="krit-title">Tertutup Rapat</div>
+                <div class="krit-desc">Tidak ada celah antar sambungan greenhouse dilihat dari berbagai sisi.</div>
+              </div>
+            </div>
+            <div class="krit-item">
+              <div class="krit-ico">🌬️</div>
+              <div>
+                <div class="krit-title">Ventilasi Udara</div>
+                <div class="krit-desc">Pintu atau ventilasi berukuran 10 cm × 10 cm.</div>
+              </div>
+            </div>
+            <div class="krit-item">
+              <div class="krit-ico">☀️</div>
+              <div>
+                <div class="krit-title">Cahaya Masuk</div>
+                <div class="krit-desc">Tulisan terbaca dari dalam saat disenter dari jarak 5–20 cm dari luar greenhouse.</div>
+              </div>
+            </div>
+            <div class="krit-item">
+              <div class="krit-ico">🌡️</div>
+              <div>
+                <div class="krit-title">Suhu & Kelembaban Ideal</div>
+                <div class="krit-desc">Sesuai atau mendekati suhu ideal jenis tanaman lokal yang telah disepakati bersama.</div>
+              </div>
+            </div>
+          </div>
+          <div class="batasan-box">
+            <h4>📏 Batasan</h4>
+            <ul>
+              <li>Ukuran maks: 30 × 30 × 40 cm</li>
+              <li>Rangka: bambu / sumpit / stick kayu</li>
+              <li>Atap & dinding: plastik bening / plastik mika</li>
+              <li>Perekat: kawat / tali / lem</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:64px"></div>
+
+<!-- ═══ TUJUAN PEMBELAJARAN ═══ -->
+<section class="tujuan-sec" id="tujuan">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Bagian 4</div>
+      <h2>Tujuan Pembelajaran</h2>
+      <p>Capaian yang ingin diraih murid melalui proyek ini, diintegrasikan dari dua mata pelajaran.</p>
+    </div>
+
+    <div style="margin-bottom:16px" class="rev">
+      <div style="background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r);padding:18px 22px;box-shadow:var(--shadow)">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mute);margin-bottom:10px">⚡ Kompetensi Prasyarat</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="font-size:13px;padding:5px 12px;border-radius:20px;background:var(--surface2);border:1px solid var(--border-l);color:var(--text-mid)">🌤️ Jenis cuaca & pengaruhnya bagi makhluk hidup</span>
+          <span style="font-size:13px;padding:5px 12px;border-radius:20px;background:var(--surface2);border:1px solid var(--border-l);color:var(--text-mid)">🍃 Proses fotosintesis & peran tumbuhan</span>
+          <span style="font-size:13px;padding:5px 12px;border-radius:20px;background:var(--surface2);border:1px solid var(--border-l);color:var(--text-mid)">📋 Mencatat & membaca tabel sederhana</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tp-grid rev">
+      <div class="tp-card">
+        <h4><span style="font-size:22px">🔬</span> <span class="ipas-h">IPAS</span></h4>
+        <p>Menganalisis hubungan antarkomponen <strong>biotik</strong> (tanaman, hewan, manusia) dan <strong>abiotik</strong> (suhu, kelembaban, cahaya) serta pengaruhnya terhadap ekosistem.</p>
+      </div>
+      <div class="tp-card">
+        <h4><span style="font-size:22px">📐</span> <span style="color:var(--pink)">Matematika</span></h4>
+        <p>Mengurutkan, membandingkan, menyajikan, dan menganalisis data dalam bentuk <strong>gambar/piktogram, diagram batang, dan tabel frekuensi</strong> untuk mendapatkan informasi.</p>
+      </div>
+    </div>
+
+    <div class="stem-integ rev">
+      <h3>🔗 Integrasi Komponen STEM dalam Pembelajaran</h3>
+      <div class="stem-cols">
+        <div class="stem-col sc-s">
+          <div class="sc-head">
+            <span class="sc-letter">S</span>
+            <span class="sc-name">Sains</span>
+          </div>
+          <div class="sc-body">
+            <p>Murid mengamati, mencatat, dan mengidentifikasi komponen abiotik (suhu, cahaya, kelembaban) dan komponen biotik di lingkungan sekitar.</p>
+            <div class="sc-goal">Mengetahui hubungan antarkomponen dalam ekosistem dan dampaknya terhadap pertumbuhan tanaman.</div>
+          </div>
+        </div>
+        <div class="stem-col sc-t">
+          <div class="sc-head">
+            <span class="sc-letter">T</span>
+            <span class="sc-name">Teknologi</span>
+          </div>
+          <div class="sc-body">
+            <p>Murid menggunakan termometer, higrometer dan aplikasi cuaca digital (BMKG / Weather App) untuk mencatat data suhu dan kelembaban.</p>
+            <div class="sc-goal">Menggunakan alat ukur digital/konvensional untuk mengetahui kondisi lingkungan.</div>
+          </div>
+        </div>
+        <div class="stem-col sc-e">
+          <div class="sc-head">
+            <span class="sc-letter">E</span>
+            <span class="sc-name">Enjinering</span>
+          </div>
+          <div class="sc-body">
+            <p>Murid merancang dan membuat purwarupa mini greenhouse mempertimbangkan bentuk kubah, rangka, material, serta struktur ventilasi.</p>
+            <div class="sc-goal">Menerapkan desain teknik sederhana untuk solusi lingkungan nyata dan menguji desainnya.</div>
+          </div>
+        </div>
+        <div class="stem-col sc-m">
+          <div class="sc-head">
+            <span class="sc-letter">M</span>
+            <span class="sc-name">Matematika</span>
+          </div>
+          <div class="sc-body">
+            <p>Membaca & menyajikan data cuaca 30 hari (tabel & piktogram). Mencatat suhu & kelembaban, menyajikan dalam diagram batang, lalu menganalisis efektivitas greenhouse.</p>
+            <div class="sc-goal">Melatih kemampuan membaca, menyajikan, dan menarik kesimpulan dari data lingkungan.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:64px"></div>
+
+<!-- ═══ DESAIN PEMBELAJARAN ═══ -->
+<section class="pedagogi-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Bagian 5</div>
+      <h2>Desain Pembelajaran</h2>
+      <p>Praktik pedagogis, kemitraan, lingkungan belajar, dan pemanfaatan digital dalam proyek.</p>
+    </div>
+
+    <div class="model-5e rev">
+      <h4>🔄 Model STEM Bybee — Siklus 5E</h4>
+      <div class="e5-track">
+        <div class="e5-item e51"><div class="e5-n">Engagement</div><div class="e5-l">Pertemuan 1</div></div>
+        <div class="e5-item e52"><div class="e5-n">Exploration</div><div class="e5-l">Pertemuan 2–3</div></div>
+        <div class="e5-item e53"><div class="e5-n">Explanation</div><div class="e5-l">Pertemuan 4</div></div>
+        <div class="e5-item e54"><div class="e5-n">Elaboration</div><div class="e5-l">Pertemuan 5</div></div>
+        <div class="e5-item e55"><div class="e5-n">Evaluation</div><div class="e5-l">Pertemuan 6–7</div></div>
+      </div>
+    </div>
+
+    <div class="peda-grid rev" style="margin-top:16px">
+      <div class="peda-card">
+        <h4>🤝 Kemitraan</h4>
+        <ul>
+          <li>Orang tua: membantu penyediaan alat & bahan untuk membuat mini greenhouse</li>
+          <li>Petani lokal / penggiat urban farming: narasumber melalui kunjungan kelas, video call, atau rekaman singkat</li>
+          <li>Komunitas lingkungan: sesi tanya jawab mengenai masalah nyata tanaman & greenhouse di lapangan</li>
+        </ul>
+      </div>
+      <div class="peda-card">
+        <h4>🏫 Lingkungan Belajar</h4>
+        <ul>
+          <li>Mendorong murid merancang ide bercocok tanam efektif menghadapi perubahan komponen abiotik</li>
+          <li>Kegiatan kolaboratif & analitis berbasis data</li>
+          <li>Pembelajaran di dalam kelas dan memanfaatkan lingkungan sekolah</li>
+          <li>Pengembangan ide greenhouse di lingkungan sekolah</li>
+        </ul>
+      </div>
+      <div class="peda-card">
+        <h4>📱 Pemanfaatan Digital</h4>
+        <div class="tools-grid" style="margin-top:8px">
+          <div class="tool-chip">🎬 Video anomali cuaca</div>
+          <div class="tool-chip">♻️ Video perubahan iklim</div>
+          <div class="tool-chip">🏠 Video pembuatan greenhouse</div>
+          <div class="tool-chip">🌐 weather.com</div>
+          <div class="tool-chip">🌐 BMKG.go.id</div>
+          <div class="tool-chip">🌡️ Termometer & higrometer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:64px"></div>
+
+<!-- ═══ LANGKAH PEMBELAJARAN ═══ -->
+<section class="langkah-sec" id="langkah">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Bagian 6</div>
+      <h2>Langkah Pembelajaran</h2>
+      <p>Tujuh pertemuan terstruktur mengikuti model STEM Bybee 5E. Klik setiap pertemuan untuk detailnya.</p>
+    </div>
+
+    <div class="pertemuan-list rev">
+
+      <!-- P1 -->
+      <div class="ptr phase-eng">
+        <div class="ptr-hdr" onclick="toggle(this)">
+          <div class="ptr-num">1</div>
+          <div class="ptr-meta">
+            <div class="ptr-phase">⚡ Engagement — Memahami</div>
+            <div class="ptr-title">Makhluk Hidup dan Benda Tak Hidup di Sekitarku</div>
+            <div class="ptr-tags">
+              <span class="ptr-tag">🏫 Berkesadaran Bermakna Menggembirakan</span>
+              <span class="ptr-tag">🔬 IPAS</span>
+              <span class="ptr-tag">👥 Kelompok 3–4 orang</span>
+            </div>
+          </div>
+          <span class="ptr-chevron">▼</span>
+        </div>
+        <div class="ptr-body">
+          <ul class="ptr-steps">
+            <li><span class="step-n">1</span>Pendidik menampilkan gambar kondisi tanaman kering dan layu melalui proyektor atau cetak.</li>
+            <li><span class="step-n">2</span>Diskusi awal melalui pertanyaan pemantik: "Apa perbedaan kondisi tanaman pada kedua gambar? Mengapa tanaman itu layu?"</li>
+            <li><span class="step-n">3</span>Murid menyimak video fenomena anomali cuaca (hingga menit 01:09) — Banjir di Musim Kemarau.</li>
+            <li><span class="step-n">4</span>Video perubahan iklim: "Yuk Ketahui Pentingnya Perubahan Iklim!" disimak bersama + diskusi.</li>
+            <li><span class="step-n">5</span>Penyampaian tujuan pembelajaran: peran sebagai "Agen Aksi Hijau Si Penyelamat Bumi."</li>
+            <li><span class="step-n">6</span>Murid berkelompok 3–4 orang untuk observasi komponen biotik & abiotik di lingkungan sekolah.</li>
+            <li><span class="step-n">7</span>Pengisian Misi Pertama (asesmen formatif IPAS) + Lembar Refleksi Aksi Hijau.</li>
+          </ul>
+          <div class="ptr-note"><p><strong>🎯 Misi Berhasil:</strong> Murid dapat membedakan makhluk hidup & benda tak hidup serta menjelaskan dampak jika tidak ada komponen abiotik.</p></div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="ptr phase-exp">
+        <div class="ptr-hdr" onclick="toggle(this)">
+          <div class="ptr-num">2</div>
+          <div class="ptr-meta">
+            <div class="ptr-phase">🔍 Exploration — Memahami</div>
+            <div class="ptr-title">Apa yang Dibutuhkan Tanaman untuk Bertahan Hidup?</div>
+            <div class="ptr-tags">
+              <span class="ptr-tag">🏫 Berkesadaran Bermakna</span>
+              <span class="ptr-tag">🌿 Biotik & Abiotik</span>
+              <span class="ptr-tag">📝 Sticky Notes</span>
+            </div>
+          </div>
+          <span class="ptr-chevron">▼</span>
+        </div>
+        <div class="ptr-body">
+          <ul class="ptr-steps">
+            <li><span class="step-n">1</span>Pertanyaan pemantik dari gambar: komponen biotik & abiotik, akibat jika tidak ada tumbuhan.</li>
+            <li><span class="step-n">2</span>Papan tulis dibagi 3 bagian: fungsi tumbuhan, bagaimana menghasilkan oksigen, apa yang diperlukan untuk fotosintesis.</li>
+            <li><span class="step-n">3</span>Murid menulis jawaban di potongan kertas / sticky notes, ditempel di papan tulis, lalu dibahas bersama.</li>
+            <li><span class="step-n">4</span>Pengisian Misi Kedua (IPAS): komponen abiotik yang dibutuhkan tumbuhan, peran, dan dampaknya.</li>
+            <li><span class="step-n">5</span>Beberapa murid presentasi hasil kerja; pendidik memberi penguatan tentang pentingnya menjaga tumbuhan.</li>
+            <li><span class="step-n">6</span>Tugas rumah: mencari tahu musim apa yang seharusnya terjadi saat ini beserta sumbernya.</li>
+          </ul>
+          <div class="ptr-note"><p><strong>🎯 Misi Berhasil:</strong> Murid menyebutkan komponen abiotik yang dibutuhkan tumbuhan beserta perannya dan dampak kekurangan/kelebihan sinar matahari.</p></div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="ptr phase-exp">
+        <div class="ptr-hdr" onclick="toggle(this)">
+          <div class="ptr-num">3</div>
+          <div class="ptr-meta">
+            <div class="ptr-phase">🔍 Exploration — Memahami</div>
+            <div class="ptr-title">Teknologi dan Data Lingkungan</div>
+            <div class="ptr-tags">
+              <span class="ptr-tag">📊 Matematika</span>
+              <span class="ptr-tag">🌐 Weather.com</span>
+              <span class="ptr-tag">📈 Piktogram & Tabel</span>
+            </div>
+          </div>
+          <span class="ptr-chevron">▼</span>
+        </div>
+        <div class="ptr-body">
+          <ul class="ptr-steps">
+            <li><span class="step-n">1</span>Pendidik menampilkan prakiraan cuaca 30 hari sebelumnya via weather.com (cetak jika internet terbatas).</li>
+            <li><span class="step-n">2</span>Penjelasan arti setiap simbol prakiraan cuaca: hari, tanggal, suhu tertinggi/terendah, kondisi cuaca.</li>
+            <li><span class="step-n">3</span>Pembentukan kelompok melalui kartu cuaca acak. Kelompok menuliskan prediksi pengaruh cuaca terhadap tanaman dalam kalimat sebab-akibat.</li>
+            <li><span class="step-n">4</span>Pengisian Misi Ketiga (Matematika): membuat piktogram suhu 30 hari terakhir dari data aktual daerah sekolah.</li>
+            <li><span class="step-n">5</span>Presentasi perwakilan kelompok + diskusi kesimpulan bersama tentang pola cuaca dan dampaknya pada tanaman.</li>
+            <li><span class="step-n">6</span>Murid mencari alternatif solusi merawat tanaman sesuai kondisi musim saat ini → dikaitkan dengan konsep greenhouse.</li>
+            <li><span class="step-n">7</span>Pengisian Tiket Keluar sebagai refleksi + asesmen formatif IPAS.</li>
+          </ul>
+          <div class="ptr-note"><p><strong>🎯 Misi Berhasil:</strong> Murid membuat piktogram suhu 30 hari dan menjelaskan hubungan antara pengaruh cuaca dengan kondisi tanaman.</p></div>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div class="ptr phase-expl">
+        <div class="ptr-hdr" onclick="toggle(this)">
+          <div class="ptr-num">4</div>
+          <div class="ptr-meta">
+            <div class="ptr-phase">💡 Explanation — Mengaplikasi</div>
+            <div class="ptr-title">Desain Solusi Mini Greenhouse</div>
+            <div class="ptr-tags">
+              <span class="ptr-tag">🏗️ Enjinering</span>
+              <span class="ptr-tag">✏️ Perancangan</span>
+              <span class="ptr-tag">🌱 Pemilihan Tanaman Lokal</span>
+            </div>
+          </div>
+          <span class="ptr-chevron">▼</span>
+        </div>
+        <div class="ptr-body">
+          <ul class="ptr-steps">
+            <li><span class="step-n">1</span>Murid menyimak video fungsi greenhouse di daerah tropis untuk membangun pemahaman konteks.</li>
+            <li><span class="step-n">2</span>Diskusi: fungsi greenhouse apa yang paling sesuai dengan kondisi daerah sekolah berdasarkan data cuaca pertemuan lalu.</li>
+            <li><span class="step-n">3</span>Pembentukan kelompok melalui kartu desain mini greenhouse (berbeda bentuk) → menjadi desain awal proyek.</li>
+            <li><span class="step-n">4</span>Kelompok mendiskusikan dan memilih 1 tanaman lokal paling cocok sesuai data cuaca (suhu ideal, kelembaban ideal).</li>
+            <li><span class="step-n">5</span>Kelas menyepakati bersama 1 jenis tanaman yang akan digunakan dalam proyek mini greenhouse.</li>
+            <li><span class="step-n">6</span>Murid menyimak video komponen greenhouse sederhana → mengisi Misi Keempat sebagai panduan rancangan.</li>
+            <li><span class="step-n">7</span>Gallery walk: desain dipajang, kelompok saling memberi masukan → revisi & penyempurnaan rancangan.</li>
+          </ul>
+          <div class="ptr-note"><p><strong>🏡 Output:</strong> Setiap kelompok memiliki sketsa desain mini greenhouse yang telah direvisi beserta daftar alat & bahan untuk dibawa pertemuan berikutnya.</p></div>
+        </div>
+      </div>
+
+      <!-- P5 -->
+      <div class="ptr phase-elab">
+        <div class="ptr-hdr" onclick="toggle(this)">
+          <div class="ptr-num">5</div>
+          <div class="ptr-meta">
+            <div class="ptr-phase">🛠️ Elaboration — Mengaplikasi</div>
+            <div class="ptr-title">Uji Efektivitas Mini Greenhouse</div>
+            <div class="ptr-tags">
+              <span class="ptr-tag">🌡️ Termometer & Higrometer</span>
+              <span class="ptr-tag">📊 Diagram Batang</span>
+              <span class="ptr-tag">🔧 Membuat & Menguji</span>
+            </div>
+          </div>
+          <span class="ptr-chevron">▼</span>
+        </div>
+        <div class="ptr-body">
+          <ul class="ptr-steps">
+            <li><span class="step-n">1</span>Review suhu & kelembaban ideal tanaman pilihan + pertanyaan reflektif sebelum mulai membuat.</li>
+            <li><span class="step-n">2</span>Murid menuliskan hipotesis suhu & kelembaban di dalam greenhouse pada Lembar Hipotesis Aksi Hijau.</li>
+            <li><span class="step-n">3</span>Kelompok membuat mini greenhouse sesuai sketsa yang telah dirancang pada pertemuan sebelumnya.</li>
+            <li><span class="step-n">4</span>Uji coba mandiri keberhasilan menggunakan Lembar Ceklis Keberhasilan Mini Greenhouse (setelah penjelasan penggunaan termometer & higrometer).</li>
+            <li><span class="step-n">5</span>Pengukuran suhu & kelembaban di dalam dan di luar mini greenhouse → dicatat dan dibandingkan dengan hipotesis awal.</li>
+            <li><span class="step-n">6</span>Misi Kelima: menyajikan & menganalisis data hasil pengukuran dalam bentuk diagram batang.</li>
+            <li><span class="step-n">7</span>Presentasi kelompok + refleksi: apakah hipotesis sesuai? Perbaikan apa yang diperlukan?</li>
+          </ul>
+          <div class="ptr-note"><p><strong>📏 Alat Ukur:</strong> Termometer digital / thermometer udara + Higrometer untuk mengukur suhu dan kelembaban di dalam & luar greenhouse.</p></div>
+        </div>
+      </div>
+
+      <!-- P6 -->
+      <div class="ptr phase-eval">
+        <div class="ptr-hdr" onclick="toggle(this)">
+          <div class="ptr-num">6</div>
+          <div class="ptr-meta">
+            <div class="ptr-phase">🏅 Evaluation — Mengaplikasi</div>
+            <div class="ptr-title">Menyajikan Data dan Refleksi Proyek</div>
+            <div class="ptr-tags">
+              <span class="ptr-tag">🔄 Iterasi Desain</span>
+              <span class="ptr-tag">📊 Analisis Data</span>
+              <span class="ptr-tag">📝 Laporan Proyek</span>
+            </div>
+          </div>
+          <span class="ptr-chevron">▼</span>
+        </div>
+        <div class="ptr-body">
+          <ul class="ptr-steps">
+            <li><span class="step-n">1</span>Review temuan pengukuran pertemuan lalu: apa yang belum optimal? Bagaimana jika diberi kesempatan memperbaiki?</li>
+            <li><span class="step-n">2</span>Murid menyepakati bagian yang perlu diperbaiki mengacu pada Lembar Ceklis Keberhasilan.</li>
+            <li><span class="step-n">3</span>Pengisian Lembar Revisi Desain → perbaikan atau penyesuaian desain (menambah ventilasi, ganti plastik, dll).</li>
+            <li><span class="step-n">4</span>Pengukuran ulang suhu & kelembaban setelah perbaikan → dicatat pada Misi Puncak Aksi Hijau.</li>
+            <li><span class="step-n">5</span>Analisis mandiri: membandingkan data sebelum & sesudah revisi dalam bentuk diagram batang.</li>
+            <li><span class="step-n">6</span>Murid menyusun Laporan Proyek Akhir (deskripsi desain, data, analisis, kesimpulan, kaitan perubahan iklim).</li>
+            <li><span class="step-n">7</span>Refleksi bersama: mengapa penting mencoba lagi? Apa kaitannya dengan tantangan perubahan iklim?</li>
+          </ul>
+          <div class="ptr-note"><p><strong>📋 Laporan Akhir Memuat:</strong> Deskripsi desain dari perspektif individu · Data suhu & kelembaban · Analisis sebelum & sesudah revisi · Kesimpulan efektivitas · Rekomendasi terkait perubahan iklim.</p></div>
+        </div>
+      </div>
+
+      <!-- P7 -->
+      <div class="ptr phase-eval">
+        <div class="ptr-hdr" onclick="toggle(this)">
+          <div class="ptr-num">7</div>
+          <div class="ptr-meta">
+            <div class="ptr-phase">🏅 Evaluation — Merefleksi</div>
+            <div class="ptr-title">Presentasi dan Laporan Aksi Hijau</div>
+            <div class="ptr-tags">
+              <span class="ptr-tag">🎤 Presentasi Individu</span>
+              <span class="ptr-tag">⭐ Asesmen Sumatif</span>
+              <span class="ptr-tag">🏆 Sertifikat Penghargaan</span>
+            </div>
+          </div>
+          <span class="ptr-chevron">▼</span>
+        </div>
+        <div class="ptr-body">
+          <ul class="ptr-steps">
+            <li><span class="step-n">1</span>Pembukaan: penyampaian bahwa ini merupakan asesmen sumatif individu dari rangkaian proyek Aksi Hijau.</li>
+            <li><span class="step-n">2</span>Kilas balik proses pertemuan 1–6 melalui foto/video kegiatan yang ditampilkan.</li>
+            <li><span class="step-n">3</span>Murid mempersiapkan mini greenhouse, data pengukuran, tabel & diagram batang untuk presentasi.</li>
+            <li><span class="step-n">4</span>Setiap murid mempresentasikan hasil secara individu (durasi 5–7 menit): deskripsi desain, data, analisis, kesimpulan, kaitan perubahan iklim.</li>
+            <li><span class="step-n">5</span>Pendidik menilai menggunakan Rubrik Asesmen Sumatif selama presentasi berlangsung.</li>
+            <li><span class="step-n">6</span>Murid menyerahkan laporan tertulis dan mengisi Lembar Refleksi Pribadi.</li>
+            <li><span class="step-n">7</span>Penutup: apresiasi + pemberian Sertifikat Penghargaan "Agen Aksi Hijau Penyelamat Bumi."</li>
+          </ul>
+          <div class="ptr-note"><p><strong>🏆 Kriteria Penilaian Sumatif:</strong> Produk proyek · Pengolahan data · Analisis data · Penjelasan hubungan biotik-abiotik · Presentasi lisan · Refleksi pribadi.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:64px"></div>
+
+<!-- ═══ ASESMEN ═══ -->
+<section class="asesmen-sec" id="asesmen">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Bagian 7</div>
+      <h2>Asesmen Pembelajaran</h2>
+      <p>Formatif per pertemuan dan sumatif terintegrasi pada pertemuan ke-7.</p>
+    </div>
+
+    <div class="ases-table-wrap rev">
+      <table class="ases-table">
+        <thead>
+          <tr>
+            <th>Mata Pelajaran</th>
+            <th>Tujuan Pembelajaran</th>
+            <th>Pertemuan</th>
+            <th>Bentuk</th>
+            <th>Kegiatan Asesmen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ases-mapel" rowspan="3">🔬 IPAS</td>
+            <td rowspan="3" style="max-width:220px">Menganalisis hubungan antarkomponen biotik dan abiotik serta pengaruhnya terhadap ekosistem.</td>
+            <td><span class="ptr-badge">P1</span></td>
+            <td><span class="ases-badge f-badge">Formatif</span></td>
+            <td>Mengidentifikasi komponen biotik & abiotik serta dampak jika tidak ada komponen abiotik.</td>
+          </tr>
+          <tr>
+            <td><span class="ptr-badge">P2</span></td>
+            <td><span class="ases-badge f-badge">Formatif</span></td>
+            <td>Menuliskan komponen abiotik penting bagi tumbuhan, peran, serta dampak terhadap pertumbuhan tanaman.</td>
+          </tr>
+          <tr>
+            <td><span class="ptr-badge">P3</span></td>
+            <td><span class="ases-badge f-badge">Formatif</span></td>
+            <td>Menjelaskan pengaruh cuaca terhadap pertumbuhan tanaman (Tiket Keluar).</td>
+          </tr>
+          <tr>
+            <td class="ases-mapel" rowspan="3">📐 Matematika</td>
+            <td rowspan="3" style="max-width:220px">Mengurutkan, membandingkan, menyajikan, dan menganalisis data dalam bentuk piktogram, diagram batang, dan tabel frekuensi.</td>
+            <td><span class="ptr-badge">P3</span></td>
+            <td><span class="ases-badge f-badge">Formatif</span></td>
+            <td>Menuliskan, mengelompokkan, dan menyajikan data cuaca 30 hari dalam tabel frekuensi & diagram gambar/piktogram.</td>
+          </tr>
+          <tr>
+            <td><span class="ptr-badge">P5</span></td>
+            <td><span class="ases-badge f-badge">Formatif</span></td>
+            <td>Menyajikan & menganalisis data pengukuran suhu & kelembaban pada tahap uji coba dalam diagram batang.</td>
+          </tr>
+          <tr>
+            <td><span class="ptr-badge">P6</span></td>
+            <td><span class="ases-badge f-badge">Formatif</span></td>
+            <td>Membandingkan, menganalisis, dan menyimpulkan keberhasilan greenhouse setelah revisi berdasarkan data pengukuran.</td>
+          </tr>
+          <tr>
+            <td class="ases-mapel">🌿 IPAS + Matematika</td>
+            <td>Integrasi kedua mata pelajaran dalam proyek nyata berbasis data.</td>
+            <td><span class="ptr-badge">P7</span></td>
+            <td><span class="ases-badge s-badge">Sumatif</span></td>
+            <td><strong>Presentasi & Laporan Proyek Akhir</strong> — Aksi Hijau Si Penyelamat Bumi (Produk + Presentasi + Refleksi).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:64px"></div>
+
+<!-- ═══ RUBRIK ═══ -->
+<section class="rubrik-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Rubrik Asesmen Sumatif</div>
+      <h2>Kriteria Penilaian Proyek</h2>
+      <p>Empat aspek penilaian dengan skor 1–4 untuk asesmen sumatif pertemuan ke-7.</p>
+    </div>
+
+    <div class="rubrik-grid rev">
+      <div class="rubrik-card">
+        <h4>📊 Pengolahan Data — Penyajian Tabel & Diagram Batang</h4>
+        <div class="score-row"><div class="score-badge s4">4</div><div class="score-text"><strong>Mahir</strong><p>Menyajikan ≥2 tabel dan 1 diagram batang sesuai hasil pengukuran tanpa kesalahan perhitungan.</p></div></div>
+        <div class="score-row"><div class="score-badge s3">3</div><div class="score-text"><strong>Cakap</strong><p>Menyajikan ≥1 tabel dan 1 diagram batang sesuai hasil pengukuran (≤2 kesalahan perhitungan).</p></div></div>
+        <div class="score-row"><div class="score-badge s2">2</div><div class="score-text"><strong>Berkembang</strong><p>Menyajikan tabel atau diagram batang tetapi data tidak konsisten dengan hasil pengukuran (>2 kesalahan).</p></div></div>
+        <div class="score-row"><div class="score-badge s1">1</div><div class="score-text"><strong>Perlu Bimbingan</strong><p>Tidak menyajikan tabel/diagram atau data sepenuhnya salah.</p></div></div>
+      </div>
+
+      <div class="rubrik-card">
+        <h4>🔍 Analisis Data — Perbandingan & Kesimpulan</h4>
+        <div class="score-row"><div class="score-badge s4">4</div><div class="score-text"><strong>Mahir</strong><p>Membandingkan minimal 2 variabel dengan benar dan menyimpulkan sesuai seluruh data yang disajikan.</p></div></div>
+        <div class="score-row"><div class="score-badge s3">3</div><div class="score-text"><strong>Cakap</strong><p>Membandingkan minimal 2 variabel dengan benar dan menyimpulkan sesuai sebagian data.</p></div></div>
+        <div class="score-row"><div class="score-badge s2">2</div><div class="score-text"><strong>Berkembang</strong><p>Membandingkan data tetapi kesimpulan tidak sesuai atau kurang lengkap.</p></div></div>
+        <div class="score-row"><div class="score-badge s1">1</div><div class="score-text"><strong>Perlu Bimbingan</strong><p>Tidak melakukan perbandingan atau kesimpulan sepenuhnya salah.</p></div></div>
+      </div>
+
+      <div class="rubrik-card">
+        <h4>🔗 Hubungan Biotik–Abiotik — Relevansi & Kelengkapan</h4>
+        <div class="score-row"><div class="score-badge s4">4</div><div class="score-text"><strong>Mahir</strong><p>Menjelaskan hubungan ≥3 komponen biotik dan abiotik dengan contoh nyata dan dampaknya.</p></div></div>
+        <div class="score-row"><div class="score-badge s3">3</div><div class="score-text"><strong>Cakap</strong><p>Menjelaskan hubungan ≥2 komponen biotik dan abiotik dengan contoh sederhana.</p></div></div>
+        <div class="score-row"><div class="score-badge s2">2</div><div class="score-text"><strong>Berkembang</strong><p>Menyebut ≥2 komponen tetapi tanpa hubungan yang jelas.</p></div></div>
+        <div class="score-row"><div class="score-badge s1">1</div><div class="score-text"><strong>Perlu Bimbingan</strong><p>Menyebut <2 komponen atau hubungan tidak relevan.</p></div></div>
+      </div>
+
+      <div class="rubrik-card">
+        <h4>🎤 Presentasi & 💭 Refleksi</h4>
+        <div style="font-size:12px;font-weight:700;color:var(--text-mute);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Presentasi — Struktur, Kejelasan, Media</div>
+        <div class="score-row"><div class="score-badge s4">4</div><div class="score-text"><strong>Mahir</strong><p>Runtut (pembukaan, isi, penutup), suara jelas, durasi 5–7 menit, menggunakan media kreatif.</p></div></div>
+        <div class="score-row"><div class="score-badge s3">3</div><div class="score-text"><strong>Cakap</strong><p>Penyampaian runtut, suara jelas, durasi sesuai, menggunakan media yang relevan.</p></div></div>
+        <div style="font-size:12px;font-weight:700;color:var(--text-mute);margin:14px 0 10px;text-transform:uppercase;letter-spacing:.06em">Refleksi — Kaitan dengan Perubahan Iklim</div>
+        <div class="score-row"><div class="score-badge s4">4</div><div class="score-text"><strong>Mahir</strong><p>Menyebut minimal 2 contoh nyata keterkaitan proyek dengan perubahan iklim dan 1 ide solusi.</p></div></div>
+        <div class="score-row"><div class="score-badge s3">3</div><div class="score-text"><strong>Cakap</strong><p>Menyebut minimal 1 contoh nyata keterkaitan proyek dengan perubahan iklim.</p></div></div>
+      </div>
+    </div>
+
+    <div class="nilai-strip rev">
+      <div class="nilai-cell n1"><div class="nilai-range">84–100</div><div class="nilai-kat">🏆 Mahir</div></div>
+      <div class="nilai-cell n2"><div class="nilai-range">69–83</div><div class="nilai-kat">✅ Cakap</div></div>
+      <div class="nilai-cell n3"><div class="nilai-range">54–68</div><div class="nilai-kat">📈 Berkembang</div></div>
+      <div class="nilai-cell n4"><div class="nilai-range">0–53</div><div class="nilai-kat">🤝 Perlu Bimbingan</div></div>
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--text-mute);margin-top:10px">Murid dikatakan mencapai tujuan pembelajaran apabila mencapai minimal kategori <strong>Cakap</strong> (skor 3 pada setiap indikator)</p>
+  </div>
+</section>
+
+<div class="div" style="margin-top:64px"></div>
+
+<!-- ═══ RTL ═══ -->
+<section class="rtl-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Bagian 8</div>
+      <h2>Rencana Tindak Lanjut</h2>
+      <p>Strategi diferensiasi pasca asesmen untuk mendukung semua murid sesuai kategorinya.</p>
+    </div>
+
+    <div class="rtl-grid rev">
+      <div class="rtl-card rtl-mahir">
+        <div class="rtl-score">84–100</div>
+        <div class="rtl-label">🏆 Mahir</div>
+        <ul class="rtl-items">
+          <li>Pengayaan: rancang modifikasi mini greenhouse untuk jenis tanaman atau kondisi lingkungan berbeda</li>
+          <li>Menjadi mentor bagi teman di kategori Berkembang & Perlu Bimbingan</li>
+          <li>Karya diabadikan sebagai contoh praktik baik untuk pameran/dokumentasi sekolah</li>
+        </ul>
+      </div>
+      <div class="rtl-card rtl-cakap">
+        <div class="rtl-score">69–83</div>
+        <div class="rtl-label">✅ Cakap</div>
+        <ul class="rtl-items">
+          <li>Latihan analisis lanjutan dengan data baru</li>
+          <li>Meningkatkan ketelitian dalam perbandingan variabel</li>
+          <li>Memperkuat kemampuan menarik kesimpulan dari data</li>
+        </ul>
+      </div>
+      <div class="rtl-card rtl-berk">
+        <div class="rtl-score">54–68</div>
+        <div class="rtl-label">📈 Berkembang</div>
+        <ul class="rtl-items">
+          <li>Bimbingan terstruktur memperbaiki tabel/diagram batang yang salah</li>
+          <li>Menulis ulang kesimpulan berdasarkan data yang benar</li>
+          <li>Menggunakan lembar panduan hubungan biotik–abiotik</li>
+        </ul>
+      </div>
+      <div class="rtl-card rtl-perlu">
+        <div class="rtl-score">0–53</div>
+        <div class="rtl-label">🤝 Perlu Bimbingan</div>
+        <ul class="rtl-items">
+          <li>Mengulang proyek skala kecil dengan pendampingan pendidik</li>
+          <li>Remedial tatap muka: cara membuat tabel, diagram batang, dan analisis sederhana</li>
+          <li>Melihat dan mendiskusikan contoh mini greenhouse yang baik</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:64px"></div>
+
+<!-- ═══ QUOTE ═══ -->
+<section class="quote-sec">
+  <div class="wrap">
+    <div class="quote-box rev">
+      <p class="quote-text">"Pembelajaran STEM bukan sekadar kumpulan pengetahuan, melainkan sebuah <span>dampak nyata bagi murid</span> — mampu menerapkan ilmu dalam kehidupan sehari-hari sehingga memberikan kontribusi nyata bagi dirinya, satuan pendidikan, dan komunitas."</p>
+      <p class="quote-src">— Panduan Pembelajaran STEM, BSKAP Kemendikdasmen 2025</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="ft-brand">🌿 Aksi Hijau Si Penyelamat Bumi</div>
+        <p class="ft-desc">Contoh Perencanaan Pembelajaran STEM Terintegrasi untuk SD Kelas V. Berdasarkan Panduan Pembelajaran STEM, Pusat Kurikulum dan Pembelajaran, BSKAP Kemendikdasmen RI 2025.</p>
+        <p class="ft-meta">IPAS & Matematika · Fase C / Kelas V · 28 JP · 7 Pertemuan · Topik: Perubahan Iklim</p>
+      </div>
+      <ul class="ft-links">
+        <li><a href="#identitas">🏷️ Identitas & Identifikasi</a></li>
+        <li><a href="#tujuan">🎯 Tujuan Pembelajaran</a></li>
+        <li><a href="#langkah">📋 Langkah Pembelajaran</a></li>
+        <li><a href="#asesmen">📊 Asesmen</a></li>
+      </ul>
+    </div>
+    <div class="ft-bot">
+      <p>Pusat Kurikulum dan Pembelajaran · BSKAP · Kemendikdasmen RI · 2025</p>
+      <span class="ver">Perencanaan STEM Kelas V</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Progress bar
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const s = document.documentElement.scrollTop;
+  const h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (s / h * 100) + '%';
+});
+
+// Intersection observer for .rev
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+}), { threshold: 0.08 });
+document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+
+// Toggle pertemuan
+function toggle(hdr) {
+  const ptr = hdr.parentElement;
+  ptr.classList.toggle('open');
+}
+
+// Particle canvas — very light for this theme
+const cv = document.getElementById('bg');
+const cx = cv.getContext('2d');
+let W, H, P = [];
+function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+class Dot {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.r = Math.random() * 2 + 0.5;
+    this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
+    this.c = ['#0EA5C9','#059669','#D97706','#DB2777','#0369A1'][Math.floor(Math.random() * 5)];
+    this.life = Math.random(); this.ls = Math.random() * 0.004 + 0.001;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy; this.life += this.ls;
+    if (this.life > 1) this.reset();
+    if (this.x < 0 || this.x > W) this.vx *= -1;
+    if (this.y < 0 || this.y > H) this.vy *= -1;
+  }
+  draw() {
+    const a = Math.sin(this.life * Math.PI) * 0.4;
+    cx.beginPath(); cx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    cx.fillStyle = this.c + Math.round(a * 255).toString(16).padStart(2, '0');
+    cx.fill();
+  }
+}
+function init() { P = Array.from({ length: 80 }, () => new Dot()); }
+function draw() {
+  cx.clearRect(0, 0, W, H);
+  for (let i = 0; i < P.length; i++)
+    for (let j = i + 1; j < P.length; j++) {
+      const dx = P[i].x - P[j].x, dy = P[i].y - P[j].y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 90) {
+        cx.beginPath(); cx.moveTo(P[i].x, P[i].y); cx.lineTo(P[j].x, P[j].y);
+        cx.strokeStyle = `rgba(14,165,201,${(1 - d/90) * 0.06})`;
+        cx.lineWidth = 0.5; cx.stroke();
+      }
+    }
+  P.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(draw);
+}
+resize(); init(); draw();
+window.addEventListener('resize', resize);
+</script>
+</body>
+</html>
