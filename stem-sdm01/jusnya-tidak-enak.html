@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Jusnya Tidak Enak · STEM Kelas 3 · SDM01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --cream:#FFFCF5; --cream2:#FFF8EC; --cream3:#FFF0D4;
+      --orange:#C2410C; --orange-mid:#EA580C; --orange-bright:#FB923C; --orange-soft:#FFF7ED; --orange-glow:rgba(251,146,60,.18);
+      --yellow:#A16207; --yellow-mid:#CA8A04; --yellow-bright:#EAB308; --yellow-soft:#FEFCE8;
+      --green:#166534; --green-mid:#15803D; --green-bright:#4ADE80; --green-soft:#F0FDF4;
+      --lime:#3F6212; --lime-soft:#F7FEE7;
+      --rose:#9F1239; --rose-mid:#BE123C; --rose-soft:#FFF1F2;
+      --indigo:#3730A3; --indigo-soft:#EEF2FF;
+      --teal:#0F766E; --teal-soft:#F0FDFA;
+      --navy:#1C1917; --navy-mid:#292524; --navy-light:#44403C;
+      --text:#1C1917; --text-mid:#44403C; --text-mute:#78716C; --text-faint:#A8A29E;
+      --border:#E7E5E4; --border-warm:#DDD5C8;
+      --shadow:0 1px 12px rgba(28,25,23,.07); --shadow-md:0 6px 28px rgba(28,25,23,.11); --shadow-lg:0 16px 48px rgba(28,25,23,.14);
+      --r:12px; --rl:20px;
+      --ff-serif:'Fraunces','Georgia',serif;
+      --ff-body:'Outfit',system-ui,sans-serif;
+      --ff-mono:'DM Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-body);background:var(--cream);color:var(--text);line-height:1.65;overflow-x:hidden}
+    a{color:var(--orange-mid);text-decoration:none;transition:color .2s}
+    a:hover{color:var(--orange)}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+    /* ── PROGRESS ── */
+    #prog{position:fixed;top:0;left:0;height:3px;z-index:999;width:0%;
+      background:linear-gradient(90deg,var(--yellow-bright),var(--orange-bright),var(--rose-mid),var(--green-bright));
+      transition:width .1s}
+
+    /* ── FLOATING BUBBLES ── */
+    .bubbles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .bubble{position:absolute;border-radius:50%;opacity:.06;animation:float linear infinite}
+    @keyframes float{0%{transform:translateY(100vh) scale(.6)}100%{transform:translateY(-120px) scale(1)}}
+
+    /* ── NAV ── */
+    nav{position:sticky;top:0;z-index:100;background:rgba(255,252,245,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-warm);box-shadow:0 1px 8px rgba(28,25,23,.05)}
+    .nav-in{max-width:1100px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .nav-logo{display:flex;align-items:center;gap:10px}
+    .nav-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--orange-mid),var(--yellow-bright));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+    .nav-brand{font-family:var(--ff-serif);font-size:14px;font-weight:700;color:var(--navy);line-height:1.2}
+    .nav-brand span{display:block;font-size:11px;font-weight:500;color:var(--text-mute);font-family:var(--ff-body)}
+    .nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+    .nav-links a{font-size:12px;font-weight:600;color:var(--text-mute);transition:color .2s}
+    .nav-links a:hover{color:var(--navy)}
+    .nav-chip{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--orange-soft);color:var(--orange-mid);border:1px solid #FED7AA}
+    @media(max-width:700px){.nav-links{display:none}}
+
+    /* ── HERO ── */
+    .hero{padding:80px 0 64px;position:relative;z-index:1;overflow:hidden}
+    .hero-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+    .blob-a{width:500px;height:400px;top:-120px;right:-100px;background:radial-gradient(circle,var(--orange-glow),transparent 65%)}
+    .blob-b{width:360px;height:360px;bottom:-60px;left:-80px;background:radial-gradient(circle,rgba(234,179,8,.12),transparent 65%)}
+
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-mid);background:var(--orange-soft);padding:5px 14px;border-radius:20px;border:1px solid #FED7AA;margin-bottom:24px;opacity:0;animation:fu .7s .1s ease forwards}
+    .hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--orange-bright);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.7)}}
+
+    .hero h1{font-family:var(--ff-serif);font-size:clamp(30px,5vw,60px);line-height:1.08;letter-spacing:-.01em;color:var(--navy);max-width:800px;margin-bottom:18px;opacity:0;animation:fu .7s .2s ease forwards}
+    .hero h1 .hl{color:var(--orange-mid);font-style:italic}
+    .hero h1 .hl2{color:var(--green-mid)}
+
+    .hero-sub{font-size:clamp(14px,1.8vw,17px);color:var(--text-mute);max-width:680px;margin-bottom:40px;line-height:1.7;opacity:0;animation:fu .7s .3s ease forwards}
+
+    .hero-pills{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;opacity:0;animation:fu .7s .4s ease forwards}
+    .hpill{background:#fff;border:1px solid var(--border-warm);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+    .hpill-ico{font-size:24px;flex-shrink:0}
+    .hpill-body strong{display:block;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:1px}
+    .hpill-body span{font-size:11px;color:var(--text-mute);font-weight:500}
+
+    /* Juice drops decoration */
+    .hero-drops{display:flex;gap:8px;align-items:center;margin-top:36px;opacity:0;animation:fu .7s .5s ease forwards}
+    .drop{width:14px;height:18px;border-radius:50% 50% 45% 45% / 55% 55% 45% 45%;animation:drip 2.5s ease-in-out infinite}
+    .drop:nth-child(2){animation-delay:.4s}.drop:nth-child(3){animation-delay:.8s}.drop:nth-child(4){animation-delay:1.2s}.drop:nth-child(5){animation-delay:1.6s}
+    @keyframes drip{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.2) translateY(2px)}}
+    .d-orange{background:var(--orange-bright);opacity:.7}
+    .d-yellow{background:var(--yellow-bright);opacity:.7}
+    .d-green{background:var(--green-bright);opacity:.7}
+    .d-rose{background:#FB7185;opacity:.7}
+    .hero-drops span{font-size:12px;color:var(--text-faint);font-weight:600;margin-left:4px}
+
+    /* ── SECTION HEADER ── */
+    .sh{text-align:center;margin-bottom:52px}
+    .sh-pill{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-mid);background:var(--orange-soft);padding:5px 14px;border-radius:20px;border:1px solid #FED7AA;margin-bottom:14px}
+    .sh h2{font-family:var(--ff-serif);font-size:clamp(22px,3.5vw,38px);line-height:1.15;color:var(--navy);margin-bottom:12px}
+    .sh p{font-size:15px;color:var(--text-mute);max-width:540px;margin:0 auto;line-height:1.65}
+
+    /* ── KONTEKS MASALAH ── */
+    .masalah-sec{padding:0 0 80px;position:relative;z-index:1}
+    .masalah-box{border-radius:var(--rl);padding:52px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);background:var(--navy)}
+    .masalah-box::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(251,146,60,.1),transparent 50%,rgba(234,179,8,.07) 100%);pointer-events:none}
+    .masalah-deco{position:absolute;right:-60px;top:-60px;font-size:220px;opacity:.04;pointer-events:none;line-height:1}
+    .m-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#FED7AA;background:rgba(251,146,60,.12);padding:4px 13px;border-radius:20px;border:1px solid rgba(254,215,170,.2);margin-bottom:18px}
+    .masalah-box h3{font-family:var(--ff-serif);font-size:clamp(17px,2.5vw,24px);color:#fff;line-height:1.4;margin-bottom:18px;position:relative;z-index:1;max-width:740px;font-style:italic}
+    .masalah-box h3 em{color:var(--orange-bright);font-style:normal}
+    .masalah-box p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.65);max-width:720px;position:relative;z-index:1}
+    .masalah-dua{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;position:relative;z-index:1}
+    @media(max-width:640px){.masalah-dua{grid-template-columns:1fr}}
+    .m-side{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:18px 20px}
+    .m-side-lbl{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-bright);margin-bottom:8px}
+    .m-side p{font-size:13px;line-height:1.65;color:rgba(255,255,255,.7)}
+    @media(max-width:640px){.masalah-box{padding:28px 22px}}
+
+    /* ── STEM 4-CARD ── */
+    .stem-sec{padding:80px 0;position:relative;z-index:1}
+    .stem-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:680px){.stem-grid{grid-template-columns:1fr}}
+    .stem-card{border-radius:var(--rl);padding:30px 26px;border:1px solid var(--border);transition:box-shadow .25s,transform .25s;position:relative;overflow:hidden;background:#fff}
+    .stem-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+    .sc-s{border-top:3px solid var(--green-mid)}
+    .sc-t{border-top:3px solid var(--orange-mid)}
+    .sc-e{border-top:3px solid var(--yellow-mid)}
+    .sc-m{border-top:3px solid var(--rose-mid)}
+    .stem-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:14px;border:1px solid}
+    .sc-s .stem-badge{background:var(--green-soft);color:var(--green);border-color:#86EFAC}
+    .sc-t .stem-badge{background:var(--orange-soft);color:var(--orange-mid);border-color:#FED7AA}
+    .sc-e .stem-badge{background:var(--yellow-soft);color:var(--yellow);border-color:#FDE047}
+    .sc-m .stem-badge{background:var(--rose-soft);color:var(--rose-mid);border-color:#FECDD3}
+    .stem-card h4{font-family:var(--ff-serif);font-size:17px;color:var(--navy);margin-bottom:5px}
+    .stem-card .sub{font-size:12px;color:var(--text-mute);font-weight:500;margin-bottom:12px;font-style:italic}
+    .stem-card p,.stem-card ul{font-size:13px;line-height:1.7;color:var(--text-mid)}
+    .stem-card ul{padding-left:16px}
+    .stem-card ul li{margin-bottom:5px}
+    .stem-ghost{position:absolute;right:14px;bottom:6px;font-family:var(--ff-serif);font-size:62px;font-weight:900;opacity:.04;line-height:1;color:var(--navy)}
+
+    /* Ingredient tag strip */
+    .ing-strip{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+    .ing{font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid}
+    .i-buah{background:#FFF7ED;color:var(--orange-mid);border-color:#FED7AA}
+    .i-air{background:var(--indigo-soft);color:var(--indigo);border-color:#C7D2FE}
+    .i-gula{background:var(--yellow-soft);color:var(--yellow);border-color:#FDE047}
+    .i-es{background:var(--teal-soft);color:var(--teal);border-color:#99F6E4}
+
+    /* ── BAHAN 4-PANEL ── */
+    .bahan-sec{padding:0 0 80px;position:relative;z-index:1}
+    .bahan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media(max-width:800px){.bahan-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.bahan-grid{grid-template-columns:1fr}}
+    .bahan-card{border-radius:14px;padding:24px 20px;text-align:center;border:1px solid;transition:transform .2s,box-shadow .2s}
+    .bahan-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+    .b-buah{background:var(--orange-soft);border-color:#FED7AA}
+    .b-air{background:var(--indigo-soft);border-color:#C7D2FE}
+    .b-gula{background:var(--yellow-soft);border-color:#FDE047}
+    .b-es{background:var(--teal-soft);border-color:#99F6E4}
+    .bahan-ico{font-size:40px;margin-bottom:12px;display:block}
+    .bahan-lbl{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+    .b-buah .bahan-lbl{color:var(--orange-mid)}.b-air .bahan-lbl{color:var(--indigo)}.b-gula .bahan-lbl{color:var(--yellow)}.b-es .bahan-lbl{color:var(--teal)}
+    .bahan-card h4{font-family:var(--ff-serif);font-size:16px;color:var(--navy);margin-bottom:8px}
+    .bahan-card p{font-size:12px;color:var(--text-mute);line-height:1.6}
+    .bahan-sifat{margin-top:10px;display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
+    .bs{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.7);color:var(--text-mute)}
+
+    /* ── TIMELINE 6P ── */
+    .tl-sec{padding:80px 0;position:relative;z-index:1}
+    .tl-wrap{position:relative}
+    .tl-wrap::before{content:'';position:absolute;left:40px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--orange-bright),var(--yellow-bright),var(--green-bright));opacity:.3}
+    @media(max-width:600px){.tl-wrap::before{left:20px}}
+    .tl-item{display:flex;gap:22px;margin-bottom:4px;padding:14px 14px 14px 0;border-radius:14px;transition:background .2s}
+    .tl-item:hover{background:rgba(255,247,237,.7)}
+    @media(max-width:600px){.tl-item{gap:12px}}
+    .tl-node{flex-shrink:0;width:80px;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1}
+    @media(max-width:600px){.tl-node{width:40px}}
+    .tl-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-serif);font-weight:700;font-size:15px;border:2px solid;background:var(--cream)}
+    .p1 .tl-num{border-color:var(--orange-mid);color:var(--orange-mid)}
+    .p2 .tl-num{border-color:var(--yellow-mid);color:var(--yellow-mid)}
+    .p3 .tl-num{border-color:var(--green-mid);color:var(--green-mid)}
+    .p4 .tl-num{border-color:var(--orange);color:var(--orange)}
+    .p5 .tl-num{border-color:var(--rose-mid);color:var(--rose-mid)}
+    .p6 .tl-num{border-color:var(--indigo);color:var(--indigo)}
+    .tl-phase{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.2}
+    @media(max-width:600px){.tl-phase{display:none}}
+    .tl-card{flex:1;background:#fff;border-radius:14px;border:1px solid var(--border);padding:20px 24px;box-shadow:var(--shadow)}
+    .p1 .tl-card{border-left:3px solid var(--orange-mid)}
+    .p2 .tl-card{border-left:3px solid var(--yellow-mid)}
+    .p3 .tl-card{border-left:3px solid var(--green-mid)}
+    .p4 .tl-card{border-left:3px solid var(--orange)}
+    .p5 .tl-card{border-left:3px solid var(--rose-mid)}
+    .p6 .tl-card{border-left:3px solid var(--indigo)}
+    .tl-pert{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:3px}
+    .tl-title{font-family:var(--ff-serif);font-size:17px;color:var(--navy);margin-bottom:10px;line-height:1.3}
+    .tl-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+    .tl-chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--cream2);color:var(--text-mute);border:1px solid var(--border-warm)}
+    .tl-acts{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .tl-acts li{font-size:13px;color:var(--text-mid);padding-left:16px;position:relative;line-height:1.55}
+    .tl-acts li::before{content:'›';position:absolute;left:0;color:var(--text-faint);font-weight:700}
+
+    /* Sampel A/B/C visual */
+    .sampel-row{display:flex;gap:10px;margin-top:12px}
+    .sampel{flex:1;border-radius:10px;padding:10px 12px;text-align:center;border:1px solid}
+    .s-a{background:#FFF7ED;border-color:#FED7AA}
+    .s-b{background:var(--indigo-soft);border-color:#C7D2FE}
+    .s-c{background:var(--green-soft);border-color:#86EFAC}
+    .sampel-lbl{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+    .s-a .sampel-lbl{color:var(--orange-mid)}.s-b .sampel-lbl{color:var(--indigo)}.s-c .sampel-lbl{color:var(--green)}
+    .sampel p{font-size:11px;color:var(--text-mute);line-height:1.4}
+
+    /* Iterasi visual */
+    .iter-flow{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .iter-box{background:var(--cream2);border:1px solid var(--border-warm);border-radius:9px;padding:8px 12px;font-size:12px;font-weight:600;color:var(--text-mid);flex:1;min-width:90px;text-align:center}
+    .iter-arrow{color:var(--text-faint);font-size:14px;flex-shrink:0}
+    .iter-box.active{background:var(--orange-soft);border-color:#FED7AA;color:var(--orange-mid)}
+
+    /* ── ITERASI EXPLAINER ── */
+    .iter-sec{padding:0 0 80px;position:relative;z-index:1}
+    .iter-panel{background:linear-gradient(135deg,var(--orange-soft),var(--yellow-soft));border:1px solid #FED7AA;border-radius:var(--rl);padding:44px 48px;position:relative;overflow:hidden}
+    .iter-panel::before{content:'🔄';position:absolute;right:28px;bottom:-10px;font-size:120px;opacity:.08;pointer-events:none;line-height:1}
+    .iter-title{font-family:var(--ff-serif);font-size:clamp(18px,2.5vw,24px);color:var(--navy);margin-bottom:24px;font-style:italic}
+    .iter-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;z-index:1}
+    @media(max-width:700px){.iter-steps{grid-template-columns:1fr;gap:4px}}
+    .is{position:relative;text-align:center;padding:20px 12px}
+    .is:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--text-faint);font-weight:700;z-index:1}
+    @media(max-width:700px){.is::after{display:none}}
+    .is-num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--ff-serif);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+    .is h5{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;line-height:1.3}
+    .is p{font-size:11px;color:var(--text-mute);line-height:1.4}
+    @media(max-width:640px){.iter-panel{padding:28px 22px}}
+
+    /* ── KRITERIA ── */
+    .krit-sec{padding:80px 0;background:var(--cream2);position:relative;z-index:1}
+    .krit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:640px){.krit-grid{grid-template-columns:1fr}}
+    .krit-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+    .krit-ico{width:44px;height:44px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .krit-card h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px}
+    .krit-card p{font-size:13px;color:var(--text-mute);line-height:1.55}
+
+    /* ── BATASAN ── */
+    .bat-sec{padding:0 0 80px;position:relative;z-index:1}
+    .bat-row{display:flex;gap:12px;flex-wrap:wrap}
+    .bat{flex:1;min-width:190px;background:var(--cream2);border:1px solid var(--border-warm);border-radius:12px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start}
+    .bat-ico{font-size:20px;flex-shrink:0;margin-top:2px}
+    .bat p{font-size:13px;color:var(--text-mid);line-height:1.55;font-weight:500}
+
+    /* ── RUBRIK ── */
+    .rubrik-sec{padding:80px 0;position:relative;z-index:1}
+    .rubrik-wrap{overflow-x:auto;border-radius:var(--rl);border:1px solid var(--border);box-shadow:var(--shadow-md)}
+    table{width:100%;border-collapse:collapse;background:#fff;font-size:13px;min-width:720px}
+    thead tr{background:var(--navy)}
+    th{padding:13px 15px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+    td{padding:12px 15px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;color:var(--text-mid)}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:var(--cream2)}
+    .aspek{font-weight:700;color:var(--navy);font-size:13px}
+    .sc4{font-weight:700;color:var(--green)}
+    .sc3{font-weight:700;color:var(--teal)}
+    .sc2{font-weight:700;color:var(--yellow-mid)}
+    .sc1{font-weight:700;color:var(--rose-mid)}
+
+    /* ── NILAI KATEGORI ── */
+    .nilai-sec{padding:0 0 80px;position:relative;z-index:1}
+    .nilai-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media(max-width:700px){.nilai-row{grid-template-columns:1fr 1fr}}
+    .nk{border-radius:14px;padding:22px 18px;text-align:center;border:1px solid}
+    .nk-m{background:var(--green-soft);border-color:#86EFAC;color:var(--green)}
+    .nk-c{background:var(--teal-soft);border-color:#99F6E4;color:var(--teal)}
+    .nk-b{background:var(--yellow-soft);border-color:#FDE047;color:var(--yellow)}
+    .nk-p{background:var(--rose-soft);border-color:#FECDD3;color:var(--rose-mid)}
+    .nk .range{font-family:var(--ff-mono);font-size:19px;margin-bottom:5px}
+    .nk .label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .nk .desc{font-size:11px;margin-top:7px;opacity:.8;line-height:1.4}
+
+    /* ── TINDAK LANJUT ── */
+    .tl2-sec{padding:80px 0;background:var(--cream2);position:relative;z-index:1}
+    .tl2-grid{display:flex;flex-direction:column;gap:12px}
+    .tl2-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex}
+    .tc2-stripe{width:4px;flex-shrink:0}
+    .tc2-green .tc2-stripe{background:var(--green-bright)}
+    .tc2-teal .tc2-stripe{background:var(--teal)}
+    .tc2-yellow .tc2-stripe{background:var(--yellow-bright)}
+    .tc2-rose .tc2-stripe{background:#FB7185}
+    .tc2-body{padding:18px 22px;flex:1}
+    .tc2-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+    .tc2-hdr h4{font-size:15px;font-weight:700;color:var(--navy)}
+    .tc2-badge{font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;border:1px solid}
+    .tc2-green .tc2-badge{background:var(--green-soft);color:var(--green);border-color:#86EFAC}
+    .tc2-teal .tc2-badge{background:var(--teal-soft);color:var(--teal);border-color:#99F6E4}
+    .tc2-yellow .tc2-badge{background:var(--yellow-soft);color:var(--yellow-mid);border-color:#FDE047}
+    .tc2-rose .tc2-badge{background:var(--rose-soft);color:var(--rose-mid);border-color:#FECDD3}
+    .tc2-body ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .tc2-body ul li{font-size:13px;color:var(--text-mid);padding-left:18px;position:relative;line-height:1.55}
+    .tc2-body ul li::before{content:'→';position:absolute;left:0;font-weight:700;color:var(--text-faint)}
+
+    /* ── KEMITRAAN ── */
+    .mitra-sec{padding:80px 0;position:relative;z-index:1;background:var(--navy);overflow:hidden}
+    .mitra-sec::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(251,146,60,.06),transparent 50%,rgba(234,179,8,.04));pointer-events:none}
+    .mitra-sec .sh-pill{background:rgba(251,146,60,.12);color:#FED7AA;border-color:rgba(254,215,170,.2)}
+    .mitra-sec .sh h2{color:#fff}
+    .mitra-sec .sh p{color:rgba(255,255,255,.6)}
+    .mitra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:700px){.mitra-grid{grid-template-columns:1fr}}
+    .mitra-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:26px 22px;transition:background .2s}
+    .mitra-card:hover{background:rgba(255,255,255,.1)}
+    .mitra-ico{font-size:30px;margin-bottom:14px;display:block}
+    .mitra-card h4{font-family:var(--ff-serif);font-size:15px;color:#fff;margin-bottom:8px}
+    .mitra-card p{font-size:13px;line-height:1.6;color:rgba(255,255,255,.6)}
+
+    /* ── QUOTE ── */
+    .quote-sec{padding:80px 0;position:relative;z-index:1}
+    .q-box{background:linear-gradient(135deg,var(--orange-soft),var(--yellow-soft));border:1px solid #FED7AA;border-radius:var(--rl);padding:44px 48px;position:relative;overflow:hidden}
+    .q-box::before{font-family:var(--ff-serif);content:'"';position:absolute;top:-15px;left:24px;font-size:140px;line-height:1;color:var(--orange-bright);opacity:.12;pointer-events:none}
+    .q-box blockquote{font-family:var(--ff-serif);font-size:clamp(15px,2.3vw,21px);color:var(--navy);font-style:italic;line-height:1.55;margin-bottom:12px;position:relative;z-index:1}
+    .q-box blockquote em{color:var(--orange-mid);font-style:normal}
+    .q-box cite{font-size:13px;color:var(--text-mute);font-style:normal}
+    @media(max-width:600px){.q-box{padding:28px 22px}}
+
+    /* ── FOOTER ── */
+    footer{padding:52px 0 32px;border-top:1px solid var(--border-warm);position:relative;z-index:1}
+    .ft-in{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+    @media(max-width:600px){.ft-in{grid-template-columns:1fr}}
+    .ft-brand{font-family:var(--ff-serif);font-size:18px;color:var(--navy);margin-bottom:8px}
+    .ft-desc{font-size:13px;color:var(--text-mute);max-width:380px;line-height:1.6;margin-bottom:10px}
+    .ft-meta{font-size:11px;color:var(--text-faint)}
+    .ft-links{display:flex;flex-direction:column;gap:7px;list-style:none}
+    .ft-links a{font-size:13px;color:var(--text-mute)}.ft-links a:hover{color:var(--navy)}
+    .ft-bot{margin-top:32px;padding-top:16px;border-top:1px solid var(--border-warm);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .ft-bot p{font-size:12px;color:var(--text-faint)}
+    .ft-ver{font-size:11px;font-weight:700;background:var(--cream2);color:var(--text-mute);padding:3px 10px;border-radius:6px;border:1px solid var(--border-warm)}
+
+    /* ── UTILITIES ── */
+    .div{height:1px;background:var(--border-warm)}
+    @keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+    .rev.in{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- Floating bubbles background -->
+<div class="bubbles" aria-hidden="true" id="bubbles"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-mark">🥤</div>
+      <div class="nav-brand">Jusnya Tidak Enak <span>STEM Kelas 3 · SDM01 Kukusan</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#stem">Integrasi STEM</a></li>
+      <li><a href="#bahan">Sifat Bahan</a></li>
+      <li><a href="#alur">Alur 6 Pertemuan</a></li>
+      <li><a href="#asesmen">Asesmen</a></li>
+      <li><a href="index.html">← Hub SDM01</a></li>
+    </ul>
+    <span class="nav-chip">IPAS & Matematika</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blob blob-a"></div>
+  <div class="hero-blob blob-b"></div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="hero-tag"><span class="dot"></span>Kelas 3 (Fase B) · SD Muhammadiyah 01 Kukusan</div>
+    <h1>Merancang <span class="hl">Resep Jus</span> yang Enak:<br>Memahami Bahan, <span class="hl2">Mengukur</span>, dan Menguji</h1>
+    <p class="hero-sub">Tema: <em>Jusnya Tidak Enak</em> — Murid kelas 3 menyelidiki mengapa jus bisa tidak enak, mempelajari sifat setiap bahan pembuat jus, belajar mengukur takaran dalam mililiter, lalu merancang dan menguji resep melalui dua iterasi percobaan yang hasilnya dicatat dalam data nyata.</p>
+    <div class="hero-pills">
+      <div class="hpill"><div class="hpill-ico">📚</div><div class="hpill-body"><strong>IPAS & Matematika</strong><span>2 Mata Pelajaran Terintegrasi</span></div></div>
+      <div class="hpill"><div class="hpill-ico">🏫</div><div class="hpill-body"><strong>Fase B / Kelas III</strong><span>Sekolah Dasar</span></div></div>
+      <div class="hpill"><div class="hpill-ico">⏱️</div><div class="hpill-body"><strong>24 JP · 6 Pertemuan</strong><span>4 JP per Pertemuan</span></div></div>
+      <div class="hpill"><div class="hpill-ico">⚙️</div><div class="hpill-body"><strong>Model 5E Bybee</strong><span>Praktik Pedagogis</span></div></div>
+    </div>
+    <div class="hero-drops">
+      <div class="drop d-orange"></div>
+      <div class="drop d-yellow"></div>
+      <div class="drop d-green"></div>
+      <div class="drop d-rose"></div>
+      <div class="drop d-yellow"></div>
+      <span>Jeruk · Mangga · Jambu · Sirsak</span>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- MASALAH -->
+<section class="masalah-sec" style="padding-top:72px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📋 Konteks Masalah</div>
+      <h2>Mengapa Jus Bisa Tidak Enak?</h2>
+      <p>Masalah ini sebenarnya bukan soal bahan yang buruk — melainkan soal tidak adanya takaran yang tepat dan terencana.</p>
+    </div>
+    <div class="masalah-box rev">
+      <div class="masalah-deco">🥤</div>
+      <div class="m-tag">💡 Latar Belakang Proyek</div>
+      <h3>Terlalu asam, terlalu manis, terlalu encer, atau hambar — kondisi ini sering terjadi ketika bahan dicampur berdasarkan <em>perkiraan</em>, bukan ukuran yang jelas.</h3>
+      <p>Murid kelas 3 yang mencoba membuat jus sering tidak tahu mengapa hasilnya tidak enak, dan tidak tahu bagaimana memperbaikinya secara sistematis. Masalah ini sebenarnya adalah masalah sains dan pengukuran sekaligus. Dalam proyek ini, murid tidak hanya membuat jus — mereka <strong style="color:#fff">merancang proses pembuatannya secara ilmiah</strong>: menyelidiki sifat bahan, belajar mengukur volume dalam mililiter, merancang takaran, mengujinya melalui panel rasa, lalu memperbaiki resep berdasarkan data yang dikumpulkan sendiri.</p>
+      <div class="masalah-dua">
+        <div class="m-side">
+          <div class="m-side-lbl">🔬 Masalah Sains</div>
+          <p>Setiap bahan memiliki sifat yang berbeda — buah asam, gula manis, air sebagai pelarut, es menurunkan suhu. Ketika dicampur, sifat-sifat ini berinteraksi dan menghasilkan rasa tertentu.</p>
+        </div>
+        <div class="m-side">
+          <div class="m-side-lbl">📐 Masalah Pengukuran</div>
+          <p>Takaran yang berbeda menghasilkan rasa yang berbeda — dan tanpa mencatat takaran secara tepat dalam satuan mililiter, perbaikan tidak bisa dilakukan secara terencana.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEM INTEGRATION -->
+<section class="stem-sec" id="stem">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🔬 Integrasi STEM</div>
+      <h2>Sains · Teknologi · Enjinering · Matematika</h2>
+      <p>Setiap disiplin STEM hadir dalam aksi nyata — bukan sekadar label yang ditempel di atas kegiatan.</p>
+    </div>
+    <div class="stem-grid rev">
+
+      <div class="stem-card sc-s">
+        <div class="stem-badge">🔬 Sains · IPAS</div>
+        <h4>Menyelidiki Sifat Bahan</h4>
+        <div class="sub">Buah · air · gula · es — dan bagaimana mereka berinteraksi</div>
+        <p>Murid mengamati sifat setiap bahan secara langsung: mencicipi buah segar, merasakan rasa gula, mengamati gula yang larut dalam air, dan merasakan perbedaan suhu air biasa vs. air es. Pemahaman bahwa rasa jus adalah <strong>hasil dari interaksi sifat-sifat bahan</strong> menjadi dasar ilmiah dalam menentukan takaran resep.</p>
+        <div class="ing-strip">
+          <span class="ing i-buah">🍊 Buah — asam/manis</span>
+          <span class="ing i-air">💧 Air — pelarut</span>
+          <span class="ing i-gula">🍚 Gula — manis</span>
+          <span class="ing i-es">🧊 Es — suhu ↓</span>
+        </div>
+        <div class="stem-ghost">S</div>
+      </div>
+
+      <div class="stem-card sc-t">
+        <div class="stem-badge">🔧 Teknologi</div>
+        <h4>Alat Ukur sebagai Teknologi</h4>
+        <div class="sub">Gelas ukur · sendok takar · lembar resep tertulis</div>
+        <ul>
+          <li><strong>Gelas ukur dan sendok takar</strong> — alat pengukuran volume yang terstandar. Murid belajar membaca skala ml dari sisi depan sejajar mata.</li>
+          <li><strong>Pemeras buah manual dan saringan</strong> — teknologi untuk mengekstrak dan memisahkan cairan.</li>
+          <li><strong>Lembar resep tertulis</strong> — dokumen teknologi yang memungkinkan orang lain mereproduksi hasil yang sama jika mengikuti langkahnya.</li>
+        </ul>
+        <div class="stem-ghost">T</div>
+      </div>
+
+      <div class="stem-card sc-e">
+        <div class="stem-badge">⚙️ Enjinering</div>
+        <h4>Siklus Desain Dua Iterasi</h4>
+        <div class="sub">Rancang → Buat → Uji → Revisi → Uji lagi</div>
+        <p>Murid menerapkan siklus desain teknik yang konkret dan berulang:</p>
+        <div class="iter-flow">
+          <div class="iter-box">Hipotesis takaran</div>
+          <div class="iter-arrow">→</div>
+          <div class="iter-box active">Buat & Uji</div>
+          <div class="iter-arrow">→</div>
+          <div class="iter-box">Revisi</div>
+          <div class="iter-arrow">→</div>
+          <div class="iter-box active">Buat & Uji lagi</div>
+        </div>
+        <p style="margin-top:10px;font-size:12px;font-style:italic;color:var(--text-mute)">Produk yang baik lahir dari proses yang berulang dan terencana.</p>
+        <div class="stem-ghost">E</div>
+      </div>
+
+      <div class="stem-card sc-m">
+        <div class="stem-badge">📊 Matematika</div>
+        <h4>Mengukur Volume & Membaca Data</h4>
+        <div class="sub">Mililiter · tabel berdampingan · kesimpulan berbasis data</div>
+        <ul>
+          <li>Mengukur volume setiap bahan cair dalam <strong>mililiter (ml)</strong> menggunakan gelas ukur.</li>
+          <li>Mencatat takaran bahan padat dalam <strong>sendok takar (sdt/sdm)</strong>.</li>
+          <li>Data dari dua iterasi disajikan dalam <strong>tabel berdampingan</strong> — takaran berapa yang menghasilkan penilaian rasa lebih baik?</li>
+        </ul>
+        <div class="stem-ghost">M</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- SIFAT BAHAN -->
+<section class="bahan-sec" id="bahan" style="padding-top:80px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🔬 Sifat Bahan · Pertemuan 2</div>
+      <h2>Empat Bahan, Empat Karakter</h2>
+      <p>Pemahaman tentang sifat setiap bahan adalah fondasi ilmiah untuk menentukan takaran resep — bukan sekadar mencoba-coba.</p>
+    </div>
+    <div class="bahan-grid rev">
+      <div class="bahan-card b-buah">
+        <span class="bahan-ico">🍊</span>
+        <div class="bahan-lbl">Bahan Utama</div>
+        <h4>Buah Segar</h4>
+        <p>Memberikan rasa khas, aroma, dan warna pada jus. Sifat bervariasi per jenis — jeruk sangat asam, mangga lebih manis, jambu biji sedikit asam.</p>
+        <div class="bahan-sifat">
+          <span class="bs">Rasa: asam/manis</span>
+          <span class="bs">Aroma: segar/harum</span>
+          <span class="bs">Berair</span>
+          <span class="bs">Padat</span>
+        </div>
+      </div>
+      <div class="bahan-card b-air">
+        <span class="bahan-ico">💧</span>
+        <div class="bahan-lbl">Pelarut</div>
+        <h4>Air</h4>
+        <p>Mengencerkan rasa dan menyesuaikan kekentalan jus. Makin banyak air, makin encer dan ringan rasanya. Tidak memiliki rasa sendiri.</p>
+        <div class="bahan-sifat">
+          <span class="bs">Tidak berasa</span>
+          <span class="bs">Tidak beraroma</span>
+          <span class="bs">Cair</span>
+          <span class="bs">Pelarut</span>
+        </div>
+      </div>
+      <div class="bahan-card b-gula">
+        <span class="bahan-ico">🍚</span>
+        <div class="bahan-lbl">Pemanis</div>
+        <h4>Gula Pasir</h4>
+        <p>Menambah rasa manis dan menyeimbangkan keasaman buah. Larut dalam air — artinya menyebar rata ke seluruh minuman. Jumlah berbeda, tingkat kemanisan berbeda.</p>
+        <div class="bahan-sifat">
+          <span class="bs">Rasa: manis</span>
+          <span class="bs">Padat → larut</span>
+          <span class="bs">1 sdt = 5 ml</span>
+          <span class="bs">1 sdm = 15 ml</span>
+        </div>
+      </div>
+      <div class="bahan-card b-es">
+        <span class="bahan-ico">🧊</span>
+        <div class="bahan-lbl">Suhu</div>
+        <h4>Es Batu</h4>
+        <p>Menurunkan suhu dan membuat jus terasa lebih segar. Mencair seiring waktu, sehingga jus bisa menjadi lebih encer jika dibiarkan lama. Opsional — disesuaikan preferensi.</p>
+        <div class="bahan-sifat">
+          <span class="bs">Padat → cair</span>
+          <span class="bs">Suhu ↓</span>
+          <span class="bs">Tidak berasa</span>
+          <span class="bs">Opsional: 3–5 biji</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALUR 6 PERTEMUAN -->
+<section class="tl-sec" id="alur">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📅 Alur Pembelajaran · Model 5E</div>
+      <h2>Enam Pertemuan, Dua Iterasi Nyata</h2>
+      <p>Dari mencicipi tiga sampel jus hingga mempresentasikan resep final berbasis data — setiap pertemuan membangun fondasi berikutnya.</p>
+    </div>
+    <div class="tl-wrap rev">
+
+      <div class="tl-item p1">
+        <div class="tl-node"><div class="tl-num">1</div><div class="tl-phase">Engagement</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 1 · Engagement</div>
+          <div class="tl-title">"Mengapa Jus yang Ini Enak, yang Itu Tidak?"</div>
+          <div class="tl-chips"><span class="tl-chip">🧠 Memahami</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <div class="sampel-row">
+            <div class="sampel s-a"><div class="sampel-lbl">Sampel A</div><p>Terlalu pekat / asam kuat<br><small>100ml jus + 50ml air, tanpa gula</small></p></div>
+            <div class="sampel s-b"><div class="sampel-lbl">Sampel B</div><p>Terlalu encer / hambar<br><small>30ml jus + 200ml air + 2 sdm gula</small></p></div>
+            <div class="sampel s-c"><div class="sampel-lbl">Sampel C</div><p>Seimbang / lebih enak<br><small>80ml jus + 120ml air + 1,5 sdm gula</small></p></div>
+          </div>
+          <ul class="tl-acts" style="margin-top:12px">
+            <li>Murid mencicipi tiga sampel jus dari buah yang sama (Sampel A, B, C) secara bergantian, lalu mengisi LK 1 — mendeskripsikan rasa setiap sampel dengan kata-kata sendiri.</li>
+            <li>Diskusi pertanyaan pemantik: apa yang membuat Sampel A dan B terasa berbeda dari C? Apa yang perlu diubah agar Sampel A lebih enak?</li>
+            <li>Guru mencatat semua dugaan murid di papan tanpa menilai — ini adalah awal pemikiran ilmiah tentang hubungan takaran dan rasa.</li>
+            <li>Murid membentuk kelompok 3–4 orang, masing-masing mendapat satu jenis buah untuk dikerjakan sepanjang proyek.</li>
+            <li>Refleksi: "Satu pertanyaan yang ingin aku jawab tentang cara membuat jus yang enak adalah..."</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p2">
+        <div class="tl-node"><div class="tl-num">2</div><div class="tl-phase">Exploration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 2 · Exploration</div>
+          <div class="tl-title">"Mengenal Sifat Bahan Pembuat Jus"</div>
+          <div class="tl-chips"><span class="tl-chip">🔍 Memahami</span><span class="tl-chip">📍 Berkesadaran · Bermakna</span></div>
+          <ul class="tl-acts">
+            <li>Buka dengan menampilkan kembali dugaan-dugaan dari P1. Murid diminta: "Mana yang masih kamu percaya? Mana yang ingin dibuktikan?"</li>
+            <li>Amati setiap bahan (buah, air, gula, es) menggunakan indera — isi LK 2 Pengamatan Sifat Bahan: rasa, aroma, wujud, sifat lain.</li>
+            <li><strong>Percobaan 1 — Gula larut:</strong> 1 sdt gula dalam segelas air, aduk perlahan. Amati: apakah gula masih terlihat? Apakah rasa berubah?</li>
+            <li><strong>Percobaan 2 — Pengaruh suhu:</strong> celupkan jari ke air biasa lalu ke air es. Diskusikan: apakah jus dengan air es rasanya akan berbeda?</li>
+            <li>Lengkapi LK 2 dengan kolom 'Peran dalam jus': menurut kelompok, apa fungsi masing-masing bahan?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p3">
+        <div class="tl-node"><div class="tl-num">3</div><div class="tl-phase">Explanation</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 3 · Explanation</div>
+          <div class="tl-title">"Mengukur dengan Tepat dan Merancang Resep"</div>
+          <div class="tl-chips"><span class="tl-chip">📐 Memahami</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Demonstrasi: tuang air ke dua gelas — satu dikira-kira "1 gelas penuh", satu diukur tepat 150 ml. Tanya: jika cara ini berbeda, apakah hasil jusnya sama persis?</li>
+            <li>Pengenalan alat: cara membaca skala ml gelas ukur (sejajar mata, bukan dari atas); perbedaan 1 sdt (5ml) vs 1 sdm (15ml) — lihat dan rasakan bedanya langsung.</li>
+            <li>Latihan mengukur: ukur 100 ml air, lalu 150 ml, bandingkan visual selisihnya. Guru menuang tanpa ukuran — murid menebak, lalu membuktikan.</li>
+            <li><strong>LK 3 — Rancangan Resep Pertama:</strong> tentukan jenis buah, tulis takaran setiap bahan dalam ml/sdm, tulis langkah-langkah urut, tulis harapan rasa.</li>
+            <li>Presentasi singkat tiap kelompok (2–3 menit) — kelompok lain boleh ajukan 1 pertanyaan atau masukan. Semua rancangan diuji di P4.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p4">
+        <div class="tl-node"><div class="tl-num">4</div><div class="tl-phase">Elaboration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 4 · Elaboration</div>
+          <div class="tl-title">"Membuat dan Menguji Jus: Iterasi Pertama"</div>
+          <div class="tl-chips"><span class="tl-chip">🧪 Mengaplikasi</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Meja dialasi plastik/koran, buah sudah dipotong guru. Ingatkan: guru yang pegang bahan tajam; murid hanya pakai pemeras manual, sendok, dan gelas.</li>
+            <li>Buat jus sesuai LK 3 — ukur setiap bahan sesuai takaran tertulis, jangan menambah berdasarkan perkiraan.</li>
+            <li><strong>Uji rasa Putaran 1 (sendiri):</strong> anggota kelompok mencicipi jus buatannya sendiri, isi LK 4 — nilai kemanisan, keasaman, kekentalan, kesegaran (skala: kurang / pas / berlebihan).</li>
+            <li><strong>Uji rasa Putaran 2 (silang):</strong> tukar gelas antar kelompok, masing-masing mengisi penilaian secara jujur berdasarkan rasa yang dirasakan.</li>
+            <li>Kumpulkan semua penilaian, simpulkan: apa yang paling banyak dinilai kurang/berlebihan? Tulis <strong>Rencana Revisi</strong> dengan angka spesifik — bukan hanya "dikurangi", tapi "dari 3 sdt menjadi 1,5 sdt".</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p5">
+        <div class="tl-node"><div class="tl-num">5</div><div class="tl-phase">Elaboration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 5 · Elaboration</div>
+          <div class="tl-title">"Memperbaiki Resep dan Menguji: Iterasi Kedua"</div>
+          <div class="tl-chips"><span class="tl-chip">🔄 Mengaplikasi</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Baca kembali Rencana Revisi dari P4 — perubahan apa yang sudah direncanakan dan mengapa?</li>
+            <li>Buat jus iterasi kedua. <strong>Wajib:</strong> catat takaran setiap bahan di LK 5 sebelum bahan dicampur, bukan setelahnya. Ubah hanya 1–2 bahan saja agar mudah mengidentifikasi pengaruhnya.</li>
+            <li>Uji rasa dengan cara yang sama (sendiri + silang). Isi kolom penilaian LK 5.</li>
+            <li>Bandingkan data iterasi 1 dan 2 secara berdampingan: takaran apa yang berubah? Penilaian rasa mana yang berubah? Menjadi lebih baik atau lebih buruk?</li>
+            <li>Tulis kesimpulan: "Resep terbaik kami adalah ... dengan takaran ... karena berdasarkan data, ..."</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p6">
+        <div class="tl-node"><div class="tl-num">6</div><div class="tl-phase">Evaluation</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 6 · Evaluation — Asesmen Sumatif</div>
+          <div class="tl-title">"Mempresentasikan Resep dan Apa yang Dipelajari"</div>
+          <div class="tl-chips"><span class="tl-chip">🎤 Merefleksi</span><span class="tl-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Buka dengan menampilkan kembali tiga sampel P1 (atau fotonya): "Sekarang kalian tahu mengapa ketiga sampel ini rasanya berbeda?" — murid menjawab sebelum presentasi dimulai.</li>
+            <li><strong>Presentasi individu (4–5 menit):</strong> apa yang diamati, diukur, dan diputuskan; bagaimana data dua iterasi menunjukkan perubahan; mengapa pilihan takaran masuk akal berdasarkan sifat bahan.</li>
+            <li>Laporan tertulis dikumpulkan setelah presentasi: sifat bahan, resep iterasi 1 + hasil uji, perubahan + alasan, tabel perbandingan, resep final, refleksi.</li>
+            <li>Guru menutup: bandingkan resep final semua kelompok — adakah pola yang sama meskipun buahnya berbeda? Ini momen membangun pemahaman bersama tentang prinsip umum sifat bahan.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ITERASI EXPLAINER -->
+<section class="iter-sec" id="iterasi">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🔄 Jantung Proyek</div>
+      <h2>Mengapa Dua Iterasi?</h2>
+      <p>Iterasi bukan tanda kegagalan — ia adalah cara kerja sains dan enjinering yang sebenarnya.</p>
+    </div>
+    <div class="iter-panel rev">
+      <p class="iter-title">"Produk yang baik lahir dari proses yang berulang dan terencana — bukan dari sekali percobaan yang berhasil secara kebetulan."</p>
+      <div class="iter-steps">
+        <div class="is">
+          <div class="is-num">1</div>
+          <h5>Hipotesis Takaran</h5>
+          <p>Tulis takaran dalam ml berdasarkan sifat bahan yang dipelajari</p>
+        </div>
+        <div class="is">
+          <div class="is-num">2</div>
+          <h5>Buat & Uji — Iterasi 1</h5>
+          <p>Buat jus, catat data panel rasa, identifikasi yang kurang/berlebihan</p>
+        </div>
+        <div class="is">
+          <div class="is-num">3</div>
+          <h5>Revisi Berbasis Data</h5>
+          <p>Ubah 1–2 takaran secara spesifik dengan angka, bukan hanya "dikurangi"</p>
+        </div>
+        <div class="is">
+          <div class="is-num">4</div>
+          <h5>Buat & Uji — Iterasi 2</h5>
+          <p>Buat jus revisi, catat data panel rasa dengan format yang sama persis</p>
+        </div>
+        <div class="is">
+          <div class="is-num">5</div>
+          <h5>Bandingkan & Simpulkan</h5>
+          <p>Tabel berdampingan — perubahan apa yang benar-benar berpengaruh?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KRITERIA -->
+<section class="krit-sec" id="asesmen">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">✅ Kriteria Keberhasilan</div>
+      <h2>Empat Ukuran Keberhasilan Proyek</h2>
+    </div>
+    <div class="krit-grid rev">
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--orange-soft)">😋</div>
+        <div><h4>Jus Layak Diminum</h4><p>Minimal <strong>3 dari 5 pencicip</strong> dalam panel uji rasa memberikan penilaian 'enak' atau 'cukup enak' pada setidaknya satu iterasi.</p></div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--indigo-soft)">📏</div>
+        <div><h4>Resep Memuat Takaran Spesifik</h4><p>Resep mencantumkan jumlah setiap bahan dalam satuan terukur: <strong>mililiter (ml)</strong> untuk cairan dan <strong>sendok takar (sdt/sdm)</strong> untuk bahan padat.</p></div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--yellow-soft)">📊</div>
+        <div><h4>Resep Didukung Data Dua Iterasi</h4><p>Tabel data memuat hasil uji rasa <strong>iterasi 1 dan iterasi 2</strong>, serta keterangan perubahan takaran yang dilakukan antara keduanya.</p></div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--green-soft)">🧬</div>
+        <div><h4>Pilihan Takaran Dapat Dijelaskan</h4><p>Murid dapat menjelaskan mengapa memilih takaran tertentu menggunakan <strong>sifat bahan</strong> yang sudah dipelajari — bukan hanya "karena enak".</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BATASAN -->
+<section class="bat-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🧱 Batasan Proyek</div>
+      <h2>Prinsip Rancangan yang Aman dan Adil</h2>
+    </div>
+    <div class="bat-row rev">
+      <div class="bat"><div class="bat-ico">🍊</div><p><strong>Satu jenis buah per kelompok</strong> — jeruk, mangga, jambu biji, atau sirsak. Dipilih guru sebelum proyek agar dapat memastikan tidak ada alergi.</p></div>
+      <div class="bat"><div class="bat-ico">✋</div><p><strong>Pemotongan buah dilakukan guru.</strong> Murid hanya menggunakan pemeras manual, sendok, dan gelas — tidak ada alat tajam atau listrik.</p></div>
+      <div class="bat"><div class="bat-ico">📏</div><p><strong>Alat yang tersedia di sekolah:</strong> gelas ukur, sendok takar, saringan, pemeras manual. Tidak memerlukan biaya tambahan dari murid atau orang tua.</p></div>
+      <div class="bat"><div class="bat-ico">🔬</div><p><strong>Tidak mencampur beberapa buah</strong> — agar murid dapat mengamati sifat bahan dengan lebih terfokus dan data lebih mudah diinterpretasikan.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- RUBRIK -->
+<section class="rubrik-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📋 Asesmen Sumatif · Pertemuan 6</div>
+      <h2>Rubrik Penilaian Proyek</h2>
+      <p>Penilaian proyek terintegrasi IPAS dan Matematika. Nilai = (Skor ÷ 24) × 100</p>
+    </div>
+    <div class="rubrik-wrap rev">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:16%">Aspek</th>
+            <th style="width:18%">Indikator</th>
+            <th style="width:16%"><span class="sc4">Skor 4</span> — Mahir</th>
+            <th style="width:16%"><span class="sc3">Skor 3</span> — Cakap</th>
+            <th style="width:17%"><span class="sc2">Skor 2</span> — Berkembang</th>
+            <th style="width:17%"><span class="sc1">Skor 1</span> — Perlu Bimbingan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="aspek">🔬 Sifat Bahan<br><small style="font-weight:400;color:var(--text-mute)">IPAS</small></td>
+            <td>Ketepatan & relevansi penjelasan</td>
+            <td>Menjelaskan sifat min. 2 bahan dengan tepat dan menghubungkannya secara logis dengan rasa jus yang dihasilkan.</td>
+            <td>Menjelaskan sifat 1 bahan dengan tepat dan cukup menghubungkannya dengan rasa jus.</td>
+            <td>Menyebut nama bahan tetapi penjelasan sifatnya tidak tepat atau tidak dihubungkan dengan rasa.</td>
+            <td>Tidak menjelaskan sifat bahan, atau penjelasannya tidak berkaitan dengan proyek.</td>
+          </tr>
+          <tr>
+            <td class="aspek">📊 Data Dua Iterasi<br><small style="font-weight:400;color:var(--text-mute)">Matematika</small></td>
+            <td>Kelengkapan & keterbacaan tabel</td>
+            <td>Tabel memuat takaran (ml/sdm) dan hasil uji rasa kedua iterasi secara lengkap, dengan perubahan yang dilakukan tercatat jelas.</td>
+            <td>Tabel memuat takaran dan hasil uji rasa kedua iterasi, dengan satu atau dua bagian yang kurang lengkap.</td>
+            <td>Tabel hanya memuat data satu iterasi, atau takaran tidak ditulis dalam satuan yang terukur.</td>
+            <td>Tidak ada tabel data, atau tabel tidak dapat dibaca karena terlalu tidak lengkap.</td>
+          </tr>
+          <tr>
+            <td class="aspek">📝 Resep Final<br><small style="font-weight:400;color:var(--text-mute)">Enjinering</small></td>
+            <td>Spesifisitas & keterlaksanaan</td>
+            <td>Mencantumkan semua bahan dengan takaran spesifik (ml/sdm) dan langkah pembuatan yang urut — cukup jelas untuk diikuti orang lain.</td>
+            <td>Mencantumkan semua bahan dengan takaran, tetapi langkah kurang runtut atau ada satu bahan yang takarannya tidak spesifik.</td>
+            <td>Mencantumkan bahan tetapi takaran tidak dalam satuan terukur (hanya "secukupnya" atau "sedikit").</td>
+            <td>Resep tidak ada, atau tidak dapat digunakan untuk membuat jus.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🧬 Alasan Sains<br><small style="font-weight:400;color:var(--text-mute)">IPAS</small></td>
+            <td>Keterkaitan takaran & sifat bahan</td>
+            <td>Menjelaskan alasan min. 2 pilihan takaran menggunakan sifat bahan yang dipelajari — bukan hanya "karena enak".</td>
+            <td>Menjelaskan alasan 1 pilihan takaran menggunakan sifat bahan yang dipelajari.</td>
+            <td>Memberikan alasan tetapi tidak dikaitkan dengan sifat bahan yang dipelajari.</td>
+            <td>Tidak memberikan alasan ilmiah, atau alasan tidak berkaitan dengan proyek.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🎤 Presentasi</td>
+            <td>Kejelasan & penggunaan data</td>
+            <td>Penyampaian runtut, mengacu pada data (tabel, takaran) dalam penjelasan, durasi 4–5 menit.</td>
+            <td>Penyampaian cukup runtut, mengacu pada data, durasi sesuai.</td>
+            <td>Penyampaian kurang runtut atau tidak mengacu pada data dalam penjelasan.</td>
+            <td>Penyampaian tidak terstruktur dan tidak mengacu pada data yang dikumpulkan.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🪞 Refleksi</td>
+            <td>Kekonkretan & kedalaman</td>
+            <td>Menuliskan satu hal spesifik yang dipelajari dan satu perubahan nyata yang akan dilakukan, dengan penjelasan mengapa.</td>
+            <td>Menuliskan satu hal yang dipelajari dan satu perubahan yang akan dilakukan secara umum.</td>
+            <td>Menuliskan refleksi tetapi hanya berupa kesan umum tanpa kaitan konkret dengan pengalaman proyek.</td>
+            <td>Tidak menulis refleksi yang bermakna, atau tidak berkaitan dengan proyek.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- NILAI KATEGORI -->
+<section class="nilai-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🏆 Kategori Pencapaian</div>
+      <h2>Standar Kelulusan Proyek</h2>
+      <p>Murid dikatakan berhasil jika berada pada kategori <strong>Cakap</strong> — skor 3 di setiap indikator rubrik.</p>
+    </div>
+    <div class="nilai-row rev">
+      <div class="nk nk-m">
+        <div class="range">84–100</div>
+        <div class="label">🌟 Mahir</div>
+        <div class="desc">Rancang variasi resep dengan mengganti satu bahan (madu, jahe), dokumentasikan dalam tabel baru. Buat "buku resep mini kelas" dari resep semua kelompok.</div>
+      </div>
+      <div class="nk nk-c">
+        <div class="range">69–83</div>
+        <div class="label">✅ Cakap</div>
+        <div class="desc">Analisis lanjutan: pilih satu baris data dari tabel, tulis satu paragraf mengapa perubahan takaran itu mengubah rasa — mengacu pada sifat bahan.</div>
+      </div>
+      <div class="nk nk-b">
+        <div class="range">54–68</div>
+        <div class="label">📈 Berkembang</div>
+        <div class="desc">Bimbingan melengkapi tabel data yang belum selesai. Diskusi terbimbing: ceritakan secara lisan apa yang terjadi, guru bantu menuangkan ke laporan.</div>
+      </div>
+      <div class="nk nk-p">
+        <div class="range">0–53</div>
+        <div class="label">🤝 Perlu Bimbingan</div>
+        <div class="desc">Remedial tatap muka: buat satu gelas jus bersama guru, ukur setiap bahan, isi tabel baris per baris secara lisan. Fokus pada tiga bahan utama saja.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TINDAK LANJUT -->
+<section class="tl2-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🗺️ Rencana Tindak Lanjut</div>
+      <h2>Setelah Proyek: Langkah Selanjutnya</h2>
+    </div>
+    <div class="tl2-grid rev">
+      <div class="tl2-card tc2-green">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>🌟 Pengayaan — Mahir (84–100)</h4><span class="tc2-badge">Mahir</span></div>
+          <ul>
+            <li>Rancang variasi resep dengan mengganti satu bahan (gula biasa → madu, atau tambah sedikit jahe) dan dokumentasikan perbandingan rasanya dalam tabel baru.</li>
+            <li>Buat <strong>"Buku Resep Mini Kelas"</strong> — kumpulkan resep final dari semua kelompok dalam satu dokumen yang bisa digunakan kelas lain atau dicetak untuk perpustakaan sekolah.</li>
+            <li>Berpikir lebih jauh: bagaimana cara menjaga jus ini tetap segar lebih lama? (Mengantarkan ke topik perubahan sifat bahan dan penyimpanan.)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl2-card tc2-teal">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>✅ Penguatan — Cakap (69–83)</h4><span class="tc2-badge">Cakap</span></div>
+          <ul>
+            <li>Pilih satu baris data dari tabel perbandingan dan tulis satu paragraf penjelasan: mengapa perubahan takaran itu menghasilkan perubahan rasa yang spesifik? Penjelasan harus mengacu pada sifat bahan yang dipelajari di Pertemuan 2.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl2-card tc2-yellow">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>📈 Remedi — Berkembang (54–68)</h4><span class="tc2-badge">Berkembang</span></div>
+          <ul>
+            <li>Bimbingan terstruktur untuk melengkapi tabel data yang belum selesai — guru mendampingi murid membaca kembali LK 4 dan LK 5 serta membantu mengidentifikasi bagian yang masih kosong.</li>
+            <li>Diskusi terbimbing: guru meminta murid menceritakan secara lisan apa yang terjadi saat membuat jus, lalu membantu menuliskannya dalam laporan dengan kalimat sederhana.</li>
+            <li>Latihan pengukuran ulang: ukur volume beberapa cairan berbeda menggunakan gelas ukur dan catat hasilnya — memperkuat pemahaman satuan ml.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl2-card tc2-rose">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>🤝 Remedial Tatap Muka — Perlu Bimbingan (0–53)</h4><span class="tc2-badge">Perlu Bimbingan</span></div>
+          <ul>
+            <li>Remedial: guru mendampingi murid membuat satu gelas jus sederhana bersama-sama, mengukur setiap bahan, dan mengisi tabel data baris per baris secara lisan.</li>
+            <li>Kembali ke LK 2, pilih satu bahan untuk dijelaskan sifatnya secara lisan — guru menuliskan penjelasan murid dan memperlihatkannya: "Ini yang kamu ketahui, dan ini yang bisa kamu tulis di laporan."</li>
+            <li>Fokus pada satu hal yang dapat diselesaikan: cukup tulis takaran tiga bahan utama dalam ml/sdm dengan benar sebagai target minimum.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEMITRAAN -->
+<section class="mitra-sec">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-pill">🤝 Kemitraan Pembelajaran</div>
+      <h2>Belajar Bersama Komunitas</h2>
+      <p>Proyek ini melibatkan pihak di luar kelas untuk memberikan konteks dan dukungan yang nyata.</p>
+    </div>
+    <div class="mitra-grid">
+      <div class="mitra-card">
+        <span class="mitra-ico">👨‍👩‍👧</span>
+        <h4>Orang Tua Murid</h4>
+        <p>Dapat membantu menyediakan buah untuk proyek. Didorong untuk mengulang kegiatan membuat jus bersama anak di rumah menggunakan resep yang dirancang di sekolah — sebagai penguatan pembelajaran di luar kelas.</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">👩‍🍳</span>
+        <h4>Petugas Kantin / Orang Tua Ahli Memasak</h4>
+        <p>Dapat diundang berbagi pengalaman singkat (±10 menit) tentang pentingnya takaran yang tepat dalam membuat minuman atau masakan — menjadi narasumber nyata sebelum Pertemuan 3 dimulai.</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">🏫</span>
+        <h4>Kelas sebagai Dapur Percobaan</h4>
+        <p>Kelas berfungsi sebagai dapur percobaan sementara — meja dialasi plastik, area cuci tangan tersedia. Suasana yang mendukung eksplorasi dan <em>tidak menghukum percobaan yang gagal</em> adalah kunci keberhasilan proyek ini.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-sec">
+  <div class="wrap">
+    <div class="q-box rev">
+      <blockquote>"Hasilnya bukan hanya jus yang lebih enak — tetapi pemahaman bahwa <em>membuat sesuatu yang baik memerlukan proses yang terencana dan dapat diperbaiki</em>."</blockquote>
+      <cite>— Catatan Pendidik, Perencanaan STEM Kelas 3 · SDM01 Kukusan</cite>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="ft-brand">Jusnya Tidak Enak · Kelas 3 SDM01</div>
+        <p class="ft-desc">Perencanaan pembelajaran STEM terintegrasi IPAS dan Matematika untuk kelas 3 SD Muhammadiyah 01 Kukusan. Model 5E Bybee · 24 JP · 6 Pertemuan · Dua Iterasi.</p>
+        <p class="ft-meta">SD Muhammadiyah 01 Kukusan · Berdasarkan Panduan STEM Kemendikdasmen 2025</p>
+      </div>
+      <ul class="ft-links">
+        <li><a href="index.html">🏠 Hub SDM01</a></li>
+        <li><a href="aksi-hijau-stem-kelas5.html">🌱 Kelas 6 · Aksi Hijau</a></li>
+        <li><a href="sistem-kebersihan-kelas5.html">🧹 Kelas 5 · Sistem Kebersihan</a></li>
+        <li><a href="kelasku-terlalu-berisik.html">🔊 Kelas 4 · Kelasku Berisik</a></li>
+        <li><a href="jusnya-tidak-enak.html">🥤 Kelas 3 · Jusnya Tidak Enak</a></li>
+        <li><a href="../index.html">↖ Hub Utama STEM</a></li>
+      </ul>
+    </div>
+    <div class="ft-bot">
+      <p>SD Muhammadiyah 01 Kukusan · Kepentingan pendidikan non-komersial</p>
+      <span class="ft-ver">v1.0.0 · Mei 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Progress bar
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const s = document.documentElement.scrollTop, h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (s / h * 100) + '%';
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+}), { threshold: .08 });
+document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+
+// Floating juice bubbles
+const bContainer = document.getElementById('bubbles');
+const colors = ['#FB923C','#EAB308','#4ADE80','#FB7185','#60A5FA','#A78BFA','#34D399'];
+for (let i = 0; i < 18; i++) {
+  const b = document.createElement('div');
+  b.className = 'bubble';
+  const size = 20 + Math.random() * 60;
+  b.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${Math.random()*100}%;
+    background:${colors[Math.floor(Math.random()*colors.length)]};
+    animation-duration:${12+Math.random()*18}s;
+    animation-delay:${Math.random()*12}s;
+  `;
+  bContainer.appendChild(b);
+}
+</script>
+</body>
+</html>
