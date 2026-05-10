@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Kelas yang Bersih adalah Tanggung Jawab Bersama · STEM Kelas 5 · SDM01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --cream:#FDFAF5; --cream2:#F5F0E8; --cream3:#EDE8DC;
+      --green:#166534; --green-mid:#15803D; --green-bright:#22C55E; --green-soft:#DCFCE7; --green-pale:#F0FDF4;
+      --amber:#92400E; --amber-mid:#B45309; --amber-bright:#F59E0B; --amber-soft:#FEF3C7; --amber-pale:#FFFBEB;
+      --red:#991B1B; --red-soft:#FEE2E2;
+      --blue:#1E40AF; --blue-soft:#DBEAFE;
+      --navy:#0F2942; --navy-mid:#1E3A5F; --navy-light:#2D5080;
+      --text:#1A1A1A; --text-mid:#3D3D3D; --text-mute:#6B6B6B; --text-faint:#9A9A9A;
+      --border:#D4C9B4; --border-l:#E8E0D0;
+      --shadow:0 2px 16px rgba(15,41,66,.08); --shadow-md:0 6px 32px rgba(15,41,66,.12);
+      --r:12px; --rl:20px;
+      --ff-serif:'Playfair Display',Georgia,serif;
+      --ff-sans:'Nunito',system-ui,sans-serif;
+      --ff-mono:'DM Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-sans);background:var(--cream);color:var(--text);line-height:1.7;overflow-x:hidden}
+    a{color:var(--green-mid);text-decoration:none;transition:color .2s}
+    a:hover{color:var(--amber-mid)}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+    /* ── PROGRESS BAR ── */
+    #prog{position:fixed;top:0;left:0;height:3px;z-index:999;width:0%;background:linear-gradient(90deg,var(--green-mid),var(--amber-bright),var(--green-bright));transition:width .1s}
+
+    /* ── GRAIN OVERLAY ── */
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+    /* ── NAV ── */
+    nav{position:sticky;top:0;z-index:100;background:rgba(253,250,245,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(15,41,66,.06)}
+    .nav-in{max-width:1100px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .nav-logo{display:flex;align-items:center;gap:10px}
+    .nav-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--green-mid),var(--green-bright));display:flex;align-items:center;justify-content:center;font-size:17px}
+    .nav-brand{font-size:13px;font-weight:800;color:var(--navy);line-height:1.2}
+    .nav-brand span{display:block;font-size:11px;font-weight:500;color:var(--text-mute)}
+    .nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+    .nav-links a{font-size:12px;font-weight:600;color:var(--text-mute);transition:color .2s}
+    .nav-links a:hover{color:var(--navy)}
+    .nav-chip{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--green-soft);color:var(--green);border:1px solid #86EFAC}
+    @media(max-width:700px){.nav-links{display:none}}
+
+    /* ── HERO ── */
+    .hero{position:relative;padding:80px 0 0;overflow:hidden;z-index:1}
+    .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+    .hero-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.25}
+    .blob1{width:600px;height:400px;top:-100px;right:-100px;background:radial-gradient(circle,var(--green-bright),transparent)}
+    .blob2{width:400px;height:400px;bottom:-50px;left:-80px;background:radial-gradient(circle,var(--amber-bright),transparent)}
+    .hero>.wrap{position:relative;z-index:1}
+
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);background:var(--green-soft);padding:5px 14px;border-radius:20px;border:1px solid #86EFAC;margin-bottom:24px;opacity:0;animation:fu .7s .1s ease forwards}
+    .hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green-bright);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}
+
+    .hero h1{font-family:var(--ff-serif);font-size:clamp(30px,5vw,58px);line-height:1.1;letter-spacing:-.01em;color:var(--navy);max-width:780px;margin-bottom:14px;opacity:0;animation:fu .7s .2s ease forwards}
+    .hero h1 em{font-style:italic;color:var(--green-mid)}
+    .hero-tagline{font-size:clamp(14px,2vw,17px);color:var(--text-mute);max-width:660px;font-weight:500;margin-bottom:36px;opacity:0;animation:fu .7s .3s ease forwards;line-height:1.6}
+
+    .hero-cards{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px;opacity:0;animation:fu .7s .4s ease forwards}
+    .hcard{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+    .hcard-ico{font-size:22px}
+    .hcard-body{font-size:12px;color:var(--text-mute);font-weight:500;line-height:1.3}
+    .hcard-body strong{display:block;font-size:14px;font-weight:800;color:var(--navy)}
+
+    /* Decorative broom SVG banner */
+    .hero-visual{background:linear-gradient(180deg,transparent,var(--cream));position:relative;height:100px;margin-top:8px}
+
+    /* ── SECTION HEADER ── */
+    .sh{text-align:center;margin-bottom:52px}
+    .sh-label{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--green-mid);margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px}
+    .sh-label::before,.sh-label::after{content:'';flex:1;max-width:48px;height:1px;background:var(--green-bright);opacity:.5}
+    .sh h2{font-family:var(--ff-serif);font-size:clamp(24px,3.5vw,38px);line-height:1.2;color:var(--navy);margin-bottom:12px}
+    .sh p{font-size:15px;color:var(--text-mute);max-width:520px;margin:0 auto;font-weight:500}
+
+    /* ── MASALAH ── */
+    .masalah-sec{padding:72px 0 0;position:relative;z-index:1}
+    .masalah-box{background:var(--navy);border-radius:var(--rl);padding:52px 52px 52px 56px;position:relative;overflow:hidden;box-shadow:var(--shadow-md)}
+    .masalah-box::before{content:'';position:absolute;top:0;right:0;width:360px;height:360px;background:radial-gradient(circle at top right,rgba(34,197,94,.15),transparent 60%);pointer-events:none}
+    .masalah-box::after{content:'';position:absolute;bottom:0;left:0;width:300px;height:300px;background:radial-gradient(circle at bottom left,rgba(245,158,11,.1),transparent 60%);pointer-events:none}
+    .masalah-quote-mark{font-family:var(--ff-serif);font-size:120px;line-height:.7;color:var(--green-bright);opacity:.15;position:absolute;top:28px;left:28px;pointer-events:none}
+    .masalah-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green-bright);background:rgba(34,197,94,.1);padding:4px 13px;border-radius:20px;border:1px solid rgba(34,197,94,.25);margin-bottom:20px}
+    .masalah-box h3{font-family:var(--ff-serif);font-size:clamp(20px,3vw,28px);color:#fff;line-height:1.35;margin-bottom:20px;position:relative;z-index:1}
+    .masalah-body{font-size:14px;line-height:1.8;color:rgba(255,255,255,.75);max-width:680px;position:relative;z-index:1}
+    .masalah-sila{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+    .sila-chip{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;padding:8px 16px;border-radius:20px;border:1px solid}
+    .sila-3{background:rgba(245,158,11,.12);color:#FCD34D;border-color:rgba(252,211,77,.25)}
+    .sila-5{background:rgba(34,197,94,.12);color:#6EE7B7;border-color:rgba(110,231,183,.25)}
+    @media(max-width:640px){.masalah-box{padding:32px 24px}}
+
+    /* ── STEM GRID ── */
+    .stem-sec{padding:80px 0;position:relative;z-index:1}
+    .stem-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:680px){.stem-grid{grid-template-columns:1fr}}
+
+    .stem-card{border-radius:var(--rl);padding:32px 28px;border:1px solid var(--border-l);transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+    .stem-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+    .stem-s{background:var(--green-pale)}
+    .stem-t{background:var(--blue-soft)}
+    .stem-e{background:var(--amber-pale)}
+    .stem-m{background:var(--red-soft)}
+
+    .stem-letter{font-family:var(--ff-serif);font-size:72px;font-weight:900;line-height:.85;position:absolute;right:20px;bottom:12px;opacity:.08;letter-spacing:-.02em}
+    .stem-s .stem-letter{color:var(--green)}
+    .stem-t .stem-letter{color:var(--blue)}
+    .stem-e .stem-letter{color:var(--amber)}
+    .stem-m .stem-letter{color:var(--red)}
+
+    .stem-badge{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:16px;border:1px solid}
+    .stem-s .stem-badge{background:var(--green-soft);color:var(--green);border-color:#86EFAC}
+    .stem-t .stem-badge{background:var(--blue-soft);color:var(--blue);border-color:#93C5FD}
+    .stem-e .stem-badge{background:var(--amber-soft);color:var(--amber);border-color:#FCD34D}
+    .stem-m .stem-badge{background:var(--red-soft);color:var(--red);border-color:#FCA5A5}
+
+    .stem-card h4{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:6px}
+    .stem-card .stem-sub{font-size:12px;font-weight:600;color:var(--text-mute);margin-bottom:14px;font-style:italic}
+    .stem-card p{font-size:13px;line-height:1.7;color:var(--text-mid)}
+    .stem-card ul{font-size:13px;line-height:1.7;color:var(--text-mid);padding-left:18px}
+    .stem-card ul li{margin-bottom:5px}
+
+    /* ── TIMELINE 5E ── */
+    .timeline-sec{padding:0 0 80px;position:relative;z-index:1}
+    .timeline{position:relative}
+    .timeline::before{content:'';position:absolute;left:42px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--green-bright),var(--amber-bright));opacity:.3}
+    @media(max-width:600px){.timeline::before{left:22px}}
+
+    .titem{display:flex;gap:24px;margin-bottom:4px;padding:16px 16px 16px 0;border-radius:14px;transition:background .2s;cursor:default}
+    .titem:hover{background:rgba(255,255,255,.7)}
+    @media(max-width:600px){.titem{gap:14px}}
+
+    .tnode{flex-shrink:0;width:84px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+    @media(max-width:600px){.tnode{width:44px}}
+    .tnum{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;border:2px solid;position:relative;background:var(--cream)}
+    .t1 .tnum{border-color:var(--green-mid);color:var(--green-mid)}
+    .t2 .tnum{border-color:#0891B2;color:#0891B2}
+    .t3 .tnum{border-color:var(--amber-mid);color:var(--amber-mid)}
+    .t4 .tnum{border-color:#7C3AED;color:#7C3AED}
+    .t5 .tnum{border-color:#DC2626;color:#DC2626}
+    .tphase{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);text-align:center}
+    @media(max-width:600px){.tphase{display:none}}
+
+    .tbody{flex:1;background:#fff;border-radius:14px;border:1px solid var(--border-l);padding:22px 26px;box-shadow:0 1px 8px rgba(15,41,66,.05)}
+    .t1 .tbody{border-left:3px solid var(--green-mid)}
+    .t2 .tbody{border-left:3px solid #0891B2}
+    .t3 .tbody{border-left:3px solid var(--amber-mid)}
+    .t4 .tbody{border-left:3px solid #7C3AED}
+    .t5 .tbody{border-left:3px solid #DC2626}
+
+    .tpert{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:4px}
+    .ttitle{font-family:var(--ff-serif);font-size:18px;color:var(--navy);margin-bottom:12px;line-height:1.25}
+    .tmeta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .tmeta-chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--cream2);color:var(--text-mute);border:1px solid var(--border)}
+    .tactivities{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .tactivities li{font-size:13px;color:var(--text-mid);padding-left:18px;position:relative;line-height:1.5}
+    .tactivities li::before{content:'›';position:absolute;left:0;color:var(--text-faint);font-weight:700}
+
+    /* ── KRITERIA ── */
+    .kriteria-sec{padding:80px 0;background:linear-gradient(180deg,var(--cream2),var(--cream));position:relative;z-index:1}
+    .kriteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:680px){.kriteria-grid{grid-template-columns:1fr}}
+    .krit-card{background:#fff;border:1px solid var(--border-l);border-radius:14px;padding:24px;display:flex;gap:16px;align-items:flex-start;box-shadow:var(--shadow)}
+    .krit-ico{width:44px;height:44px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .krit-card h4{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:5px}
+    .krit-card p{font-size:13px;color:var(--text-mute);line-height:1.55}
+
+    /* ── BATASAN ── */
+    .batasan-sec{padding:0 0 80px;position:relative;z-index:1}
+    .batasan-row{display:flex;gap:12px;flex-wrap:wrap}
+    .bat-item{flex:1;min-width:200px;background:var(--cream2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start}
+    .bat-ico{font-size:20px;flex-shrink:0;margin-top:2px}
+    .bat-item p{font-size:13px;color:var(--text-mid);line-height:1.55;font-weight:500}
+
+    /* ── RUBRIK ── */
+    .rubrik-sec{padding:80px 0;position:relative;z-index:1;background:var(--cream2)}
+    .rubrik-wrap{overflow-x:auto;border-radius:var(--rl);border:1px solid var(--border);box-shadow:var(--shadow-md)}
+    table{width:100%;border-collapse:collapse;background:#fff;font-size:13px;min-width:700px}
+    thead tr{background:var(--navy)}
+    th{padding:14px 16px;text-align:left;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+    td{padding:13px 16px;border-bottom:1px solid var(--border-l);vertical-align:top;line-height:1.5;color:var(--text-mid)}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:var(--cream)}
+    .score-4{font-weight:700;color:var(--green)}
+    .score-3{font-weight:700;color:#0891B2}
+    .score-2{font-weight:700;color:var(--amber-mid)}
+    .score-1{font-weight:700;color:var(--red)}
+    .aspek{font-weight:700;color:var(--navy)}
+
+    /* ── NILAI ── */
+    .nilai-sec{padding:80px 0;position:relative;z-index:1}
+    .nilai-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media(max-width:700px){.nilai-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.nilai-grid{grid-template-columns:1fr}}
+    .nilai-card{border-radius:14px;padding:22px 20px;text-align:center;border:1px solid}
+    .n-mahir{background:var(--green-pale);border-color:#86EFAC;color:var(--green)}
+    .n-cakap{background:var(--blue-soft);border-color:#93C5FD;color:var(--blue)}
+    .n-berkembang{background:var(--amber-pale);border-color:#FCD34D;color:var(--amber-mid)}
+    .n-bimbingan{background:var(--red-soft);border-color:#FCA5A5;color:var(--red)}
+    .nilai-card .range{font-family:var(--ff-mono);font-size:20px;font-weight:500;margin-bottom:6px}
+    .nilai-card .label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .nilai-card .desc{font-size:12px;margin-top:8px;opacity:.8;line-height:1.4}
+
+    /* ── TINDAK LANJUT ── */
+    .tl-sec{padding:0 0 80px;position:relative;z-index:1}
+    .tl-grid{display:flex;flex-direction:column;gap:14px}
+    .tl-card{background:#fff;border:1px solid var(--border-l);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex}
+    .tl-stripe{width:5px;flex-shrink:0}
+    .tl-green .tl-stripe{background:var(--green-bright)}
+    .tl-blue .tl-stripe{background:#38BDF8}
+    .tl-amber .tl-stripe{background:var(--amber-bright)}
+    .tl-red .tl-stripe{background:#F87171}
+    .tl-body{padding:20px 24px;flex:1}
+    .tl-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+    .tl-header h4{font-size:16px;font-weight:800;color:var(--navy)}
+    .tl-badge{font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;border:1px solid}
+    .tl-green .tl-badge{background:var(--green-soft);color:var(--green);border-color:#86EFAC}
+    .tl-blue .tl-badge{background:var(--blue-soft);color:var(--blue);border-color:#93C5FD}
+    .tl-amber .tl-badge{background:var(--amber-soft);color:var(--amber-mid);border-color:#FCD34D}
+    .tl-red .tl-badge{background:var(--red-soft);color:var(--red);border-color:#FCA5A5}
+    .tl-body ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .tl-body ul li{font-size:13px;color:var(--text-mid);padding-left:20px;position:relative;line-height:1.55}
+    .tl-body ul li::before{content:'→';position:absolute;left:0;font-weight:700;color:var(--text-faint)}
+
+    /* ── KEMITRAAN ── */
+    .mitra-sec{padding:80px 0;background:linear-gradient(135deg,var(--navy),var(--navy-mid));position:relative;z-index:1;overflow:hidden}
+    .mitra-sec::before{content:'';position:absolute;top:-40%;right:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.08),transparent 60%)}
+    .mitra-sec .sh-label{color:var(--green-bright)}
+    .mitra-sec .sh-label::before,.mitra-sec .sh-label::after{background:var(--green-bright)}
+    .mitra-sec .sh h2{color:#fff}
+    .mitra-sec .sh p{color:rgba(255,255,255,.65)}
+    .mitra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:700px){.mitra-grid{grid-template-columns:1fr}}
+    .mitra-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:24px;transition:background .2s}
+    .mitra-card:hover{background:rgba(255,255,255,.1)}
+    .mitra-ico{font-size:30px;margin-bottom:14px;display:block}
+    .mitra-card h4{font-size:15px;font-weight:800;color:#fff;margin-bottom:8px}
+    .mitra-card p{font-size:13px;line-height:1.6;color:rgba(255,255,255,.65)}
+
+    /* ── FOOTER ── */
+    footer{padding:52px 0 32px;border-top:1px solid var(--border);background:var(--cream2);position:relative;z-index:1}
+    .ft-in{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+    @media(max-width:600px){.ft-in{grid-template-columns:1fr}}
+    .ft-brand{font-family:var(--ff-serif);font-size:18px;color:var(--navy);margin-bottom:8px}
+    .ft-desc{font-size:13px;color:var(--text-mute);max-width:380px;line-height:1.6;margin-bottom:12px}
+    .ft-meta{font-size:11px;color:var(--text-faint)}
+    .ft-links{display:flex;flex-direction:column;gap:7px;list-style:none}
+    .ft-links a{font-size:13px;color:var(--text-mute)}.ft-links a:hover{color:var(--navy)}
+    .ft-bot{margin-top:32px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .ft-bot p{font-size:12px;color:var(--text-faint)}
+
+    /* ── UTILITIES ── */
+    @keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+    .rev.in{opacity:1;transform:translateY(0)}
+
+    /* data bar decorative */
+    .bar-demo{display:flex;align-items:flex-end;gap:6px;height:60px;margin-top:16px}
+    .bar{border-radius:4px 4px 0 0;min-width:16px;opacity:.7;transition:height .5s ease}
+    .bar-green{background:var(--green-bright)}
+    .bar-amber{background:var(--amber-bright)}
+
+    /* ── QUOTE ── */
+    .quote-sec{padding:0 0 80px;position:relative;z-index:1}
+    .quote-box{background:linear-gradient(135deg,var(--green-pale),var(--cream2));border:1px solid #86EFAC;border-radius:var(--rl);padding:40px 44px;position:relative;overflow:hidden}
+    .quote-box::before{font-family:var(--ff-serif);content:'"';position:absolute;top:-10px;left:24px;font-size:130px;line-height:1;color:var(--green-bright);opacity:.15;pointer-events:none}
+    .quote-box blockquote{font-family:var(--ff-serif);font-size:clamp(16px,2.3vw,22px);color:var(--navy);font-style:italic;line-height:1.5;margin-bottom:12px;position:relative;z-index:1}
+    .quote-box blockquote em{color:var(--green-mid);font-style:normal}
+    .quote-box cite{font-size:13px;color:var(--text-mute);font-style:normal}
+    @media(max-width:600px){.quote-box{padding:28px 24px}}
+
+    .div{height:1px;background:var(--border-l)}
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-mark">🧹</div>
+      <div class="nav-brand">Sistem Kebersihan Kelas <span>STEM Kelas 5 · SDM01 Kukusan</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#stem">Integrasi STEM</a></li>
+      <li><a href="#alur">Alur Belajar</a></li>
+      <li><a href="#asesmen">Asesmen</a></li>
+      <li><a href="index.html">← Hub SDM01</a></li>
+    </ul>
+    <span class="nav-chip">PKn & Matematika</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><div class="hero-blob blob1"></div><div class="hero-blob blob2"></div></div>
+  <div class="wrap">
+    <div class="hero-eyebrow">🏫 Kelas 5 · SD Muhammadiyah 01 Kukusan</div>
+    <h1>Kelas yang Bersih adalah<br><em>Tanggung Jawab Bersama</em></h1>
+    <p class="hero-tagline">Murid kelas 5 merancang sistem kebersihan kelas secara berkelompok, mengujinya berdasarkan data, dan mengaitkannya dengan nilai-nilai Pancasila dalam kehidupan sehari-hari.</p>
+    <div class="hero-cards">
+      <div class="hcard"><div class="hcard-ico">📚</div><div class="hcard-body"><strong>PKn & Matematika</strong>Mata Pelajaran Terintegrasi</div></div>
+      <div class="hcard"><div class="hcard-ico">🏫</div><div class="hcard-body"><strong>Fase C / Kelas V</strong>Sekolah Dasar</div></div>
+      <div class="hcard"><div class="hcard-ico">⏱️</div><div class="hcard-body"><strong>20 JP · 5 Pertemuan</strong>Alokasi Waktu</div></div>
+      <div class="hcard"><div class="hcard-ico">⚙️</div><div class="hcard-body"><strong>Model 5E Bybee</strong>Praktik Pedagogis</div></div>
+    </div>
+  </div>
+  <div class="hero-visual"></div>
+</section>
+
+<!-- MASALAH -->
+<section class="masalah-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-label">Konteks Masalah</div>
+      <h2>Mengapa Proyek Ini Penting?</h2>
+      <p>Masalah kebersihan kelas bukan soal kebiasaan individu — melainkan soal tidak adanya sistem.</p>
+    </div>
+    <div class="masalah-box rev">
+      <div class="masalah-quote-mark">"</div>
+      <div class="masalah-tag">💡 Latar Belakang Proyek</div>
+      <h3>Bungkus makanan, serpihan kertas, dan sampah kecil lainnya berserakan — bukan karena tidak ada tempat sampah, tetapi karena belum ada kesepakatan bersama yang dijalankan secara konsisten.</h3>
+      <p class="masalah-body">Kondisi ini sering diatasi dengan cara yang sama setiap hari: guru mengingatkan, murid membersihkan sebentar, lalu keesokan harinya kondisi kembali seperti semula. Masalah ini sebenarnya adalah soal tidak adanya <strong style="color:#fff">sistem</strong> — bukan sekadar kebiasaan. Dalam proyek ini, murid kelas 5 diajak memahami masalah melalui pengamatan langsung, merancang sistem berbasis data, mengujinya, dan mengevaluasinya — sehingga mereka bisa melihat nyata apakah rancangan mereka bekerja.</p>
+      <div class="masalah-sila">
+        <div class="sila-chip sila-3">⭐ Sila ke-3 — Persatuan Indonesia</div>
+        <div class="sila-chip sila-5">⭐ Sila ke-5 — Keadilan Sosial bagi Seluruh Rakyat</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEM INTEGRATION -->
+<section class="stem-sec" id="stem">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-label">Integrasi STEM</div>
+      <h2>Sains · Teknologi · Enjinering · Matematika</h2>
+      <p>Setiap disiplin STEM berperan nyata dalam proyek ini — bukan sekadar label, tetapi aktivitas konkret yang saling mendukung.</p>
+    </div>
+    <div class="stem-grid rev">
+
+      <!-- S -->
+      <div class="stem-card stem-s">
+        <div class="stem-badge">🔬 Sains</div>
+        <h4>Mengamati dan Memahami Masalah</h4>
+        <div class="stem-sub">Observasi langsung kondisi kelas</div>
+        <p>Murid mengamati kondisi kebersihan kelas secara langsung setelah jam istirahat — mencatat jenis sampah, lokasi temuan, dan waktu kemunculannya. Mereka menghubungkan temuan dengan dampak kebersihan lingkungan terhadap kenyamanan dan konsentrasi belajar.</p>
+        <div class="bar-demo">
+          <div class="bar bar-green" style="height:40px" title="Bungkus makanan"></div>
+          <div class="bar bar-green" style="height:55px" title="Kertas"></div>
+          <div class="bar bar-green" style="height:28px" title="Plastik"></div>
+          <div class="bar bar-amber" style="height:20px" title="Lainnya"></div>
+        </div>
+        <div class="stem-letter">S</div>
+      </div>
+
+      <!-- T -->
+      <div class="stem-card stem-t">
+        <div class="stem-badge">💻 Teknologi</div>
+        <h4>Merancang Alat dan Produk</h4>
+        <div class="stem-sub">Lembar observasi · Denah zona · Rambu kebersihan</div>
+        <ul>
+          <li><strong>Lembar observasi terstruktur</strong> — dirancang bersama sebagai alat pencatatan data yang dapat diulang dan dibandingkan antar pertemuan.</li>
+          <li><strong>Denah kelas sederhana</strong> — sketsa berskala untuk memetakan zona tanggung jawab setiap kelompok piket.</li>
+          <li><strong>Rambu kebersihan</strong> — dari karton, dipasang di titik strategis berdasarkan data observasi (minimal 2 rambu).</li>
+        </ul>
+        <div class="stem-letter">T</div>
+      </div>
+
+      <!-- E -->
+      <div class="stem-card stem-e">
+        <div class="stem-badge">⚙️ Enjinering</div>
+        <h4>Siklus Desain-Uji-Revisi</h4>
+        <div class="stem-sub">Merancang sistem yang benar-benar bisa dijalankan</div>
+        <p>Murid menerapkan proses desain teknik sederhana:</p>
+        <ul style="margin-top:8px">
+          <li>Identifikasi masalah dari data</li>
+          <li>Rancang solusi (zona, jadwal, aturan)</li>
+          <li>Buat dan pasang rambu</li>
+          <li>Uji sistem dalam kondisi nyata</li>
+          <li>Evaluasi dari data → revisi</li>
+        </ul>
+        <div class="stem-letter">E</div>
+      </div>
+
+      <!-- M -->
+      <div class="stem-card stem-m">
+        <div class="stem-badge">📊 Matematika</div>
+        <h4>Data sebagai Dasar Keputusan</h4>
+        <div class="stem-sub">Tabel frekuensi · Diagram batang berdampingan</div>
+        <ul>
+          <li>Pertemuan 2: Membuat tabel frekuensi dan diagram batang dari data observasi awal.</li>
+          <li>Pertemuan 4: Membandingkan data <em>sebelum</em> dan <em>sesudah</em> uji sistem dalam diagram batang berdampingan.</li>
+          <li>Menarik kesimpulan yang dapat dipertanggungjawabkan berdasarkan data nyata — bukan sekadar asumsi.</li>
+        </ul>
+        <div class="stem-letter">M</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ALUR 5E TIMELINE -->
+<section class="timeline-sec" id="alur" style="padding-top:80px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-label">Alur Pembelajaran · Model 5E</div>
+      <h2>Lima Pertemuan, Satu Proyek Nyata</h2>
+      <p>Dari mengamati kondisi kelas hingga mempresentasikan sistem kebersihan berbasis data — setiap pertemuan membangun fondasi pertemuan berikutnya.</p>
+    </div>
+    <div class="timeline rev">
+
+      <!-- P1 -->
+      <div class="titem t1">
+        <div class="tnode">
+          <div class="tnum">1</div>
+          <div class="tphase">Engagement</div>
+        </div>
+        <div class="tbody">
+          <div class="tpert">Pertemuan 1 · Engagement</div>
+          <div class="ttitle">"Kondisi Kelas Kita Setelah Istirahat"</div>
+          <div class="tmeta">
+            <span class="tmeta-chip">🧠 Memahami</span>
+            <span class="tmeta-chip">📍 Berkesadaran · Bermakna · Menggembirakan</span>
+          </div>
+          <ul class="tactivities">
+            <li>Kelas dibuka tepat setelah istirahat — kondisi kelas dibiarkan apa adanya sebagai titik awal pengamatan.</li>
+            <li>Diskusi foto perbandingan kelas bersih vs kotor dengan pertanyaan pemantik tentang Pancasila.</li>
+            <li>Murid merancang format Lembar Kerja 1 (Observasi) bersama guru: kolom jenis sampah, lokasi, jumlah, keterangan.</li>
+            <li>Observasi keliling kelas selama 5–7 menit, dilanjutkan presentasi singkat per kelompok.</li>
+            <li>Tugas mandiri: amati kelas setelah istirahat secara mandiri menggunakan format yang sama.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="titem t2">
+        <div class="tnode">
+          <div class="tnum">2</div>
+          <div class="tphase">Exploration</div>
+        </div>
+        <div class="tbody">
+          <div class="tpert">Pertemuan 2 · Exploration</div>
+          <div class="ttitle">"Membaca Data: Di Mana dan Kapan Kelas Paling Kotor?"</div>
+          <div class="tmeta">
+            <span class="tmeta-chip">🔍 Memahami</span>
+            <span class="tmeta-chip">📊 Berkesadaran · Bermakna</span>
+          </div>
+          <ul class="tactivities">
+            <li>Gabungkan data pengamatan mandiri dengan data Pertemuan 1 di papan tulis.</li>
+            <li>Analisis: jenis sampah terbanyak, area paling rentan, dan apakah data sudah cukup untuk merancang solusi.</li>
+            <li>Lembar Kerja 2: susun tabel frekuensi (jenis sampah × jumlah) dan buat diagram batang.</li>
+            <li>Tulis 2–3 kalimat kesimpulan: pola dari data dan prioritas rancangan sistem.</li>
+            <li>Presentasi satu kelompok — kelompok lain menanggapi jika ada perbedaan temuan.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="titem t3">
+        <div class="tnode">
+          <div class="tnum">3</div>
+          <div class="tphase">Explanation</div>
+        </div>
+        <div class="tbody">
+          <div class="tpert">Pertemuan 3 · Explanation</div>
+          <div class="ttitle">"Merancang Sistem Kebersihan Berbasis Data"</div>
+          <div class="tmeta">
+            <span class="tmeta-chip">🛠️ Mengaplikasi</span>
+            <span class="tmeta-chip">🤝 Berkesadaran · Bermakna · Menggembirakan</span>
+          </div>
+          <ul class="tactivities">
+            <li>Opsional: petugas kebersihan sekolah hadir 10 menit untuk berbagi perspektif lapangan.</li>
+            <li>Lembar Kerja 3: rancang peta zona, jadwal piket yang adil, aturan kelas (kalimat positif), dan sketsa rambu.</li>
+            <li>Gallery walk: tempel rancangan di dinding, kelompok lain beri komentar di sticky note.</li>
+            <li>Kelas bersama-sama menyepakati satu rancangan sistem gabungan yang akan diuji di Pertemuan 4.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div class="titem t4">
+        <div class="tnode">
+          <div class="tnum">4</div>
+          <div class="tphase">Elaboration</div>
+        </div>
+        <div class="tbody">
+          <div class="tpert">Pertemuan 4 · Elaboration</div>
+          <div class="ttitle">"Uji Coba, Evaluasi, dan Perbaikan Sistem"</div>
+          <div class="tmeta">
+            <span class="tmeta-chip">🧪 Mengaplikasi</span>
+            <span class="tmeta-chip">🔄 Berkesadaran · Bermakna · Menggembirakan</span>
+          </div>
+          <ul class="tactivities">
+            <li>Buat dan pasang rambu kebersihan di titik-titik yang disepakati rancangan sistem.</li>
+            <li>Jalankan sistem piket sesuai jadwal dan zona yang ditetapkan.</li>
+            <li>Setelah istirahat: observasi ulang menggunakan <strong>format persis sama dengan Pertemuan 1</strong> — agar data dapat dibandingkan secara valid.</li>
+            <li>Lembar Kerja 4: diagram batang berdampingan sebelum–sesudah, analisis zona berhasil vs belum, dan rencana revisi.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- P5 -->
+      <div class="titem t5">
+        <div class="tnode">
+          <div class="tnum">5</div>
+          <div class="tphase">Evaluation</div>
+        </div>
+        <div class="tbody">
+          <div class="tpert">Pertemuan 5 · Evaluation — Asesmen Sumatif</div>
+          <div class="ttitle">"Presentasi Hasil Proyek dan Refleksi"</div>
+          <div class="tmeta">
+            <span class="tmeta-chip">🎤 Merefleksi</span>
+            <span class="tmeta-chip">🌟 Berkesadaran · Bermakna · Menggembirakan</span>
+          </div>
+          <ul class="tactivities">
+            <li><strong>Presentasi individu</strong> (5–7 menit/murid): kontribusi, data, analisis, dan kaitan dengan Pancasila — bukan sekadar mengulang presentasi kelompok.</li>
+            <li>Laporan tertulis memuat: data awal, pola observasi, rancangan sistem, diagram perbandingan, dan refleksi Pancasila.</li>
+            <li>Lembar Refleksi Pribadi: nilai Pancasila yang paling nyata dirasakan + satu komitmen tindak lanjut spesifik.</li>
+            <li>Guru menutup: sistem yang dirancang dilanjutkan sebagai praktik tetap kelas — bukan hanya tugas sekolah.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- KRITERIA SUKSES -->
+<section class="kriteria-sec" id="asesmen">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-label">Kriteria Keberhasilan</div>
+      <h2>Kapan Proyek Dikatakan Berhasil?</h2>
+      <p>Empat kriteria konkret yang dapat diamati dan diukur oleh murid sendiri.</p>
+    </div>
+    <div class="kriteria-grid rev">
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--green-soft)">📉</div>
+        <div>
+          <h4>Sistem Kebersihan Berjalan</h4>
+          <p>Jumlah sampah saat observasi akhir <strong>lebih sedikit</strong> dari kondisi awal, berdasarkan data yang dicatat menggunakan lembar observasi yang sama.</p>
+        </div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--blue-soft)">📅</div>
+        <div>
+          <h4>Jadwal Piket Tersusun</h4>
+          <p>Jadwal memuat <strong>nama seluruh murid</strong>, hari tugas, dan zona tanggung jawab yang terbagi secara merata — tidak ada yang dikecualikan.</p>
+        </div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--amber-soft)">🪧</div>
+        <div>
+          <h4>Rambu Pengingat Terpasang</h4>
+          <p>Minimal <strong>2 rambu</strong> kebersihan terpasang di tempat yang disepakati kelas berdasarkan temuan data observasi.</p>
+        </div>
+      </div>
+      <div class="krit-card">
+        <div class="krit-ico" style="background:var(--red-soft)">📊</div>
+        <div>
+          <h4>Data Kebersihan Tersajikan</h4>
+          <p>Data jumlah sampah <strong>sebelum dan sesudah</strong> uji coba tersaji dalam tabel frekuensi dan diagram batang yang dapat dibaca dan diinterpretasikan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BATASAN -->
+<section class="batasan-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-label">Batasan Proyek</div>
+      <h2>Prinsip Rancangan yang Adil</h2>
+    </div>
+    <div class="batasan-row rev">
+      <div class="bat-item">
+        <div class="bat-ico">♻️</div>
+        <p>Menggunakan bahan yang <strong>sudah tersedia</strong> di kelas atau sekolah — tidak memerlukan biaya tambahan.</p>
+      </div>
+      <div class="bat-item">
+        <div class="bat-ico">👥</div>
+        <p><strong>Seluruh murid memiliki peran</strong> dalam sistem — tidak ada yang dikecualikan dari jadwal piket.</p>
+      </div>
+      <div class="bat-item">
+        <div class="bat-ico">⚖️</div>
+        <p>Jadwal piket <strong>mempertimbangkan keadilan</strong> dan kondisi fisik setiap murid dalam pembagian tugas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- RUBRIK ASESMEN -->
+<section class="rubrik-sec" style="padding-top:80px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-label">Asesmen Sumatif · Pertemuan 5</div>
+      <h2>Rubrik Penilaian Proyek</h2>
+      <p>Penilaian proyek terintegrasi Pendidikan Pancasila dan Matematika. Nilai = (Skor ÷ 24) × 100</p>
+    </div>
+    <div class="rubrik-wrap rev">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:15%">Aspek</th>
+            <th style="width:20%">Indikator</th>
+            <th style="width:16%"><span class="score-4">Skor 4</span> — Mahir</th>
+            <th style="width:16%"><span class="score-3">Skor 3</span> — Cakap</th>
+            <th style="width:16%"><span class="score-2">Skor 2</span> — Berkembang</th>
+            <th style="width:17%"><span class="score-1">Skor 1</span> — Bimbingan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="aspek">📊 Penyajian Data</td>
+            <td>Ketepatan tabel frekuensi & diagram batang</td>
+            <td>Tabel & diagram sebelum–sesudah tersaji lengkap tanpa kesalahan perhitungan.</td>
+            <td>Tersaji dengan maks. 2 kesalahan yang tidak mengubah kesimpulan.</td>
+            <td>Data tidak konsisten atau ada kesalahan yang memengaruhi kesimpulan.</td>
+            <td>Tidak menyajikan tabel/diagram, atau mengandung kesalahan mendasar.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🔍 Analisis Data</td>
+            <td>Kedalaman analisis & ketepatan kesimpulan</td>
+            <td>Membandingkan min. 2 zona/variabel secara tepat; kesimpulan sesuai <em>seluruh</em> data.</td>
+            <td>Membandingkan min. 2 zona; kesimpulan sesuai <em>sebagian</em> data.</td>
+            <td>Membandingkan data tapi kesimpulan tidak sepenuhnya didukung data.</td>
+            <td>Tidak melakukan perbandingan, atau kesimpulan tidak berkaitan dengan data.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🗺️ Rancangan Sistem</td>
+            <td>Kelengkapan & keterlaksanaan komponen</td>
+            <td>Memuat 4 komponen (zona, jadwal adil, aturan, rambu berbasis data) dan dapat dijalankan semua murid.</td>
+            <td>Memuat 3 dari 4 komponen dan secara umum dapat dijalankan.</td>
+            <td>Memuat 1–2 komponen atau tidak mencakup semua murid.</td>
+            <td>Tidak ada rancangan yang dapat diidentifikasi atau tidak dapat dijalankan.</td>
+          </tr>
+          <tr>
+            <td class="aspek">⭐ Nilai Pancasila</td>
+            <td>Relevansi & kedalaman keterkaitan</td>
+            <td>Menjelaskan min. 2 sila dengan <em>pengalaman konkret</em> selama proyek — bukan sekadar definisi.</td>
+            <td>Menjelaskan 1 sila dengan contoh dari pengalaman proyek.</td>
+            <td>Menyebut nama sila tapi keterkaitan dengan pengalaman tidak dijelaskan konkret.</td>
+            <td>Tidak menjelaskan keterkaitan, atau penjelasan tidak relevan.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🎤 Presentasi</td>
+            <td>Struktur, kejelasan & penggunaan data</td>
+            <td>Runtut, suara jelas, durasi 5–7 menit, mengacu pada data/visualisasi.</td>
+            <td>Runtut, suara jelas, durasi sesuai, menggunakan media relevan.</td>
+            <td>Sebagian runtut, suara kurang jelas, atau tidak menggunakan data.</td>
+            <td>Tidak terstruktur, suara tidak jelas, tanpa data atau visualisasi.</td>
+          </tr>
+          <tr>
+            <td class="aspek">🪞 Refleksi</td>
+            <td>Kekonkretan & kedalaman pemahaman</td>
+            <td>Pengalaman konkret + komitmen tindak lanjut yang <em>spesifik dan dapat dilakukan</em>.</td>
+            <td>Keterkaitan Pancasila + satu komitmen secara umum.</td>
+            <td>Menyebut nilai Pancasila tanpa contoh konkret dari proyek.</td>
+            <td>Tidak menyebut keterkaitan Pancasila, atau refleksi tidak berkaitan proyek.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- KATEGORI NILAI -->
+<section class="nilai-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-label">Kategori Pencapaian</div>
+      <h2>Standar Kelulusan Proyek</h2>
+      <p>Murid dikatakan berhasil mencapai tujuan jika berada pada kategori <strong>Cakap</strong> (skor 3 di setiap indikator).</p>
+    </div>
+    <div class="nilai-grid rev">
+      <div class="nilai-card n-mahir">
+        <div class="range">84 – 100</div>
+        <div class="label">🌟 Mahir</div>
+        <div class="desc">Merancang proposal sistem untuk area lain di sekolah (koridor, kantin)</div>
+      </div>
+      <div class="nilai-card n-cakap">
+        <div class="range">69 – 83</div>
+        <div class="label">✅ Cakap</div>
+        <div class="desc">Kumpulkan data setelah 1 minggu dan analisis efektivitas sistem</div>
+      </div>
+      <div class="nilai-card n-berkembang">
+        <div class="range">54 – 68</div>
+        <div class="label">📈 Berkembang</div>
+        <div class="desc">Bimbingan tabel frekuensi & perbaikan bagian analisis laporan</div>
+      </div>
+      <div class="nilai-card n-bimbingan">
+        <div class="range">0 – 53</div>
+        <div class="label">🤝 Perlu Bimbingan</div>
+        <div class="desc">Remedial tatap muka dengan data lebih sederhana & pendampingan langsung</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TINDAK LANJUT -->
+<section class="tl-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-label">Rencana Tindak Lanjut</div>
+      <h2>Setelah Proyek: Langkah Selanjutnya</h2>
+    </div>
+    <div class="tl-grid rev">
+      <div class="tl-card tl-green">
+        <div class="tl-stripe"></div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <h4>🌟 Pengayaan — Mahir (84–100)</h4>
+            <span class="tl-badge">Mahir</span>
+          </div>
+          <ul>
+            <li>Rancang proposal perbaikan sistem kebersihan untuk area lain di sekolah (koridor atau kantin) dan presentasikan kepada kepala sekolah atau guru lain.</li>
+            <li>Jadilah koordinator sistem kebersihan kelas: pimpin evaluasi mingguan dan catat perkembangannya.</li>
+            <li>Karya terbaik (rancangan sistem + analisis data) dapat dijadikan contoh bagi kelas lain.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-card tl-blue">
+        <div class="tl-stripe"></div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <h4>✅ Penguatan — Cakap (69–83)</h4>
+            <span class="tl-badge">Cakap</span>
+          </div>
+          <ul>
+            <li>Kumpulkan data kebersihan satu minggu setelah proyek selesai, sajikan dalam diagram batang, dan tulis satu paragraf analisis: apakah sistem masih efektif atau perlu direvisi?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-card tl-amber">
+        <div class="tl-stripe"></div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <h4>📈 Remedi — Berkembang (54–68)</h4>
+            <span class="tl-badge">Berkembang</span>
+          </div>
+          <ul>
+            <li>Bimbingan terstruktur untuk memperbaiki tabel frekuensi atau diagram batang menggunakan data yang sudah dikumpulkan.</li>
+            <li>Tulis ulang bagian analisis laporan dengan panduan pertanyaan: "Apa yang kamu lihat dari data ini? Apa yang berbeda sebelum dan sesudah?"</li>
+            <li>Gunakan lembar panduan hubungan Sila Pancasila untuk memperkuat refleksi yang masih terlalu umum.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-card tl-red">
+        <div class="tl-stripe"></div>
+        <div class="tl-body">
+          <div class="tl-header">
+            <h4>🤝 Remedial Tatap Muka — Perlu Bimbingan (0–53)</h4>
+            <span class="tl-badge">Perlu Bimbingan</span>
+          </div>
+          <ul>
+            <li>Remedial: membuat tabel frekuensi dan diagram batang dengan data lebih sederhana (satu zona saja) dengan pendampingan langsung.</li>
+            <li>Diskusi bersama guru: "Apa yang kamu lakukan selama proyek? Apakah cara itu mencerminkan nilai Pancasila?"</li>
+            <li>Menulis ulang laporan secara terbimbing, bagian per bagian, dengan umpan balik langsung.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEMITRAAN -->
+<section class="mitra-sec">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-label">Kemitraan Pembelajaran</div>
+      <h2>Belajar Bersama Komunitas</h2>
+      <p>Proyek ini melibatkan pihak di luar kelas untuk memberikan perspektif lapangan yang nyata.</p>
+    </div>
+    <div class="mitra-grid">
+      <div class="mitra-card">
+        <span class="mitra-ico">👨‍👩‍👧</span>
+        <h4>Orang Tua Murid</h4>
+        <p>Mendukung pembentukan kebiasaan menjaga kebersihan di rumah sebagai penguatan nilai yang dipelajari di sekolah — kesinambungan antara kelas dan kehidupan sehari-hari.</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">🧹</span>
+        <h4>Petugas Kebersihan Sekolah</h4>
+        <p>Diundang berbagi pengalaman nyata tentang tantangan menjaga kebersihan sekolah sehari-hari — menjadi narasumber konkret sebelum murid merancang sistem (±10–15 menit di awal Pertemuan 3).</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">🏫</span>
+        <h4>Lingkungan Kelas sebagai Lab</h4>
+        <p>Kelas berfungsi sekaligus sebagai laboratorium: kondisi nyata kelas adalah data, dan sistem yang dirancang murid diterapkan langsung di ruang yang sama. Nilai Pancasila diuji dalam tindakan yang terukur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-sec" style="padding-top:80px">
+  <div class="wrap">
+    <div class="quote-box rev">
+      <blockquote>"Proyek ini selesai jika sistem yang dirancang benar-benar bisa dijalankan — <em>bukan sekadar digambar di atas kertas</em>."</blockquote>
+      <cite>— Catatan Pendidik, Perencanaan Pembelajaran STEM Kelas 5 · SDM01 Kukusan</cite>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="ft-brand">Sistem Kebersihan Kelas · Kelas 5 SDM01</div>
+        <p class="ft-desc">Perencanaan pembelajaran STEM terintegrasi Pendidikan Pancasila dan Matematika untuk kelas 5 SD Muhammadiyah 01 Kukusan. Model 5E Bybee · 20 JP · 5 Pertemuan.</p>
+        <p class="ft-meta">SD Muhammadiyah 01 Kukusan · Berdasarkan Panduan STEM Kemendikdasmen 2025</p>
+      </div>
+      <ul class="ft-links">
+        <li><a href="index.html">🏠 Hub SDM01</a></li>
+        <li><a href="aksi-hijau-stem-kelas5.html">🌱 Kelas 6 · Aksi Hijau</a></li>
+        <li><a href="kelasku-terlalu-berisik.html">🔊 Kelas 4 · Kelasku Berisik</a></li>
+        <li><a href="kelasku-terlalu-berisik.html">🔊 Kelas 4 · Kelasku Berisik</a></li>
+        <li><a href="jusnya-tidak-enak.html">🥤 Kelas 3 · Jusnya Tidak Enak</a></li>
+        <li><a href="../index.html">↖ Hub Utama STEM</a></li>
+      </ul>
+    </div>
+    <div class="ft-bot">
+      <p>SD Muhammadiyah 01 Kukusan · Kepentingan pendidikan non-komersial</p>
+      <span style="font-size:11px;font-weight:700;background:var(--cream3);color:var(--text-mute);padding:3px 10px;border-radius:6px;border:1px solid var(--border)">v1.0.0 · Mei 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Progress bar
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-innerHeight;
+  prog.style.width=(s/h*100)+'%';
+});
+// Scroll reveal
+const obs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}
+}),{threshold:.08});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+
+// Animate bar chart heights on scroll
+const bars=document.querySelectorAll('.bar');
+const barObs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      const heights=[40,55,28,20];
+      bars.forEach((b,i)=>{b.style.height=heights[i]+'px'});
+      barObs.disconnect();
+    }
+  });
+},{threshold:.3});
+if(bars.length) barObs.observe(bars[0].parentElement);
+</script>
+</body>
+</html>
