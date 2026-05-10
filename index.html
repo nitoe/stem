@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panduan Pembelajaran STEM | Hub Guru Indonesia</title>
+  <title>STEM SDM01 Kukusan | Contoh Penerapan STEM di Sekolah Dasar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -77,6 +77,69 @@
     .sh-lbl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
     .sh h2{font-family:var(--ff-serif);font-size:clamp(26px,4vw,40px);line-height:1.15;color:var(--white);max-width:560px;margin:0 auto 12px}
     .sh p{font-size:15px;color:var(--text-muted);max-width:540px;margin:0 auto;font-weight:300}
+
+    /* ── CONTOH SDM01 SECTION ── */
+    .sdm-sec{padding:72px 0 80px;position:relative;z-index:1}
+    .sdm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    @media(max-width:900px){.sdm-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:560px){.sdm-grid{grid-template-columns:1fr}}
+
+    .sdm-card{
+      background:var(--navy-mid);
+      border:1px solid var(--border);
+      border-radius:var(--rl);
+      padding:32px 26px 28px;
+      display:flex;flex-direction:column;
+      transition:border-color .25s, transform .25s, box-shadow .25s;
+      position:relative;overflow:hidden;
+    }
+    .sdm-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,var(--card-c1),var(--card-c2));
+      opacity:0;transition:opacity .25s;
+    }
+    .sdm-card:hover{border-color:var(--card-c1);transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,.25)}
+    .sdm-card:hover::before{opacity:1}
+
+    .card-k5{--card-c1:#0EA5C9;--card-c2:#10B981}
+    .card-k4{--card-c1:#F59E0B;--card-c2:#F472B6}
+    .card-k3{--card-c1:#34D399;--card-c2:#38BDF8}
+
+    .sdm-kelas-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      padding:4px 12px;border-radius:20px;margin-bottom:20px;width:fit-content;
+    }
+    .card-k5 .sdm-kelas-badge{background:#0EA5C920;color:var(--teal);border:1px solid #0EA5C940}
+    .card-k4 .sdm-kelas-badge{background:#F59E0B20;color:var(--amber);border:1px solid #F59E0B40}
+    .card-k3 .sdm-kelas-badge{background:#34D39920;color:var(--emerald);border:1px solid #34D39940}
+
+    .sdm-ico{font-size:36px;margin-bottom:16px;display:block;line-height:1}
+    .sdm-card h3{font-family:var(--ff-serif);font-size:20px;color:var(--white);line-height:1.25;margin-bottom:10px}
+    .sdm-card .tema{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-faint);margin-bottom:12px}
+    .sdm-card p{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:24px;flex:1}
+
+    .sdm-link{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:13px;font-weight:600;
+      padding:10px 18px;border-radius:10px;
+      border:1px solid;transition:all .2s;align-self:flex-start;
+    }
+    .card-k5 .sdm-link{color:var(--teal);border-color:#0EA5C940;background:#0EA5C910}
+    .card-k5 .sdm-link:hover{background:#0EA5C925;border-color:var(--teal);color:var(--teal)}
+    .card-k4 .sdm-link{color:var(--amber);border-color:#F59E0B40;background:#F59E0B10}
+    .card-k4 .sdm-link:hover{background:#F59E0B25;border-color:var(--amber);color:var(--amber)}
+    .card-k3 .sdm-link{color:var(--emerald);border-color:#34D39940;background:#34D39910}
+    .card-k3 .sdm-link:hover{background:#34D39925;border-color:var(--emerald);color:var(--emerald)}
+
+    .soon-chip{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:12px;font-weight:600;
+      padding:9px 16px;border-radius:10px;
+      background:var(--navy-light);color:var(--text-faint);
+      border:1px dashed var(--border);
+      align-self:flex-start;cursor:default;
+    }
 
     /* FORMAT EXPLAINER */
     .fmt-sec{padding:56px 0 0;position:relative;z-index:1}
@@ -178,27 +241,28 @@
   <div class="nav-in">
     <div class="nav-logo">
       <div class="nav-mark">SE</div>
-      <div class="nav-brand">Panduan STEM <span>Hub Guru Indonesia</span></div>
+      <div class="nav-brand">STEM SDM01 Kukusan <span>SD Muhammadiyah 01 Kukusan</span></div>
     </div>
     <ul class="nav-links">
+      <li><a href="#contoh">Contoh STEM</a></li>
       <li><a href="#format">Format</a></li>
       <li><a href="#levels">Tingkat</a></li>
       <li><a href="#konten">Konten</a></li>
-      <li><a href="changelog.md" class="nav-ver">v1.1.0</a></li>
+      <li><a href="../index.html" class="nav-ver">↖ Hub Utama</a></li>
     </ul>
-    <span class="nav-badge">Kemendikdasmen 2025</span>
+    <span class="nav-badge">SDM01 Kukusan</span>
   </div>
 </nav>
 
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">Panduan Resmi Kemendikdasmen 2025</div>
-    <h1>Panduan Pembelajaran <em>STEM</em><br>untuk Guru</h1>
-    <p class="hero-sub">Tiga tingkat berjenjang — masing-masing hadir dalam dua format:<br><strong>dokumen bacaan</strong> dan <strong>presentasi</strong>, untuk mengakomodasi cara belajar yang berbeda.</p>
+    <div class="eyebrow">SD Muhammadiyah 01 Kukusan</div>
+    <h1>Contoh Nyata <em>STEM</em><br>di SDM01 Kukusan</h1>
+    <p class="hero-sub">Tiga proyek pembelajaran STEM lintas kelas — dari ide hingga aksi nyata di dalam dan luar kelas SD Muhammadiyah 01 Kukusan.</p>
     <p class="hero-src">Berdasarkan <strong>Panduan Pembelajaran STEM</strong> · Pusat Kurikulum dan Pembelajaran BSKAP · Kemendikdasmen RI · 2025</p>
     <div class="hero-cta">
-      <a href="#levels" class="btn btn-p">Lihat Semua Level <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a href="#format" class="btn btn-g">Tentang Format</a>
+      <a href="#contoh" class="btn btn-p">Lihat Contoh STEM <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="../index.html" class="btn btn-g">↖ Kembali ke Hub Utama</a>
     </div>
   </div>
 </section>
@@ -210,6 +274,55 @@
       <div class="p-col pt"><span class="p-ico">💻</span><div class="p-let">T</div><div class="p-lbl">Teknologi</div></div>
       <div class="p-col pe"><span class="p-ico">⚙️</span><div class="p-let">E</div><div class="p-lbl">Enjinering</div></div>
       <div class="p-col pm"><span class="p-ico">📐</span><div class="p-let">M</div><div class="p-lbl">Matematika</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ── CONTOH STEM SDM01 ── -->
+<section class="sdm-sec" id="contoh">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-lbl">Penerapan Nyata di Sekolah</div>
+      <h2>Contoh STEM SDM01 Kukusan</h2>
+      <p>Tiga proyek STEM lintas kelas yang menghubungkan sains, teknologi, enjinering, dan matematika dengan permasalahan nyata di kehidupan sehari-hari siswa.</p>
+    </div>
+    <div class="sdm-grid rev">
+
+      <!-- KELAS 5 -->
+      <div class="sdm-card card-k5">
+        <span class="sdm-ico">🌱</span>
+        <div class="sdm-kelas-badge">🏫 Kelas 5</div>
+        <div class="tema">Tema Proyek</div>
+        <h3>Aksi Hijau Si Penyelamat Bumi</h3>
+        <p>Siswa mengidentifikasi masalah lingkungan di sekitar sekolah, merancang solusi berbasis sains, dan menerapkannya sebagai aksi nyata — mulai dari pengelolaan sampah hingga penghijauan lahan sekolah.</p>
+        <a href="aksi-hijau-stem-kelas5.html" class="sdm-link">
+          Buka Proyek Kelas 5
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- KELAS 4 -->
+      <div class="sdm-card card-k4">
+        <span class="sdm-ico">🔊</span>
+        <div class="sdm-kelas-badge">🏫 Kelas 4</div>
+        <div class="tema">Tema Proyek</div>
+        <h3>Kelasku Terlalu Berisik</h3>
+        <p>Siswa menyelidiki sumber kebisingan di kelas, mengukur tingkat suara dengan alat sederhana, lalu merancang dan menguji solusi peredam suara dari bahan daur ulang yang mudah didapat.</p>
+        <span class="soon-chip">⏳ Segera Hadir</span>
+      </div>
+
+      <!-- KELAS 3 -->
+      <div class="sdm-card card-k3">
+        <span class="sdm-ico">🥤</span>
+        <div class="sdm-kelas-badge">🏫 Kelas 3</div>
+        <div class="tema">Tema Proyek</div>
+        <h3>Jusnya Tidak Enak</h3>
+        <p>Siswa berperan sebagai "ilmuwan rasa" — mengidentifikasi mengapa minuman terasa tidak enak, menguji variabel rasa (manis, asam, segar), dan merancang formula minuman sehat yang disukai teman-teman.</p>
+        <span class="soon-chip">⏳ Segera Hadir</span>
+      </div>
+
     </div>
   </div>
 </section>
@@ -270,12 +383,12 @@
         <div class="f-cell">
           <div class="f-type"><div class="f-ico ico-doc">📄</div><div><strong>Dokumen Bacaan</strong><span>Bacaan mandiri, lengkap & terstruktur</span></div></div>
           <p class="f-desc">Penjelasan komprehensif tentang STEM dari nol: sejarah, definisi, karakteristik, dan cara pertama kali memulai. Dilengkapi contoh aktivitas PAUD dan SD yang bisa langsung diadaptasi.</p>
-          <a href="level1/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="../level1/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
         <div class="f-cell">
           <div class="f-type"><div class="f-ico ico-pres">🖥️</div><div><strong>Presentasi</strong><span>Slide interaktif + catatan presenter</span></div></div>
           <p class="f-desc">Slide visual untuk sesi pengenalan STEM — cocok untuk rapat guru atau workshop sekolah. Setiap slide dilengkapi catatan presenter dengan poin diskusi dan pertanyaan pemantik.</p>
-          <a href="level1/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="../level1/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
       </div>
     </div>
@@ -294,12 +407,12 @@
         <div class="f-cell">
           <div class="f-type"><div class="f-ico ico-doc">📄</div><div><strong>Dokumen Bacaan</strong><span>Panduan lengkap perancangan & pelaksanaan</span></div></div>
           <p class="f-desc">Panduan praktis 4 langkah perancangan dengan template, contoh analisis Capaian Pembelajaran, diagram alur praktik saintifik-enjinering, dan rubrik asesmen per tahap.</p>
-          <a href="level2/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="../level2/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
         <div class="f-cell">
           <div class="f-type"><div class="f-ico ico-pres">🖥️</div><div><strong>Presentasi</strong><span>Slide workshop + catatan fasilitasi</span></div></div>
           <p class="f-desc">Slide untuk workshop implementasi STEM di sekolah. Setiap slide dilengkapi catatan presenter berisi poin diskusi, pertanyaan pemantik, dan tips fasilitasi untuk pelatih.</p>
-          <a href="level2/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="../level2/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
       </div>
     </div>
@@ -318,12 +431,12 @@
         <div class="f-cell">
           <div class="f-type"><div class="f-ico ico-doc">📄</div><div><strong>Dokumen Bacaan</strong><span>Referensi mendalam + checklist</span></div></div>
           <p class="f-desc">Referensi komprehensif: kerangka kemitraan, panduan inklusi UDL, roadmap P5, dan checklist mandiri untuk merefleksikan dan mengembangkan praktik STEM yang sudah berjalan.</p>
-          <a href="level3/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="../level3/dokumen.html" class="f-link dl">Buka Dokumen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
         <div class="f-cell">
           <div class="f-type"><div class="f-ico ico-pres">🖥️</div><div><strong>Presentasi</strong><span>Slide refleksi & pengembangan strategis</span></div></div>
           <p class="f-desc">Slide untuk sesi refleksi dan perencanaan strategis bersama tim guru. Memuat studi kasus, diskusi PLC, dan peta jalan pengembangan ekosistem STEM sekolah jangka panjang.</p>
-          <a href="level3/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="../level3/presentasi.html" class="f-link pl">Buka Presentasi <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
       </div>
     </div>
@@ -369,25 +482,24 @@
   <div class="wrap">
     <div class="ft-in">
       <div>
-        <div class="ft-brand">Panduan STEM · Hub Guru</div>
-        <p class="ft-desc">Sumber belajar digital berjenjang untuk guru Indonesia. Tiga tingkat, dua format per tingkat — dokumen bacaan dan presentasi. Berdasarkan Panduan STEM Kemendikdasmen 2025.</p>
-        <p class="ft-meta">Pusat Kurikulum dan Pembelajaran · BSKAP · Kemendikdasmen RI · 2025</p>
+        <div class="ft-brand">STEM SDM01 Kukusan</div>
+        <p class="ft-desc">Sumber belajar dan contoh penerapan STEM di SD Muhammadiyah 01 Kukusan. Berdasarkan Panduan STEM Kemendikdasmen 2025 — tiga proyek nyata lintas kelas.</p>
+        <p class="ft-meta">SD Muhammadiyah 01 Kukusan · Pusat Kurikulum dan Pembelajaran · BSKAP · Kemendikdasmen RI · 2025</p>
       </div>
       <ul class="ft-links">
-        <li><a href="index.html">🏠 Beranda</a></li>
-        <li><a href="level1/dokumen.html">📘 L1 · Dokumen</a></li>
-        <li><a href="level1/presentasi.html">🖥️ L1 · Presentasi</a></li>
-        <li><a href="level2/dokumen.html">📗 L2 · Dokumen</a></li>
-        <li><a href="level2/presentasi.html">🖥️ L2 · Presentasi</a></li>
-        <li><a href="level3/dokumen.html">📙 L3 · Dokumen</a></li>
-        <li><a href="level3/presentasi.html">🖥️ L3 · Presentasi</a></li>
-        <li><a href="readme.md">📄 Readme</a></li>
-        <li><a href="changelog.md">📋 Changelog</a></li>
+        <li><a href="index.html">🏠 Beranda SDM01</a></li>
+        <li><a href="aksi-hijau-stem-kelas5.html">🌱 Kelas 5 · Aksi Hijau</a></li>
+        <li><a href="kelasku-terlalu-berisik.html">🔊 Kelas 4 · Terlalu Berisik</a></li>
+        <li><a href="jusnya-tidak-enak.html">🥤 Kelas 3 · Jusnya Tidak Enak</a></li>
+        <li><a href="../index.html">↖ Hub Utama STEM</a></li>
+        <li><a href="../level1/dokumen.html">📘 L1 · Dokumen</a></li>
+        <li><a href="../level2/dokumen.html">📗 L2 · Dokumen</a></li>
+        <li><a href="../level3/dokumen.html">📙 L3 · Dokumen</a></li>
       </ul>
     </div>
     <div class="ft-bot">
-      <p>Dokumen resmi pemerintah RI · Kepentingan pendidikan non-komersial</p>
-      <span class="ver">v1.1.0 — Mei 2025</span>
+      <p>SD Muhammadiyah 01 Kukusan · Dokumen resmi pemerintah RI · Kepentingan pendidikan non-komersial</p>
+      <span class="ver">v1.0.0 — Mei 2025</span>
     </div>
   </div>
 </footer>
