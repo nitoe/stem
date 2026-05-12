@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Berapa Banyak yang Bisa Dibawa Kapalku? · STEM Kelas 2 · SDM01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --ocean:#0C4A6E; --ocean-mid:#075985; --ocean-light:#0369A1;
+      --teal:#0F766E; --teal-mid:#0D9488; --teal-soft:#F0FDFA; --teal-bright:#2DD4BF;
+      --water:#BAE6FD; --water2:#E0F2FE; --water3:#F0F9FF;
+      --cyan:#22D3EE; --cyan-soft:#ECFEFF;
+      --foam:#F8FAFC; --foam2:#F1F5F9;
+      --amber:#B45309; --amber-bright:#F59E0B; --amber-soft:#FFFBEB;
+      --green:#166534; --green-soft:#F0FDF4; --green-bright:#4ADE80;
+      --rose:#BE123C; --rose-soft:#FFF1F2;
+      --coin:#CA8A04;
+      --text:#0C2340; --text-mid:#1E3A5F; --text-mute:#4A7599; --text-faint:#7CACC8;
+      --border:#BAE6FD; --border-dark:#7DD3FC;
+      --shadow:0 1px 12px rgba(12,74,110,.08); --shadow-md:0 6px 28px rgba(12,74,110,.14); --shadow-lg:0 16px 48px rgba(12,74,110,.18);
+      --r:12px; --rl:20px;
+      --ff-display:'Baloo 2','Comic Sans MS',cursive;
+      --ff-body:'Nunito',system-ui,sans-serif;
+      --ff-mono:'DM Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-body);background:var(--water3);color:var(--text);line-height:1.65;overflow-x:hidden}
+    a{color:var(--ocean-light);text-decoration:none;transition:color .2s}
+    a:hover{color:var(--teal)}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+    /* ── PROGRESS ── */
+    #prog{position:fixed;top:0;left:0;height:3px;z-index:999;width:0%;
+      background:linear-gradient(90deg,var(--cyan),var(--teal-bright),var(--amber-bright));
+      transition:width .1s}
+
+    /* ── WAVE ANIMATION ── */
+    .wave-bg{position:fixed;bottom:0;left:0;right:0;z-index:0;pointer-events:none;height:140px}
+    .wave-svg{position:absolute;bottom:0;width:200%;opacity:.06;animation:wave-move 12s linear infinite}
+    .wave-svg2{animation-duration:18s;animation-delay:-6s;opacity:.04}
+    @keyframes wave-move{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ── NAV ── */
+    nav{position:sticky;top:0;z-index:100;background:rgba(240,249,255,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(12,74,110,.07)}
+    .nav-in{max-width:1100px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .nav-logo{display:flex;align-items:center;gap:10px}
+    .nav-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--ocean-mid),var(--teal-mid));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .nav-brand{font-family:var(--ff-display);font-size:14px;font-weight:700;color:var(--text);line-height:1.2}
+    .nav-brand span{display:block;font-size:11px;font-weight:600;color:var(--text-mute);font-family:var(--ff-body)}
+    .nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+    .nav-links a{font-size:12px;font-weight:700;color:var(--text-mute);transition:color .2s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-chip{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--water2);color:var(--ocean-light);border:1px solid var(--border)}
+    @media(max-width:700px){.nav-links{display:none}}
+
+    /* ── HERO ── */
+    .hero{padding:72px 0 56px;position:relative;z-index:1;overflow:hidden}
+    .hero-ocean{position:absolute;inset:0;background:linear-gradient(180deg,#E0F2FE 0%,var(--water3) 100%);pointer-events:none}
+    .hero-depth{position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(0deg,rgba(186,230,253,.4),transparent);pointer-events:none}
+
+    /* Floating boat animation */
+    .hero-boat{position:absolute;right:5%;top:30%;pointer-events:none;animation:bob 4s ease-in-out infinite;opacity:.12}
+    @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ocean-light);background:var(--water2);padding:5px 14px;border-radius:20px;border:1px solid var(--border);margin-bottom:20px;opacity:0;animation:fu .7s .1s ease forwards}
+    .hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--teal-bright);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.7)}}
+
+    .hero h1{font-family:var(--ff-display);font-size:clamp(28px,5vw,58px);line-height:1.08;color:var(--text);max-width:780px;margin-bottom:16px;opacity:0;animation:fu .7s .2s ease forwards}
+    .hero h1 .hl{color:var(--ocean-mid)}
+    .hero h1 .hl2{color:var(--coin)}
+
+    .hero-sub{font-size:clamp(14px,1.8vw,17px);color:var(--text-mute);max-width:680px;margin-bottom:36px;line-height:1.7;opacity:0;animation:fu .7s .3s ease forwards}
+
+    .hero-pills{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;opacity:0;animation:fu .7s .4s ease forwards}
+    .hpill{background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px 18px;display:flex;align-items:center;gap:11px;box-shadow:var(--shadow)}
+    .hpill-ico{font-size:22px;flex-shrink:0}
+    .hpill-body strong{display:block;font-size:13px;font-weight:800;color:var(--text);margin-bottom:1px}
+    .hpill-body span{font-size:11px;color:var(--text-mute);font-weight:600}
+
+    /* Tally counter decoration */
+    .tally-demo{display:flex;align-items:center;gap:8px;margin-top:8px;opacity:0;animation:fu .7s .5s ease forwards;flex-wrap:wrap}
+    .tally-group{display:flex;gap:3px;align-items:flex-end;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 12px}
+    .tally-line{width:4px;height:20px;background:var(--ocean-mid);border-radius:2px;opacity:.8}
+    .tally-cross{width:4px;height:28px;background:var(--ocean-mid);border-radius:2px;transform:rotate(-20deg);margin-left:2px}
+    .tally-label{font-size:12px;font-weight:700;color:var(--text-mute)}
+
+    /* ── SECTION HEADER ── */
+    .sh{text-align:center;margin-bottom:48px}
+    .sh-pill{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ocean-light);background:var(--water2);padding:5px 14px;border-radius:20px;border:1px solid var(--border);margin-bottom:14px}
+    .sh h2{font-family:var(--ff-display);font-size:clamp(20px,3.2vw,36px);line-height:1.2;color:var(--text);margin-bottom:10px}
+    .sh p{font-size:15px;color:var(--text-mute);max-width:540px;margin:0 auto;line-height:1.65}
+
+    /* ── KONTEKS ── */
+    .konteks-sec{padding:0 0 80px;position:relative;z-index:1}
+    .k-box{background:linear-gradient(135deg,var(--ocean),var(--ocean-mid));border-radius:var(--rl);padding:48px 52px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+    .k-box::before{content:'🚢';position:absolute;right:20px;bottom:-10px;font-size:160px;opacity:.05;pointer-events:none;line-height:1}
+    .k-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal-bright),var(--cyan),var(--teal-bright))}
+    .k-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7DD3FC;background:rgba(125,211,252,.1);padding:4px 13px;border-radius:20px;border:1px solid rgba(125,211,252,.2);margin-bottom:18px}
+    .k-box h3{font-family:var(--ff-display);font-size:clamp(17px,2.5vw,24px);color:#fff;line-height:1.4;margin-bottom:16px;position:relative;z-index:1;max-width:720px}
+    .k-box h3 em{color:var(--teal-bright);font-style:normal}
+    .k-box p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.7);max-width:720px;position:relative;z-index:1}
+    .k-insight{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;position:relative;z-index:1}
+    @media(max-width:640px){.k-insight{grid-template-columns:1fr}}
+    .k-ins{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 18px}
+    .k-ins-ico{font-size:22px;margin-bottom:7px;display:block}
+    .k-ins h5{font-size:13px;font-weight:800;color:#fff;margin-bottom:4px}
+    .k-ins p{font-size:12px;line-height:1.55;color:rgba(255,255,255,.65)}
+    @media(max-width:600px){.k-box{padding:28px 22px}}
+
+    /* ── STEM GRID ── */
+    .stem-sec{padding:80px 0;position:relative;z-index:1}
+    .stem-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:680px){.stem-grid{grid-template-columns:1fr}}
+    .stem-card{border-radius:var(--rl);padding:28px 24px;border:1px solid var(--border);transition:box-shadow .25s,transform .25s;background:#fff;position:relative;overflow:hidden}
+    .stem-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+    .sc-s{border-top:3px solid var(--teal-mid)}
+    .sc-t{border-top:3px solid var(--ocean-light)}
+    .sc-e{border-top:3px solid var(--amber)}
+    .sc-m{border-top:3px solid var(--coin)}
+    .stem-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:14px;border:1px solid}
+    .sc-s .stem-badge{background:var(--teal-soft);color:var(--teal);border-color:#99F6E4}
+    .sc-t .stem-badge{background:var(--water2);color:var(--ocean-light);border-color:var(--border)}
+    .sc-e .stem-badge{background:var(--amber-soft);color:var(--amber);border-color:#FDE068}
+    .sc-m .stem-badge{background:#FFFBEB;color:var(--coin);border-color:#FDE047}
+    .stem-card h4{font-family:var(--ff-display);font-size:17px;color:var(--text);margin-bottom:5px}
+    .stem-card .sub{font-size:12px;color:var(--text-mute);font-weight:600;margin-bottom:11px;font-style:italic}
+    .stem-card p,.stem-card ul{font-size:13px;line-height:1.7;color:var(--text-mid)}
+    .stem-card ul{padding-left:16px}.stem-card ul li{margin-bottom:5px}
+    .stem-ghost{position:absolute;right:14px;bottom:4px;font-family:var(--ff-display);font-size:64px;font-weight:800;opacity:.04;line-height:1;color:var(--ocean)}
+
+    /* Tally visual in math card */
+    .tally-vis{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+    .tv-group{background:var(--water2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;gap:3px;align-items:center}
+    .tv-line{width:3px;height:16px;background:var(--ocean);border-radius:1px}
+    .tv-x{width:3px;height:22px;background:var(--ocean);border-radius:1px;transform:rotate(-20deg);margin-left:1px}
+    .tv-num{font-family:var(--ff-mono);font-size:12px;font-weight:500;color:var(--text-mute);margin-left:6px}
+
+    /* ── BENDA APUNG/TENGGELAM ── */
+    .benda-sec{padding:0 0 80px;position:relative;z-index:1}
+    .benda-container{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:640px){.benda-container{grid-template-columns:1fr}}
+    .benda-panel{background:#fff;border-radius:var(--rl);border:1px solid var(--border);padding:28px 24px;box-shadow:var(--shadow)}
+    .bp-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+    .bp-ico{font-size:28px}
+    .bp-header h3{font-family:var(--ff-display);font-size:18px;color:var(--text)}
+    .benda-list{display:flex;flex-direction:column;gap:8px}
+    .benda-item{display:flex;align-items:center;gap:10px;background:var(--water3);border-radius:9px;padding:9px 13px;border:1px solid var(--border)}
+    .bi-ico{font-size:20px;flex-shrink:0}
+    .bi-name{font-size:13px;font-weight:700;color:var(--text);flex:1}
+    .bi-note{font-size:11px;color:var(--text-mute);font-weight:500}
+    .surprise-box{margin-top:18px;background:linear-gradient(135deg,var(--water2),var(--teal-soft));border:1px solid var(--teal-bright);border-radius:12px;padding:16px 18px}
+    .surprise-box h5{font-size:13px;font-weight:800;color:var(--teal);margin-bottom:6px}
+    .surprise-box p{font-size:12px;line-height:1.6;color:var(--text-mid)}
+
+    /* ── DUA MODIFIKASI ── */
+    .mod-sec{padding:80px 0;background:linear-gradient(180deg,var(--water3),#fff);position:relative;z-index:1}
+    .mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:640px){.mod-grid{grid-template-columns:1fr}}
+    .mod-card{background:#fff;border-radius:var(--rl);border:1px solid var(--border);padding:30px 26px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+    .mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+    .mod-a::before{background:linear-gradient(90deg,var(--ocean-mid),var(--teal-bright))}
+    .mod-b::before{background:linear-gradient(90deg,var(--amber),var(--amber-bright))}
+    .mod-ico{font-size:42px;margin-bottom:16px;display:block}
+    .mod-label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+    .mod-a .mod-label{color:var(--ocean-light)}.mod-b .mod-label{color:var(--amber)}
+    .mod-card h4{font-family:var(--ff-display);font-size:19px;color:var(--text);margin-bottom:10px}
+    .mod-card p{font-size:13px;color:var(--text-mute);line-height:1.6;margin-bottom:14px}
+    .mod-why{background:var(--water2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--text-mid);line-height:1.55}
+    .mod-why strong{color:var(--ocean-light)}
+
+    /* ── TIMELINE 5P ── */
+    .tl-sec{padding:80px 0;position:relative;z-index:1}
+    .tl-wrap{position:relative}
+    .tl-wrap::before{content:'';position:absolute;left:40px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--teal-bright),var(--cyan),var(--amber-bright));opacity:.3}
+    @media(max-width:600px){.tl-wrap::before{left:20px}}
+    .tl-item{display:flex;gap:22px;margin-bottom:4px;padding:14px 14px 14px 0;border-radius:14px;transition:background .2s}
+    .tl-item:hover{background:rgba(186,230,253,.3)}
+    @media(max-width:600px){.tl-item{gap:12px}}
+    .tl-node{flex-shrink:0;width:80px;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1}
+    @media(max-width:600px){.tl-node{width:40px}}
+    .tl-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-weight:800;font-size:15px;border:2px solid;background:var(--water3)}
+    .p1 .tl-num{border-color:var(--teal-mid);color:var(--teal-mid)}
+    .p2 .tl-num{border-color:var(--ocean-light);color:var(--ocean-light)}
+    .p3 .tl-num{border-color:var(--cyan);color:var(--ocean)}
+    .p4 .tl-num{border-color:var(--amber);color:var(--amber)}
+    .p5 .tl-num{border-color:var(--green);color:var(--green)}
+    .tl-phase{font-size:9px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.2}
+    @media(max-width:600px){.tl-phase{display:none}}
+    .tl-card{flex:1;background:#fff;border-radius:14px;border:1px solid var(--border);padding:20px 24px;box-shadow:var(--shadow)}
+    .p1 .tl-card{border-left:3px solid var(--teal-mid)}
+    .p2 .tl-card{border-left:3px solid var(--ocean-light)}
+    .p3 .tl-card{border-left:3px solid var(--cyan)}
+    .p4 .tl-card{border-left:3px solid var(--amber)}
+    .p5 .tl-card{border-left:3px solid var(--green)}
+    .tl-pert{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:3px}
+    .tl-title{font-family:var(--ff-display);font-size:17px;color:var(--text);margin-bottom:10px;line-height:1.3}
+    .tl-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+    .tl-chip{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--water2);color:var(--text-mute);border:1px solid var(--border)}
+    .tl-acts{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .tl-acts li{font-size:13px;color:var(--text-mid);padding-left:16px;position:relative;line-height:1.55}
+    .tl-acts li::before{content:'›';position:absolute;left:0;color:var(--text-faint);font-weight:800}
+    .lk-box{background:var(--water2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-top:12px}
+    .lk-box h5{font-size:12px;font-weight:800;color:var(--ocean-light);margin-bottom:7px}
+    .lk-box ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+    .lk-box ul li{font-size:12px;color:var(--text-mid);padding-left:14px;position:relative;line-height:1.45}
+    .lk-box ul li::before{content:'•';position:absolute;left:0;color:var(--teal-bright);font-weight:800}
+
+    /* ── PRINSIP GURU ── */
+    .prinsip-sec{padding:0 0 80px;position:relative;z-index:1}
+    .pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:640px){.pr-grid{grid-template-columns:1fr}}
+    .pr-card{background:#fff;border-radius:14px;border:1px solid var(--border);padding:22px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+    .pr-num{width:36px;height:36px;border-radius:50%;background:var(--ocean-mid);color:#fff;font-family:var(--ff-display);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .pr-card h4{font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px}
+    .pr-card p{font-size:13px;color:var(--text-mute);line-height:1.55}
+
+    /* ── ASESMEN OBSERVASI ── */
+    .asesmen-sec{padding:80px 0;background:linear-gradient(180deg,#fff,var(--water3));position:relative;z-index:1}
+    .obs-grid{display:flex;flex-direction:column;gap:14px}
+    .obs-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;box-shadow:var(--shadow)}
+    .obs-stripe{width:4px;flex-shrink:0}
+    .o-teal .obs-stripe{background:var(--teal-bright)}
+    .o-cyan .obs-stripe{background:var(--cyan)}
+    .o-amber .obs-stripe{background:var(--amber-bright)}
+    .o-green .obs-stripe{background:var(--green-bright)}
+    .obs-body{padding:18px 22px;flex:1;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;align-items:start}
+    @media(max-width:700px){.obs-body{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.obs-body{grid-template-columns:1fr}}
+    .obs-aspek{font-size:13px;font-weight:800;color:var(--text)}
+    .obs-aspek small{display:block;font-size:11px;font-weight:600;color:var(--text-mute);margin-top:2px}
+    .obs-level{font-size:12px;line-height:1.55;color:var(--text-mid)}
+    .obs-level strong{display:block;font-size:11px;font-weight:800;margin-bottom:3px}
+    .lv-bb{color:var(--green)}.lv-b{color:var(--teal)}.lv-pd{color:var(--rose)}
+
+    /* ── TINDAK LANJUT ── */
+    .tl2-sec{padding:0 0 80px;position:relative;z-index:1}
+    .tl2-grid{display:flex;flex-direction:column;gap:12px}
+    .tl2-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex}
+    .tc2-stripe{width:4px;flex-shrink:0}
+    .tc2-bb .tc2-stripe{background:var(--green-bright)}
+    .tc2-b .tc2-stripe{background:var(--teal-bright)}
+    .tc2-pd .tc2-stripe{background:#F87171}
+    .tc2-body{padding:18px 22px;flex:1}
+    .tc2-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+    .tc2-hdr h4{font-size:15px;font-weight:800;color:var(--text)}
+    .tc2-badge{font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;border:1px solid}
+    .tc2-bb .tc2-badge{background:var(--green-soft);color:var(--green);border-color:#86EFAC}
+    .tc2-b .tc2-badge{background:var(--teal-soft);color:var(--teal);border-color:#99F6E4}
+    .tc2-pd .tc2-badge{background:var(--rose-soft);color:var(--rose);border-color:#FECDD3}
+    .tc2-body ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .tc2-body ul li{font-size:13px;color:var(--text-mid);padding-left:18px;position:relative;line-height:1.55}
+    .tc2-body ul li::before{content:'→';position:absolute;left:0;font-weight:800;color:var(--text-faint)}
+
+    /* ── KEMITRAAN ── */
+    .mitra-sec{padding:80px 0;background:linear-gradient(135deg,var(--ocean),var(--ocean-mid));position:relative;z-index:1;overflow:hidden}
+    .mitra-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at bottom left,rgba(45,212,191,.1),transparent 60%);pointer-events:none}
+    .mitra-sec .sh-pill{background:rgba(45,212,191,.1);color:#5EEAD4;border-color:rgba(94,234,212,.2)}
+    .mitra-sec .sh h2{color:#fff}
+    .mitra-sec .sh p{color:rgba(255,255,255,.65)}
+    .mitra-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:640px){.mitra-grid{grid-template-columns:1fr}}
+    .mitra-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:26px 22px;transition:background .2s}
+    .mitra-card:hover{background:rgba(255,255,255,.12)}
+    .mitra-ico{font-size:30px;margin-bottom:12px;display:block}
+    .mitra-card h4{font-family:var(--ff-display);font-size:15px;color:#fff;margin-bottom:7px}
+    .mitra-card p{font-size:13px;line-height:1.6;color:rgba(255,255,255,.65)}
+
+    /* ── QUOTE ── */
+    .quote-sec{padding:80px 0;position:relative;z-index:1}
+    .q-box{background:linear-gradient(135deg,var(--water2),var(--teal-soft));border:1px solid var(--border-dark);border-radius:var(--rl);padding:44px 48px;position:relative;overflow:hidden}
+    .q-box::before{content:'🚢';font-size:120px;position:absolute;top:-10px;right:24px;opacity:.06;pointer-events:none;line-height:1}
+    .q-box blockquote{font-family:var(--ff-display);font-size:clamp(15px,2.3vw,21px);color:var(--text);font-style:italic;line-height:1.5;margin-bottom:12px;position:relative;z-index:1}
+    .q-box blockquote em{color:var(--ocean-mid);font-style:normal}
+    .q-box cite{font-size:13px;color:var(--text-mute);font-style:normal}
+    @media(max-width:600px){.q-box{padding:28px 22px}}
+
+    /* ── FOOTER ── */
+    footer{padding:52px 0 32px;border-top:1px solid var(--border);position:relative;z-index:1}
+    .ft-in{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+    @media(max-width:600px){.ft-in{grid-template-columns:1fr}}
+    .ft-brand{font-family:var(--ff-display);font-size:18px;color:var(--text);margin-bottom:8px}
+    .ft-desc{font-size:13px;color:var(--text-mute);max-width:380px;line-height:1.6;margin-bottom:10px}
+    .ft-meta{font-size:11px;color:var(--text-faint)}
+    .ft-links{display:flex;flex-direction:column;gap:7px;list-style:none}
+    .ft-links a{font-size:13px;color:var(--text-mute)}.ft-links a:hover{color:var(--text)}
+    .ft-bot{margin-top:32px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .ft-bot p{font-size:12px;color:var(--text-faint)}
+    .ft-ver{font-size:11px;font-weight:700;background:var(--water2);color:var(--text-mute);padding:3px 10px;border-radius:6px;border:1px solid var(--border)}
+
+    /* ── UTILITIES ── */
+    .div{height:1px;background:var(--border)}
+    @keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+    .rev.in{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- Wave background -->
+<div class="wave-bg" aria-hidden="true">
+  <svg class="wave-svg" viewBox="0 0 1440 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 70Q180 10 360 70Q540 130 720 70Q900 10 1080 70Q1260 130 1440 70Q1620 10 1800 70Q1980 130 2160 70Q2340 10 2520 70Q2700 130 2880 70" stroke="#0EA5E9" stroke-width="3" fill="none"/>
+  </svg>
+  <svg class="wave-svg wave-svg2" viewBox="0 0 1440 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 90Q240 30 480 90Q720 150 960 90Q1200 30 1440 90Q1680 150 1920 90Q2160 30 2400 90Q2640 150 2880 90" stroke="#0D9488" stroke-width="2" fill="none"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-mark">🚢</div>
+      <div class="nav-brand">Kapal Kertasku <span>STEM Kelas 2 · SDM01 Kukusan</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#stem">Integrasi STEM</a></li>
+      <li><a href="#modifikasi">2 Modifikasi</a></li>
+      <li><a href="#alur">5 Pertemuan</a></li>
+      <li><a href="#asesmen">Asesmen</a></li>
+      <li><a href="index.html">← Hub SDM01</a></li>
+    </ul>
+    <span class="nav-chip">IPAS & Matematika</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ocean"></div>
+  <div class="hero-depth"></div>
+  <!-- Decorative boat -->
+  <svg class="hero-boat" width="200" height="120" viewBox="0 0 200 120" fill="none">
+    <path d="M20 80 L180 80 L160 100 L40 100 Z" fill="#0C4A6E"/>
+    <path d="M100 20 L100 80 L60 80 Z" fill="#075985"/>
+    <path d="M100 20 L100 80 L140 80 Z" fill="#0369A1"/>
+  </svg>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="hero-tag"><span class="dot"></span>Kelas 2 (Fase A) · SD Muhammadiyah 01 Kukusan</div>
+    <h1>Berapa Banyak yang Bisa<br>Dibawa <span class="hl">Kapalku</span>? 🪙</h1>
+    <p class="hero-sub">Tema: <em>Kapal Kertasku Tidak Mau Tenggelam</em> — Murid kelas 2 menyelidiki mengapa ada benda yang mengapung dan ada yang tenggelam, membuat kapal kertas, menguji berapa koin yang bisa dibawanya, dan memodifikasi kapal agar bisa membawa <strong>lebih banyak</strong>.</p>
+    <div class="hero-pills">
+      <div class="hpill"><div class="hpill-ico">📚</div><div class="hpill-body"><strong>IPAS & Matematika</strong><span>2 Mata Pelajaran Terintegrasi</span></div></div>
+      <div class="hpill"><div class="hpill-ico">🏫</div><div class="hpill-body"><strong>Fase A / Kelas II</strong><span>Sekolah Dasar</span></div></div>
+      <div class="hpill"><div class="hpill-ico">⏱️</div><div class="hpill-body"><strong>20 JP · 5 Pertemuan</strong><span>4 JP per Pertemuan</span></div></div>
+      <div class="hpill"><div class="hpill-ico">⚙️</div><div class="hpill-body"><strong>Model 5E Bybee</strong><span>Praktik Pedagogis</span></div></div>
+    </div>
+    <div class="tally-demo">
+      <div class="tally-group">
+        <div class="tally-line"></div><div class="tally-line"></div><div class="tally-line"></div><div class="tally-line"></div><div class="tally-cross"></div>
+      </div>
+      <div class="tally-group">
+        <div class="tally-line"></div><div class="tally-line"></div><div class="tally-line"></div>
+      </div>
+      <div class="tally-label">= 8 koin! Mencatat dengan turus 🪙</div>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:56px"></div>
+
+<!-- KONTEKS -->
+<section class="konteks-sec" style="padding-top:72px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">💡 Pertanyaan Mengejutkan</div>
+      <h2>Kertas Tenggelam — Tapi Kapal Kertas Mengapung. Mengapa?</h2>
+      <p>Pertanyaan ini yang membingungkan sekaligus menakjubkan — dan menjadi titik awal seluruh penyelidikan ilmiah di kelas 2.</p>
+    </div>
+    <div class="k-box rev">
+      <div class="k-tag">📋 Konteks Masalah</div>
+      <h3>Bukan hanya berat benda yang menentukan apakah ia mengapung, tetapi juga <em>bentuknya</em>. Kapal kertas mengapung karena bentuknya menjebak ruang udara di dalamnya — dan udara jauh lebih ringan dari air.</h3>
+      <p>Murid kelas 2 pertama-tama menyelidiki benda-benda mana yang mengapung — termasuk kejutan bahwa kertas flat tenggelam tetapi kapal kertas mengapung. Mereka kemudian membuat kapal, menguji berapa koin yang bisa dibawanya, memahami mengapa kapal bisa mengapung, dan memodifikasi kapal agar ruang udara di dalamnya lebih banyak sehingga dapat membawa <strong style="color:#fff">lebih banyak koin</strong>. Semua hasilnya dicatat dengan turus dan dibandingkan dalam tabel.</p>
+      <div class="k-insight">
+        <div class="k-ins"><span class="k-ins-ico">🌬️</span><h5>Ruang Udara = Kekuatan</h5><p>Di dalam kapal ada ruang kosong berisi udara. Udara sangat ringan — lebih ringan dari air. Itulah yang membuat kapal mengapung.</p></div>
+        <div class="k-ins"><span class="k-ins-ico">⚖️</span><h5>Berat Total = Batas</h5><p>Ketika koin memenuhi kapal, berat total melebihi daya apungnya — kapal pun tenggelam. Semakin besar ruang udara, semakin banyak koin yang bisa ditampung.</p></div>
+        <div class="k-ins"><span class="k-ins-ico">📊</span><h5>Data = Bukti</h5><p>Kapal yang tenggelam lebih cepat bukan "gagal" — itu adalah DATA. Tanya: berapa koin yang berhasil? Bagaimana agar bisa lebih banyak?</p></div>
+        <div class="k-ins"><span class="k-ins-ico">✏️</span><h5>Satu Perubahan = Satu Temuan</h5><p>Di P4, hanya boleh mengubah SATU hal dari kapal — agar murid tahu persis hal mana yang membuat perbedaan.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEM INTEGRATION -->
+<section class="stem-sec" id="stem">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🔬 Integrasi STEM</div>
+      <h2>Sains · Teknologi · Enjinering · Matematika</h2>
+      <p>Keempat disiplin bekerja bersama — dari menyelidiki sifat benda hingga mencatat data dengan turus.</p>
+    </div>
+    <div class="stem-grid rev">
+      <div class="stem-card sc-s">
+        <div class="stem-badge">🔬 Sains · IPAS</div>
+        <h4>Menyelidiki Mengapung & Tenggelam</h4>
+        <div class="sub">Bukan hanya berat — bentuk juga menentukan</div>
+        <ul>
+          <li>Murid menguji 6–8 benda berbeda di baskom dan mengelompokkan hasilnya: mengapung vs. tenggelam.</li>
+          <li>Kejutan utama P1: kertas flat tenggelam, tetapi <strong>kapal kertas mengapung</strong> meskipun bahannya sama.</li>
+          <li>P3: demonstrasi mangkuk terbalik — udara terperangkap di dalamnya, mangkuk tidak tenggelam. Inilah prinsip kapal!</li>
+        </ul>
+        <div class="stem-ghost">S</div>
+      </div>
+      <div class="stem-card sc-t">
+        <div class="stem-badge">🔧 Teknologi</div>
+        <h4>Koin & Turus sebagai Alat</h4>
+        <div class="sub">Baskom · koin standar · tally marks</div>
+        <ul>
+          <li><strong>Baskom air</strong> sebagai "kolam uji" yang konsisten — kedalaman air sama di semua meja.</li>
+          <li><strong>Koin jenis sama</strong> untuk semua kelompok — beban yang standar membuat perbandingan menjadi adil.</li>
+          <li><strong>Turus (tally marks)</strong> — satu garis per koin, silang setelah 5. Teknologi pencatatan paling cocok untuk kelas 2.</li>
+        </ul>
+        <div class="stem-ghost">T</div>
+      </div>
+      <div class="stem-card sc-e">
+        <div class="stem-badge">⚙️ Enjinering</div>
+        <h4>Siklus Desain Dua Putaran</h4>
+        <div class="sub">Kapal pertama → data → modifikasi → bandingkan</div>
+        <ul>
+          <li><strong>Putaran 1 (P2):</strong> buat kapal model dasar → uji koin satu per satu → catat turus → simpulkan.</li>
+          <li><strong>Putaran 2 (P4):</strong> pilih satu modifikasi → buat kapal baru → uji → bandingkan dengan Putaran 1.</li>
+          <li>Keputusan desain yang baik didasarkan pada pemahaman ilmiah (ruang udara), bukan sekadar coba-coba.</li>
+        </ul>
+        <div class="stem-ghost">E</div>
+      </div>
+      <div class="stem-card sc-m">
+        <div class="stem-badge">📊 Matematika</div>
+        <h4>Turus, Tabel, Perbandingan</h4>
+        <div class="sub">Mencatat · Menjumlah · Membandingkan</div>
+        <p>Murid memasukkan koin satu per satu, menggambar satu turus untuk setiap koin, lalu menghitung total:</p>
+        <div class="tally-vis">
+          <div class="tv-group">
+            <div class="tv-line"></div><div class="tv-line"></div><div class="tv-line"></div><div class="tv-line"></div><div class="tv-x"></div>
+            <span class="tv-num">= 5</span>
+          </div>
+          <div class="tv-group">
+            <div class="tv-line"></div><div class="tv-line"></div><div class="tv-line"></div>
+            <span class="tv-num">= 3</span>
+          </div>
+          <span style="font-size:13px;font-weight:700;color:var(--text-mute);align-self:center">Total = 8 🪙</span>
+        </div>
+        <p style="margin-top:10px;font-size:12px;color:var(--text-mute)">Tabel dua baris: kapal pertama vs. kapal modifikasi. Angka lebih besar = kapal lebih kuat.</p>
+        <div class="stem-ghost">M</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- BENDA MENGAPUNG & TENGGELAM -->
+<section class="benda-sec" id="benda" style="padding-top:80px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">💧 Penyelidikan Pertemuan 1</div>
+      <h2>Apa yang Mengapung, Apa yang Tenggelam?</h2>
+      <p>Sebelum membuat kapal, murid menyelidiki dulu — menduga lebih dulu, baru menguji. Hasilnya sering mengejutkan!</p>
+    </div>
+    <div class="benda-container rev">
+      <div class="benda-panel">
+        <div class="bp-header"><span class="bp-ico">🌊</span><h3>Mengapung</h3></div>
+        <div class="benda-list">
+          <div class="benda-item"><span class="bi-ico">🧽</span><span class="bi-name">Busa/spons</span><span class="bi-note">Berisi udara</span></div>
+          <div class="benda-item"><span class="bi-ico">🍃</span><span class="bi-name">Daun</span><span class="bi-note">Sangat ringan</span></div>
+          <div class="benda-item"><span class="bi-ico">🔵</span><span class="bi-name">Tutup botol plastik</span><span class="bi-note">Ada ruang udara</span></div>
+          <div class="benda-item"><span class="bi-ico">🪵</span><span class="bi-name">Kayu kecil</span><span class="bi-note">Lebih ringan dari air</span></div>
+        </div>
+        <div class="surprise-box">
+          <h5>✨ Kejutan Utama!</h5>
+          <p>Kertas flat → <strong>tenggelam</strong>. Kapal kertas (bahan yang sama!) → <strong>mengapung</strong>. Mengapa? Karena bentuk yang berbeda menjebak udara di dalamnya!</p>
+        </div>
+      </div>
+      <div class="benda-panel">
+        <div class="bp-header"><span class="bp-ico">⬇️</span><h3>Tenggelam</h3></div>
+        <div class="benda-list">
+          <div class="benda-item"><span class="bi-ico">🪙</span><span class="bi-name">Koin logam</span><span class="bi-note">Padat & berat</span></div>
+          <div class="benda-item"><span class="bi-ico">📏</span><span class="bi-name">Penghapus</span><span class="bi-note">Padat, tanpa ruang udara</span></div>
+          <div class="benda-item"><span class="bi-ico">🪨</span><span class="bi-name">Batu kecil</span><span class="bi-note">Sangat padat</span></div>
+          <div class="benda-item"><span class="bi-ico">📄</span><span class="bi-name">Kertas flat</span><span class="bi-note">Menyerap air, tidak ada ruang udara</span></div>
+        </div>
+        <div style="margin-top:18px;background:var(--water2);border:1px solid var(--border);border-radius:12px;padding:14px 16px">
+          <h5 style="font-size:13px;font-weight:800;color:var(--ocean-light);margin-bottom:6px">💬 Pertanyaan Pemantik P1</h5>
+          <p style="font-size:12px;line-height:1.6;color:var(--text-mid)"><em>"Kalau kertas ini saya taruh di air, apa yang terjadi?"</em> — Murid menjawab, kertas flat → tenggelam. Kemudian kapal kertas → mengapung! Guru belum menjelaskan mengapa. Simpan untuk P3.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DUA MODIFIKASI -->
+<section class="mod-sec" id="modifikasi">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">⚙️ Dua Pilihan Modifikasi · Pertemuan 4</div>
+      <h2>Ubah Satu Hal — Agar Kapal Bisa Bawa Lebih Banyak</h2>
+      <p>Jika ruang udara yang membuat kapal mengapung, maka yang perlu diperbesar adalah <strong>ruang udara</strong>. Dua modifikasi ini melakukan persis itu.</p>
+    </div>
+    <div class="mod-grid rev">
+      <div class="mod-card mod-a">
+        <span class="mod-ico">🏰</span>
+        <div class="mod-label">Opsi A · Dinding Lebih Tinggi</div>
+        <h4>Lipat Tepi Kapal Lebih Kecil</h4>
+        <p>Ketika sampai di langkah "lipat tepi ke atas", lipat lebih kecil dari biasanya. Dinding kapal menjadi lebih tinggi — ruang udara di dalam kapal lebih besar secara vertikal.</p>
+        <div class="mod-why">
+          <strong>Mengapa bisa membawa lebih banyak koin?</strong><br>
+          Dinding yang lebih tinggi artinya air perlu naik lebih tinggi untuk masuk ke kapal — sehingga kapal bisa menampung lebih banyak beban sebelum akhirnya tenggelam.
+        </div>
+      </div>
+      <div class="mod-card mod-b">
+        <span class="mod-ico">🚣</span>
+        <div class="mod-label">Opsi B · Kapal Lebih Lebar</div>
+        <h4>Gunakan Lebar Penuh Kertas A4</h4>
+        <p>Gunakan kertas yang tidak dilipat menjadi dua sebelum mulai — gunakan lebar penuh A4. Kapal menjadi lebih lebar dengan alas yang lebih besar.</p>
+        <div class="mod-why">
+          <strong>Mengapa bisa membawa lebih banyak koin?</strong><br>
+          Alas yang lebih lebar mendistribusikan berat koin ke area yang lebih besar — seperti rakit vs. perahu sempit. Ruang udara lebih lebar ke samping.
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--water2);border:1px solid var(--border-dark);border-radius:14px;padding:20px 24px;margin-top:16px;display:flex;gap:14px;align-items:flex-start" class="rev">
+      <span style="font-size:24px;flex-shrink:0">⚓</span>
+      <div>
+        <p style="font-size:14px;font-weight:800;color:var(--ocean-mid);margin-bottom:4px">Aturan Satu Perubahan</p>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.6">Hanya boleh mengubah SATU hal dari kapal — tinggi dinding ATAU ukuran alas, tidak keduanya sekaligus. Cara melipat selebihnya harus persis sama dengan kapal pertama. Ini agar murid bisa mengidentifikasi dengan pasti: <em>perubahan inilah</em> yang membuat perbedaan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE 5E -->
+<section class="tl-sec" id="alur">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📅 Alur Pembelajaran · Model 5E</div>
+      <h2>Lima Pertemuan, dari Dugaan hingga Data</h2>
+      <p>Dari menguji benda-benda di air hingga kompetisi kapal terkuat — setiap pertemuan membangun pemahaman yang lebih dalam.</p>
+    </div>
+    <div class="tl-wrap rev">
+
+      <div class="tl-item p1">
+        <div class="tl-node"><div class="tl-num">1</div><div class="tl-phase">Engagement</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 1 · Engagement</div>
+          <div class="tl-title">"Apa yang Mengapung dan Apa yang Tenggelam?"</div>
+          <div class="tl-chips"><span class="tl-chip">🔍 Menduga Dulu</span><span class="tl-chip">💧 Uji di Baskom</span><span class="tl-chip">📍 Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Setiap meja memiliki baskom air dan 6–8 benda kecil. Murid <strong>menduga dulu</strong> (isi LK 1 kolom "menurutku") sebelum menguji — mana yang mengapung? mana yang tenggelam?</li>
+            <li>Uji satu per satu, pindahkan ke kolom "Hasil Nyata" di LK 1. Amati: dugaan mana yang ternyata salah?</li>
+            <li>Kejutan utama: kertas flat → tenggelam. Kapal kertas yang sudah dibuat guru → mengapung! <em>"Ini juga kertas. Mengapa ini mengapung, yang tadi tenggelam?"</em></li>
+            <li>Diskusi kelompok kecil 2 menit. Guru catat semua dugaan di papan tanpa menilai. Jawaban sesungguhnya disimpan untuk P3.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p2">
+        <div class="tl-node"><div class="tl-num">2</div><div class="tl-phase">Exploration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 2 · Exploration</div>
+          <div class="tl-title">"Membuat Kapal dan Menguji Berapa Koin yang Bisa Dibawa"</div>
+          <div class="tl-chips"><span class="tl-chip">🚢 Buat Kapal</span><span class="tl-chip">🪙 Uji Koin</span><span class="tl-chip">✏️ Catat Turus</span></div>
+          <ul class="tl-acts">
+            <li>Guru menampilkan kapal yang sudah jadi di air lebih dulu. Ajukan tantangan: <em>"Kira-kira kapal ini bisa bawa berapa koin sebelum tenggelam?"</em> — murid menebak bebas.</li>
+            <li>Guru mengajarkan model kapal dasar langkah per langkah melalui demonstrasi. Murid yang selesai lebih dulu boleh membantu temannya.</li>
+            <li>Uji koin: taruh kapal di baskom → masukkan koin satu per satu ke tengah kapal → gambar satu turus untuk setiap koin → berhenti saat kapal tenggelam → hitung total.</li>
+            <li>Isi LK 2: kotak turus besar + total koin + pertanyaan perbandingan dengan teman semeja.</li>
+          </ul>
+          <div class="lk-box">
+            <h5>📋 Format LK 2</h5>
+            <ul>
+              <li>Kotak besar untuk menggambar turus koin (1 koin = 1 garis)</li>
+              <li>"Kapalku bisa membawa ___ koin sebelum tenggelam."</li>
+              <li>"Temanku yang paling banyak bisa membawa ___ koin."</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item p3">
+        <div class="tl-node"><div class="tl-num">3</div><div class="tl-phase">Explanation</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 3 · Explanation</div>
+          <div class="tl-title">"Mengapa Kapal Kertas Bisa Mengapung?"</div>
+          <div class="tl-chips"><span class="tl-chip">🌬️ Ruang Udara</span><span class="tl-chip">🔬 3 Demonstrasi</span><span class="tl-chip">📍 Bermakna</span></div>
+          <ul class="tl-acts">
+            <li><strong>Demo 1:</strong> kertas flat vs. kapal kertas di baskom secara bersamaan. Keduanya kertas, tapi satu tenggelam, satu mengapung — karena bentuk yang berbeda.</li>
+            <li><strong>Demo 2 — Udara terperangkap:</strong> celupkan mangkuk plastik kecil dalam posisi terbalik ke air perlahan — udara di dalamnya mencegah tenggelam. 2–3 murid merasakan sendiri: taruh telapak tangan terbalik di atas permukaan air.</li>
+            <li><strong>Demo 3:</strong> kapal berisi udara → mengapung. Kapal langsung diisi koin banyak sekaligus → tenggelam. Mengapa? Berat total melebihi daya apung.</li>
+            <li>Murid mengisi LK 3: warnai "ruang udara" di dalam kapal (gambar penampang) dengan warna biru muda. Lingkari: "Kapal bisa mengapung karena di dalamnya ada ___ (udara / air / koin)."</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p4">
+        <div class="tl-node"><div class="tl-num">4</div><div class="tl-phase">Elaboration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 4 · Elaboration</div>
+          <div class="tl-title">"Ubah Satu Hal agar Kapal Bisa Bawa Lebih Banyak"</div>
+          <div class="tl-chips"><span class="tl-chip">🏰 Opsi A atau B</span><span class="tl-chip">📊 Tabel Perbandingan</span><span class="tl-chip">📍 Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Buka dengan pertanyaan: <em>"Kalau ruang udara yang membuat kapal mengapung, apa yang harus kita perbesar?"</em> Murid menjawab secara lisan — guru arahkan ke dua opsi modifikasi.</li>
+            <li>Setiap murid memilih SATU opsi (dinding lebih tinggi ATAU kapal lebih lebar) dan membuat kapal baru. Cara melipat selebihnya sama persis.</li>
+            <li>Uji koin dengan prosedur yang persis sama dengan P2: turus, hitung total, catat.</li>
+            <li>Isi LK 4: tabel dua baris (kapal pertama | kapal modifikasi), bandingkan hasilnya, tulis satu kalimat alasan mengapa hasilnya berbeda.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p5">
+        <div class="tl-node"><div class="tl-num">5</div><div class="tl-phase">Evaluation</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 5 · Evaluation — Asesmen Sumatif</div>
+          <div class="tl-title">"Kompetisi Kapal Terkuat dan Berbagi Temuan 🏆"</div>
+          <div class="tl-chips"><span class="tl-chip">🏆 Kompetisi Kelas</span><span class="tl-chip">💬 Berbagi Temuan</span><span class="tl-chip">📍 Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Murid membuat satu "kapal final terbaik" — boleh menggunakan modifikasi dari P4 atau mencoba hal baru, selama dalam batasan material.</li>
+            <li>Kompetisi "Kapal Terkuat": setiap murid maju ke baskom di depan kelas. Kelas bersama menghitung dengan lantang: <em>"Satu... dua... tiga..."</em> saat koin dimasukkan. Berhenti saat tenggelam.</li>
+            <li>Guru catat semua angka di papan — data kelas yang menarik! Murid berbagi temuan kepada teman semeja (bukan seluruh kelas) dalam 2–3 kalimat: berapa koin, apa yang diubah, mengapa hasilnya berbeda.</li>
+            <li>Refleksi penutup: <em>"Dari semua yang kamu coba, satu hal apa yang paling mengejutkanmu tentang kapal kertas?"</em></li>
+          </ul>
+          <div style="background:var(--amber-soft);border:1px solid #FDE068;border-radius:12px;padding:14px 16px;margin-top:12px">
+            <p style="font-size:13px;font-weight:700;color:var(--amber);margin-bottom:4px">🎉 Filosofi Kompetisi</p>
+            <p style="font-size:12px;color:var(--text-mid);line-height:1.55">Kompetisi ini dirancang sebagai perayaan, bukan persaingan yang menghakimi. Setiap murid mendapat tepuk tangan — baik yang kapalnya bisa 3 koin maupun 15 koin. Yang terpenting: setiap murid dapat menyampaikan <strong>apa yang ia ubah</strong> dan <strong>mengapa ia mengubahnya</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRINSIP GURU -->
+<section class="prinsip-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">👩‍🏫 Panduan Pendidik</div>
+      <h2>Empat Prinsip yang Harus Dipegang Sepanjang Proyek</h2>
+    </div>
+    <div class="pr-grid rev">
+      <div class="pr-card">
+        <div class="pr-num">1</div>
+        <div>
+          <h4>Percobaan Air = Kegembiraan, Bukan Kekacauan</h4>
+          <p>Antisipasi dengan alas meja plastik/koran, handuk kecil di tiap meja, dan aturan sederhana yang disepakati bersama sebelum mulai.</p>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">2</div>
+        <div>
+          <h4>Kapal Tenggelam = DATA, Bukan Kegagalan</h4>
+          <p>Tanya: <em>"Kapalmu bisa bawa berapa koin? Bagaimana agar bisa lebih banyak?"</em> Bukan: "Salah. Seharusnya..."</p>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">3</div>
+        <div>
+          <h4>Biarkan Murid Menduga Sebelum Guru Menjelaskan</h4>
+          <p>Murid kelas 2 sudah bisa berdiskusi dalam kelompok kecil. Gunakan momen ini: biarkan mereka menduga dulu sebelum guru memberikan penjelasan.</p>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">4</div>
+        <div>
+          <h4>Tampilkan Contoh Turus di Papan Sebelum LK</h4>
+          <p>Pencatatan turus adalah keterampilan yang sedang dibangun: <em>"Tiap koin = satu garis. Setelah 5 garis, silang."</em> Perlihatkan ini secara visual sebelum murid mulai mengisi LK.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ASESMEN OBSERVASI -->
+<section class="asesmen-sec" id="asesmen">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📋 Asesmen · Berbasis Observasi Guru</div>
+      <h2>Asesmen di Kelas 2: Observasi + Portofolio</h2>
+      <p>LK 1–4 berfungsi sebagai portofolio proses — bukti belajar nyata yang dapat dibaca kembali. Asesmen utama adalah <strong>pengamatan guru</strong> selama kegiatan dan saat berbagi di P5.</p>
+    </div>
+    <div class="obs-grid rev">
+
+      <div class="obs-card o-teal">
+        <div class="obs-stripe"></div>
+        <div class="obs-body">
+          <div class="obs-aspek">🚢 Membuat & Menguji<br><small>Proses STEM · P2–5</small></div>
+          <div class="obs-level"><strong class="lv-bb">🌟 Berkembang Baik</strong>Membuat kapal di semua sesi, melakukan uji koin secara mandiri dan teliti, memodifikasi dengan pilihan yang jelas.</div>
+          <div class="obs-level"><strong class="lv-b">✅ Berkembang</strong>Membuat kapal dan menguji koin, kadang perlu dorongan. Modifikasi dilakukan meski tanpa alasan yang jelas.</div>
+          <div class="obs-level"><strong class="lv-pd">🤝 Perlu Pendampingan</strong>Hanya membuat atau menguji dengan bimbingan penuh guru. Modifikasi tidak dilakukan atau tidak dapat dijelaskan.</div>
+        </div>
+      </div>
+
+      <div class="obs-card o-cyan">
+        <div class="obs-stripe"></div>
+        <div class="obs-body">
+          <div class="obs-aspek">🌬️ Menjelaskan Mengapung<br><small>Sains · P5 berbagi</small></div>
+          <div class="obs-level"><strong class="lv-bb">🌟 Berkembang Baik</strong>Dapat menjelaskan dengan kalimat sendiri bahwa ruang udara di dalam kapal yang membuat ia mengapung.</div>
+          <div class="obs-level"><strong class="lv-b">✅ Berkembang</strong>Dapat menyebut "ada udara di dalam" meski belum dapat menjelaskan hubungannya dengan kemampuan membawa koin.</div>
+          <div class="obs-level"><strong class="lv-pd">🤝 Perlu Pendampingan</strong>Belum dapat menjelaskan mengapa kapal mengapung meskipun dengan panduan pertanyaan guru.</div>
+        </div>
+      </div>
+
+      <div class="obs-card o-amber">
+        <div class="obs-stripe"></div>
+        <div class="obs-body">
+          <div class="obs-aspek">📊 Mencatat & Membandingkan<br><small>Matematika · LK 2 & 4</small></div>
+          <div class="obs-level"><strong class="lv-bb">🌟 Berkembang Baik</strong>Menggunakan turus secara mandiri di LK 2 dan LK 4, mengisi total dengan benar, dan dapat membandingkan dua angka.</div>
+          <div class="obs-level"><strong class="lv-b">✅ Berkembang</strong>Menggunakan turus dengan bantuan, mengisi total, tetapi kesulitan membandingkan atau belum mengisi LK 4.</div>
+          <div class="obs-level"><strong class="lv-pd">🤝 Perlu Pendampingan</strong>Belum dapat menggunakan turus secara mandiri atau tidak mengisi tabel tanpa bantuan penuh.</div>
+        </div>
+      </div>
+
+      <div class="obs-card o-green">
+        <div class="obs-stripe"></div>
+        <div class="obs-body">
+          <div class="obs-aspek">💬 Menyampaikan Temuan<br><small>Komunikasi · P5 berbagi</small></div>
+          <div class="obs-level"><strong class="lv-bb">🌟 Berkembang Baik</strong>Dapat menyampaikan: jumlah koin, apa yang diubah, dan mengapa hasilnya berbeda — dalam 2–3 kalimat mandiri.</div>
+          <div class="obs-level"><strong class="lv-b">✅ Berkembang</strong>Dapat menyampaikan jumlah koin dan apa yang diubah, tetapi alasan mengapa hasilnya berbeda belum jelas.</div>
+          <div class="obs-level"><strong class="lv-pd">🤝 Perlu Pendampingan</strong>Hanya dapat menyampaikan jumlah koin, atau tidak dapat menyampaikan apapun tanpa bantuan pertanyaan panduan.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TINDAK LANJUT -->
+<section class="tl2-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🗺️ Rencana Tindak Lanjut</div>
+      <h2>Setelah Proyek: Langkah Selanjutnya</h2>
+    </div>
+    <div class="tl2-grid rev">
+      <div class="tl2-card tc2-bb">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>🌟 Berkembang Baik</h4><span class="tc2-badge">Berkembang Baik</span></div>
+          <ul>
+            <li>Tantangan lanjutan: coba buat kapal dari kertas yang berbeda ketebalan (HVS biasa vs. karton tipis). Apakah hasilnya berbeda? Mengapa?</li>
+            <li>Ajak murid menjadi "konsultan kapal" bagi temannya: apa yang ia sarankan untuk diubah agar kapal teman bisa membawa lebih banyak?</li>
+            <li>Tantangan tambahan: berapa koin yang bisa dibawa jika koin ditaruh di ujung kapal vs. di tengah kapal? Apakah posisi beban memengaruhi daya tahan?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl2-card tc2-b">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>✅ Berkembang</h4><span class="tc2-badge">Berkembang</span></div>
+          <ul>
+            <li>Berikan format LK yang lebih terstruktur: kotak turus sudah diberi petak per koin sehingga murid tinggal menghitamkan.</li>
+            <li>Gunakan pertanyaan panduan lisan: <em>"Apa yang kamu ubah? Sebelumnya berapa koin? Sekarang berapa?"</em> — untuk membantu murid menyusun kalimat penjelasan.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl2-card tc2-pd">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>🤝 Perlu Pendampingan</h4><span class="tc2-badge">Perlu Pendampingan</span></div>
+          <ul>
+            <li>Berikan kapal yang sudah setengah jadi untuk diselesaikan — fokus pada pengalaman menguji koin, bukan melipat.</li>
+            <li>Dampingi langsung selama uji koin: guru yang memasukkan koin, murid yang menghitung dengan jari.</li>
+            <li>Sederhanakan LK: hanya satu baris (total koin) yang perlu diisi — guru bantu menulis angkanya bersama murid.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEMITRAAN -->
+<section class="mitra-sec">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-pill">🤝 Kemitraan Pembelajaran</div>
+      <h2>Belajar Bersama Komunitas</h2>
+    </div>
+    <div class="mitra-grid">
+      <div class="mitra-card">
+        <span class="mitra-ico">👨‍👩‍👧</span>
+        <h4>Orang Tua Murid</h4>
+        <p>Guru menyertakan "kartu tantangan rumah" sederhana: <em>"Coba 5 benda di dapur — mana yang mengapung di baskom air?"</em> — mendorong penyelidikan dilanjutkan di rumah bersama keluarga.</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">🌊</span>
+        <h4>Meja sebagai Kolam Uji</h4>
+        <p>Satu baskom per kelompok (3–4 murid), diisi air 2/3 penuh sebelum pelajaran. Alas plastik/koran, lap tangan, dan koin jenis sama di semua meja — kondisi yang konsisten membuat perbandingan adil.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-sec">
+  <div class="wrap">
+    <div class="q-box rev">
+      <blockquote>"Kapal yang tenggelam lebih cepat bukan berarti gagal — itu adalah <em>data</em>. Dan dari data itulah murid belajar apa yang perlu diperbaiki — dan mengapa."</blockquote>
+      <cite>— Catatan Pendidik, Perencanaan STEM Kelas 2 · SDM01 Kukusan</cite>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="ft-brand">Kapal Kertasku · Kelas 2 SDM01</div>
+        <p class="ft-desc">Perencanaan pembelajaran STEM terintegrasi IPAS dan Matematika untuk kelas 2 SD Muhammadiyah 01 Kukusan. Model 5E Bybee · 20 JP · 5 Pertemuan · Asesmen berbasis observasi.</p>
+        <p class="ft-meta">SD Muhammadiyah 01 Kukusan · Berdasarkan Panduan STEM Kemendikdasmen 2025</p>
+      </div>
+      <ul class="ft-links">
+        <li><a href="index.html">🏠 Hub SDM01</a></li>
+        <li><a href="aksi-hijau-stem-kelas5.html">🌱 Kelas 6 · Aksi Hijau</a></li>
+        <li><a href="sistem-kebersihan-kelas5.html">🧹 Kelas 5 · Sistem Kebersihan</a></li>
+        <li><a href="kelasku-terlalu-berisik.html">🔊 Kelas 4 · Kelasku Berisik</a></li>
+        <li><a href="jusnya-tidak-enak.html">🥤 Kelas 3 · Jusnya Tidak Enak</a></li>
+        <li><a href="kapal-kertas-kelas2.html">🚢 Kelas 2 · Kapal Kertas</a></li>
+        <li><a href="pesawat-kertas-kelas1.html">✈️ Kelas 1 · Pesawat Kertas</a></li>
+        <li><a href="../index.html">↖ Hub Utama STEM</a></li>
+      </ul>
+    </div>
+    <div class="ft-bot">
+      <p>SD Muhammadiyah 01 Kukusan · Kepentingan pendidikan non-komersial</p>
+      <span class="ft-ver">v1.0.0 · Mei 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const s = document.documentElement.scrollTop, h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (s / h * 100) + '%';
+});
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+}), { threshold: .08 });
+document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
