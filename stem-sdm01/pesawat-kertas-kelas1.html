@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Pesawat Kertasku Bisa Terbang Lebih Jauh · STEM Kelas 1 · SDM01 Kukusan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --sky:#EFF8FF; --sky2:#DBEAFE; --sky3:#BFDBFE;
+      --blue:#1D4ED8; --blue-mid:#2563EB; --blue-bright:#60A5FA; --blue-glow:rgba(96,165,250,.2);
+      --cyan:#0E7490; --cyan-soft:#ECFEFF; --cyan-bright:#22D3EE;
+      --sun:#CA8A04; --sun-bright:#EAB308; --sun-soft:#FEFCE8;
+      --cloud:#F1F5F9; --cloud2:#E2E8F0;
+      --green:#166534; --green-soft:#F0FDF4; --green-bright:#4ADE80;
+      --rose:#BE123C; --rose-soft:#FFF1F2;
+      --slate:#475569;
+      --text:#0F172A; --text-mid:#334155; --text-mute:#64748B; --text-faint:#94A3B8;
+      --border:#CBD5E1; --border-sky:#BFDBFE;
+      --shadow:0 1px 12px rgba(15,23,42,.07); --shadow-md:0 6px 28px rgba(15,23,42,.11); --shadow-lg:0 16px 48px rgba(15,23,42,.14);
+      --r:12px; --rl:20px;
+      --ff-display:'Baloo 2','Comic Sans MS',cursive;
+      --ff-body:'Nunito',system-ui,sans-serif;
+      --ff-mono:'DM Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-body);background:var(--sky);color:var(--text);line-height:1.65;overflow-x:hidden}
+    a{color:var(--blue-mid);text-decoration:none;transition:color .2s}
+    a:hover{color:var(--blue)}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+    /* ── PROGRESS ── */
+    #prog{position:fixed;top:0;left:0;height:3px;z-index:999;width:0%;
+      background:linear-gradient(90deg,var(--blue-bright),var(--cyan-bright),var(--sun-bright));
+      transition:width .1s}
+
+    /* ── CLOUD BACKGROUND ── */
+    .cloud-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .cloud{position:absolute;background:#fff;border-radius:50px;opacity:.6;animation:cloud-drift linear infinite}
+    @keyframes cloud-drift{0%{transform:translateX(-300px)}100%{transform:translateX(calc(100vw + 300px))}}
+
+    /* ── NAV ── */
+    nav{position:sticky;top:0;z-index:100;background:rgba(239,248,255,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-sky);box-shadow:0 1px 8px rgba(15,23,42,.06)}
+    .nav-in{max-width:1100px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .nav-logo{display:flex;align-items:center;gap:10px}
+    .nav-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--blue-mid),var(--cyan-bright));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .nav-brand{font-family:var(--ff-display);font-size:14px;font-weight:700;color:var(--text);line-height:1.2}
+    .nav-brand span{display:block;font-size:11px;font-weight:600;color:var(--text-mute);font-family:var(--ff-body)}
+    .nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+    .nav-links a{font-size:12px;font-weight:700;color:var(--text-mute);transition:color .2s}
+    .nav-links a:hover{color:var(--blue)}
+    .nav-chip{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--sky2);color:var(--blue);border:1px solid var(--sky3)}
+    @media(max-width:700px){.nav-links{display:none}}
+
+    /* ── HERO ── */
+    .hero{padding:72px 0 56px;position:relative;z-index:1;overflow:hidden}
+    .hero-sky{position:absolute;inset:0;background:linear-gradient(180deg,#DBEAFE 0%,var(--sky) 100%);pointer-events:none}
+    .hero-sun{position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(234,179,8,.25),transparent 70%);pointer-events:none}
+
+    /* Paper plane SVG animation */
+    .plane-trail{position:absolute;top:80px;left:-80px;pointer-events:none;animation:fly-across 14s linear infinite;opacity:.18}
+    @keyframes fly-across{0%{transform:translateX(-100px) translateY(0)}50%{transform:translateX(60vw) translateY(-30px)}100%{transform:translateX(130vw) translateY(10px)}}
+
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);background:var(--sky2);padding:5px 14px;border-radius:20px;border:1px solid var(--sky3);margin-bottom:20px;opacity:0;animation:fu .7s .1s ease forwards}
+    .hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--blue-bright);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.7)}}
+
+    .hero h1{font-family:var(--ff-display);font-size:clamp(28px,5vw,58px);line-height:1.1;color:var(--text);max-width:780px;margin-bottom:16px;opacity:0;animation:fu .7s .2s ease forwards}
+    .hero h1 .hl{color:var(--blue-mid)}
+    .hero h1 .hl2{color:var(--sun)}
+
+    .hero-sub{font-size:clamp(14px,1.8vw,17px);color:var(--text-mute);max-width:680px;margin-bottom:36px;line-height:1.7;opacity:0;animation:fu .7s .3s ease forwards}
+
+    .hero-pills{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;opacity:0;animation:fu .7s .4s ease forwards}
+    .hpill{background:#fff;border:1px solid var(--border-sky);border-radius:12px;padding:13px 18px;display:flex;align-items:center;gap:11px;box-shadow:var(--shadow)}
+    .hpill-ico{font-size:22px;flex-shrink:0}
+    .hpill-body strong{display:block;font-size:13px;font-weight:800;color:var(--text);margin-bottom:1px}
+    .hpill-body span{font-size:11px;color:var(--text-mute);font-weight:600}
+
+    /* Distance meter decoration */
+    .dist-meter{display:flex;align-items:center;gap:0;margin-top:8px;opacity:0;animation:fu .7s .5s ease forwards}
+    .dm-step{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;border:2px solid var(--border-sky);background:#fff;color:var(--blue);margin-right:-4px;position:relative;z-index:1;transition:all .3s}
+    .dm-step.active{background:var(--blue-mid);color:#fff;border-color:var(--blue-mid);z-index:2}
+    .dm-label{font-size:12px;font-weight:700;color:var(--text-mute);margin-left:16px}
+
+    /* ── SECTION HEADER ── */
+    .sh{text-align:center;margin-bottom:48px}
+    .sh-pill{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);background:var(--sky2);padding:5px 14px;border-radius:20px;border:1px solid var(--sky3);margin-bottom:14px}
+    .sh h2{font-family:var(--ff-display);font-size:clamp(20px,3.2vw,36px);line-height:1.2;color:var(--text);margin-bottom:10px}
+    .sh p{font-size:15px;color:var(--text-mute);max-width:540px;margin:0 auto;line-height:1.65}
+
+    /* ── KONTEKS ── */
+    .konteks-sec{padding:0 0 80px;position:relative;z-index:1}
+    .k-box{background:linear-gradient(135deg,#1E3A8A,#1D4ED8);border-radius:var(--rl);padding:48px 52px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+    .k-box::before{content:'✈️';position:absolute;right:24px;top:20px;font-size:140px;opacity:.06;pointer-events:none;line-height:1}
+    .k-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--sun-bright),var(--cyan-bright),var(--sun-bright))}
+    .k-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#93C5FD;background:rgba(147,197,253,.1);padding:4px 13px;border-radius:20px;border:1px solid rgba(147,197,253,.2);margin-bottom:18px}
+    .k-box h3{font-family:var(--ff-display);font-size:clamp(17px,2.5vw,24px);color:#fff;line-height:1.4;margin-bottom:16px;position:relative;z-index:1;max-width:720px}
+    .k-box h3 em{color:var(--sun-bright);font-style:normal}
+    .k-box p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.7);max-width:720px;position:relative;z-index:1}
+    .k-prinsip{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;position:relative;z-index:1}
+    @media(max-width:640px){.k-prinsip{grid-template-columns:1fr}}
+    .k-pr{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 18px}
+    .k-pr-ico{font-size:20px;margin-bottom:6px;display:block}
+    .k-pr h5{font-size:13px;font-weight:800;color:#fff;margin-bottom:4px}
+    .k-pr p{font-size:12px;line-height:1.55;color:rgba(255,255,255,.65)}
+    @media(max-width:600px){.k-box{padding:28px 22px}}
+
+    /* ── STEM GRID ── */
+    .stem-sec{padding:80px 0;position:relative;z-index:1}
+    .stem-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:680px){.stem-grid{grid-template-columns:1fr}}
+    .stem-card{border-radius:var(--rl);padding:28px 24px;border:1px solid var(--border);transition:box-shadow .25s,transform .25s;background:#fff;position:relative;overflow:hidden}
+    .stem-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+    .sc-s{border-top:3px solid var(--cyan)}
+    .sc-t{border-top:3px solid var(--blue-mid)}
+    .sc-e{border-top:3px solid var(--sun)}
+    .sc-m{border-top:3px solid var(--green)}
+    .stem-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:14px;border:1px solid}
+    .sc-s .stem-badge{background:var(--cyan-soft);color:var(--cyan);border-color:#A5F3FC}
+    .sc-t .stem-badge{background:var(--sky2);color:var(--blue);border-color:var(--sky3)}
+    .sc-e .stem-badge{background:var(--sun-soft);color:var(--sun);border-color:#FDE047}
+    .sc-m .stem-badge{background:var(--green-soft);color:var(--green);border-color:#86EFAC}
+    .stem-card h4{font-family:var(--ff-display);font-size:17px;color:var(--text);margin-bottom:5px}
+    .stem-card .sub{font-size:12px;color:var(--text-mute);font-weight:600;margin-bottom:11px;font-style:italic}
+    .stem-card p,.stem-card ul{font-size:13px;line-height:1.7;color:var(--text-mid)}
+    .stem-card ul{padding-left:16px}.stem-card ul li{margin-bottom:5px}
+    .stem-ghost{position:absolute;right:14px;bottom:4px;font-family:var(--ff-display);font-size:64px;font-weight:800;opacity:.04;line-height:1;color:var(--text)}
+
+    /* Step counter visual */
+    .step-counter{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .sc-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;background:var(--sky2);color:var(--blue);border:2px solid var(--sky3)}
+    .sc-num.highlight{background:var(--blue-mid);color:#fff;border-color:var(--blue-mid)}
+
+    /* ── MODIFIKASI 3 OPSI ── */
+    .mod-sec{padding:0 0 80px;position:relative;z-index:1}
+    .mod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:700px){.mod-grid{grid-template-columns:1fr}}
+    .mod-card{background:#fff;border-radius:var(--rl);border:1px solid var(--border);padding:28px 22px;text-align:center;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+    .mod-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+    .mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+    .mod-a::before{background:linear-gradient(90deg,var(--blue-mid),var(--cyan-bright))}
+    .mod-b::before{background:linear-gradient(90deg,var(--sun),var(--sun-bright))}
+    .mod-c::before{background:linear-gradient(90deg,var(--green),var(--green-bright))}
+    .mod-ico{font-size:40px;margin-bottom:14px;display:block}
+    .mod-label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+    .mod-a .mod-label{color:var(--blue)}.mod-b .mod-label{color:var(--sun)}.mod-c .mod-label{color:var(--green)}
+    .mod-card h4{font-family:var(--ff-display);font-size:16px;color:var(--text);margin-bottom:8px}
+    .mod-card p{font-size:13px;color:var(--text-mute);line-height:1.6}
+    .mod-tip{margin-top:12px;font-size:12px;font-weight:700;padding:6px 12px;border-radius:20px;display:inline-block}
+    .mod-a .mod-tip{background:var(--sky2);color:var(--blue)}
+    .mod-b .mod-tip{background:var(--sun-soft);color:var(--sun)}
+    .mod-c .mod-tip{background:var(--green-soft);color:var(--green)}
+
+    /* ── TIMELINE 5P ── */
+    .tl-sec{padding:80px 0;background:linear-gradient(180deg,#fff,var(--sky));position:relative;z-index:1}
+    .tl-wrap{position:relative}
+    .tl-wrap::before{content:'';position:absolute;left:40px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--blue-bright),var(--cyan-bright),var(--sun-bright));opacity:.3}
+    @media(max-width:600px){.tl-wrap::before{left:20px}}
+    .tl-item{display:flex;gap:22px;margin-bottom:4px;padding:14px 14px 14px 0;border-radius:14px;transition:background .2s}
+    .tl-item:hover{background:rgba(219,234,254,.4)}
+    @media(max-width:600px){.tl-item{gap:12px}}
+    .tl-node{flex-shrink:0;width:80px;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1}
+    @media(max-width:600px){.tl-node{width:40px}}
+    .tl-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-weight:800;font-size:15px;border:2px solid;background:var(--sky)}
+    .p1 .tl-num{border-color:var(--blue-mid);color:var(--blue-mid)}
+    .p2 .tl-num{border-color:var(--cyan);color:var(--cyan)}
+    .p3 .tl-num{border-color:var(--sun);color:var(--sun)}
+    .p4 .tl-num{border-color:var(--blue-mid);color:var(--blue-mid)}
+    .p5 .tl-num{border-color:var(--green);color:var(--green)}
+    .tl-phase{font-size:9px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.2}
+    @media(max-width:600px){.tl-phase{display:none}}
+    .tl-card{flex:1;background:#fff;border-radius:14px;border:1px solid var(--border-sky);padding:20px 24px;box-shadow:var(--shadow)}
+    .p1 .tl-card{border-left:3px solid var(--blue-mid)}
+    .p2 .tl-card{border-left:3px solid var(--cyan)}
+    .p3 .tl-card{border-left:3px solid var(--sun)}
+    .p4 .tl-card{border-left:3px solid var(--blue-mid)}
+    .p5 .tl-card{border-left:3px solid var(--green)}
+    .tl-pert{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:3px}
+    .tl-title{font-family:var(--ff-display);font-size:17px;color:var(--text);margin-bottom:10px;line-height:1.3}
+    .tl-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+    .tl-chip{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--sky);color:var(--text-mute);border:1px solid var(--border-sky)}
+    .tl-acts{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .tl-acts li{font-size:13px;color:var(--text-mid);padding-left:16px;position:relative;line-height:1.55}
+    .tl-acts li::before{content:'›';position:absolute;left:0;color:var(--text-faint);font-weight:800}
+
+    /* LK format callout */
+    .lk-box{background:var(--sky2);border:1px solid var(--sky3);border-radius:12px;padding:16px 18px;margin-top:12px}
+    .lk-box h5{font-size:12px;font-weight:800;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .lk-box ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+    .lk-box ul li{font-size:12px;color:var(--text-mid);padding-left:14px;position:relative;line-height:1.45}
+    .lk-box ul li::before{content:'•';position:absolute;left:0;color:var(--blue-bright);font-weight:800}
+
+    /* ── PRINSIP GURU ── */
+    .prinsip-sec{padding:0 0 80px;position:relative;z-index:1}
+    .pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:640px){.pr-grid{grid-template-columns:1fr}}
+    .pr-card{background:#fff;border-radius:14px;border:1px solid var(--border-sky);padding:22px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+    .pr-num{width:36px;height:36px;border-radius:50%;background:var(--blue-mid);color:#fff;font-family:var(--ff-display);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .pr-card h4{font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px}
+    .pr-card p{font-size:13px;color:var(--text-mute);line-height:1.55}
+
+    /* ── ASESMEN OBSERVASI ── */
+    .asesmen-sec{padding:80px 0;background:linear-gradient(180deg,var(--sky),#fff);position:relative;z-index:1}
+    .obs-grid{display:flex;flex-direction:column;gap:14px}
+    .obs-card{background:#fff;border:1px solid var(--border-sky);border-radius:14px;overflow:hidden;display:flex;box-shadow:var(--shadow)}
+    .obs-stripe{width:4px;flex-shrink:0}
+    .o-green .obs-stripe{background:var(--green-bright)}
+    .o-cyan .obs-stripe{background:var(--cyan-bright)}
+    .o-sun .obs-stripe{background:var(--sun-bright)}
+    .o-blue .obs-stripe{background:var(--blue-bright)}
+    .obs-body{padding:18px 22px;flex:1;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;align-items:start}
+    @media(max-width:700px){.obs-body{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.obs-body{grid-template-columns:1fr}}
+    .obs-aspek{font-size:13px;font-weight:800;color:var(--text)}
+    .obs-aspek small{display:block;font-size:11px;font-weight:600;color:var(--text-mute);margin-top:2px}
+    .obs-level{font-size:12px;line-height:1.55;color:var(--text-mid)}
+    .obs-level strong{display:block;font-size:11px;font-weight:800;margin-bottom:3px}
+    .lv-bb{color:var(--green)}.lv-b{color:var(--cyan)}.lv-pd{color:var(--rose)}
+
+    /* ── TINDAK LANJUT ── */
+    .tl2-sec{padding:0 0 80px;position:relative;z-index:1}
+    .tl2-grid{display:flex;flex-direction:column;gap:12px}
+    .tl2-card{background:#fff;border:1px solid var(--border-sky);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex}
+    .tc2-stripe{width:4px;flex-shrink:0}
+    .tc2-bb .tc2-stripe{background:var(--green-bright)}
+    .tc2-b .tc2-stripe{background:var(--blue-bright)}
+    .tc2-pd .tc2-stripe{background:var(--rose-soft)}
+    .tc2-body{padding:18px 22px;flex:1}
+    .tc2-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+    .tc2-hdr h4{font-size:15px;font-weight:800;color:var(--text)}
+    .tc2-badge{font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;border:1px solid}
+    .tc2-bb .tc2-badge{background:var(--green-soft);color:var(--green);border-color:#86EFAC}
+    .tc2-b .tc2-badge{background:var(--sky2);color:var(--blue);border-color:var(--sky3)}
+    .tc2-pd .tc2-badge{background:var(--rose-soft);color:var(--rose);border-color:#FECDD3}
+    .tc2-body ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .tc2-body ul li{font-size:13px;color:var(--text-mid);padding-left:18px;position:relative;line-height:1.55}
+    .tc2-body ul li::before{content:'→';position:absolute;left:0;font-weight:800;color:var(--text-faint)}
+
+    /* ── KEMITRAAN ── */
+    .mitra-sec{padding:80px 0;background:linear-gradient(135deg,#1E3A8A,#1D4ED8);position:relative;z-index:1;overflow:hidden}
+    .mitra-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(96,165,250,.12),transparent 60%);pointer-events:none}
+    .mitra-sec .sh-pill{background:rgba(96,165,250,.12);color:#93C5FD;border-color:rgba(147,197,253,.2)}
+    .mitra-sec .sh h2{color:#fff}
+    .mitra-sec .sh p{color:rgba(255,255,255,.65)}
+    .mitra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:700px){.mitra-grid{grid-template-columns:1fr}}
+    .mitra-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:26px 22px;transition:background .2s}
+    .mitra-card:hover{background:rgba(255,255,255,.12)}
+    .mitra-ico{font-size:30px;margin-bottom:12px;display:block}
+    .mitra-card h4{font-family:var(--ff-display);font-size:15px;color:#fff;margin-bottom:7px}
+    .mitra-card p{font-size:13px;line-height:1.6;color:rgba(255,255,255,.65)}
+
+    /* ── QUOTE ── */
+    .quote-sec{padding:80px 0;position:relative;z-index:1}
+    .q-box{background:linear-gradient(135deg,var(--sky2),var(--cyan-soft));border:1px solid var(--sky3);border-radius:var(--rl);padding:44px 48px;position:relative;overflow:hidden}
+    .q-box::before{content:'✈';font-size:120px;position:absolute;top:-10px;left:20px;opacity:.06;pointer-events:none;line-height:1}
+    .q-box blockquote{font-family:var(--ff-display);font-size:clamp(15px,2.3vw,21px);color:var(--text);font-style:italic;line-height:1.5;margin-bottom:12px;position:relative;z-index:1}
+    .q-box blockquote em{color:var(--blue-mid);font-style:normal}
+    .q-box cite{font-size:13px;color:var(--text-mute);font-style:normal}
+    @media(max-width:600px){.q-box{padding:28px 22px}}
+
+    /* ── FOOTER ── */
+    footer{padding:52px 0 32px;border-top:1px solid var(--border-sky);position:relative;z-index:1}
+    .ft-in{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
+    @media(max-width:600px){.ft-in{grid-template-columns:1fr}}
+    .ft-brand{font-family:var(--ff-display);font-size:18px;color:var(--text);margin-bottom:8px}
+    .ft-desc{font-size:13px;color:var(--text-mute);max-width:380px;line-height:1.6;margin-bottom:10px}
+    .ft-meta{font-size:11px;color:var(--text-faint)}
+    .ft-links{display:flex;flex-direction:column;gap:7px;list-style:none}
+    .ft-links a{font-size:13px;color:var(--text-mute)}.ft-links a:hover{color:var(--text)}
+    .ft-bot{margin-top:32px;padding-top:16px;border-top:1px solid var(--border-sky);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .ft-bot p{font-size:12px;color:var(--text-faint)}
+    .ft-ver{font-size:11px;font-weight:700;background:var(--sky);color:var(--text-mute);padding:3px 10px;border-radius:6px;border:1px solid var(--border-sky)}
+
+    /* ── UTILITIES ── */
+    .div{height:1px;background:var(--border-sky)}
+    @keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+    .rev.in{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- Cloud background -->
+<div class="cloud-bg" aria-hidden="true" id="clouds"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-mark">✈️</div>
+      <div class="nav-brand">Pesawat Kertasku <span>STEM Kelas 1 · SDM01 Kukusan</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#stem">Integrasi STEM</a></li>
+      <li><a href="#modifikasi">3 Modifikasi</a></li>
+      <li><a href="#alur">5 Pertemuan</a></li>
+      <li><a href="#asesmen">Asesmen</a></li>
+      <li><a href="index.html">← Hub SDM01</a></li>
+    </ul>
+    <span class="nav-chip">IPAS & Matematika</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-sky"></div>
+  <div class="hero-sun"></div>
+  <!-- Paper plane trail -->
+  <svg class="plane-trail" width="120" height="60" viewBox="0 0 120 60" fill="none">
+    <path d="M0 30 L110 10 L80 30 L110 10 L90 50 Z" fill="#1D4ED8"/>
+    <path d="M80 30 L90 50" stroke="#1D4ED8" stroke-width="1.5"/>
+    <path d="M0 30 L40 28 L0 30" stroke="#60A5FA" stroke-width="1" stroke-dasharray="4 3" opacity=".5"/>
+  </svg>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="hero-tag"><span class="dot"></span>Kelas 1 (Fase A) · SD Muhammadiyah 01 Kukusan</div>
+    <h1>Pesawat Kertasku<br>Bisa <span class="hl">Terbang</span> Lebih <span class="hl2">Jauh!</span></h1>
+    <p class="hero-sub">Tema: <em>Pesawat Terbang Kertas</em> — Murid kelas 1 membuat pesawat kertas, menguji seberapa jauh ia terbang dengan langkah kaki, mencoba mengubah satu bagian, dan menemukan sendiri bahwa <strong>bentuk yang berbeda menghasilkan cara terbang yang berbeda</strong>.</p>
+    <div class="hero-pills">
+      <div class="hpill"><div class="hpill-ico">📚</div><div class="hpill-body"><strong>IPAS & Matematika</strong><span>2 Mata Pelajaran Terintegrasi</span></div></div>
+      <div class="hpill"><div class="hpill-ico">🏫</div><div class="hpill-body"><strong>Fase A / Kelas I</strong><span>Sekolah Dasar</span></div></div>
+      <div class="hpill"><div class="hpill-ico">⏱️</div><div class="hpill-body"><strong>20 JP · 5 Pertemuan</strong><span>4 JP per Pertemuan</span></div></div>
+      <div class="hpill"><div class="hpill-ico">⚙️</div><div class="hpill-body"><strong>Model 5E Bybee</strong><span>Praktik Pedagogis</span></div></div>
+    </div>
+    <!-- Distance meter decoration -->
+    <div class="dist-meter">
+      <div class="dm-step">👣</div>
+      <div class="dm-step active">1</div>
+      <div class="dm-step active">2</div>
+      <div class="dm-step active">3</div>
+      <div class="dm-step active">4</div>
+      <div class="dm-step active">5</div>
+      <div class="dm-step">6</div>
+      <div class="dm-step">7</div>
+      <div class="dm-step">8</div>
+      <div class="dm-label">Mengukur jarak dengan langkah kaki!</div>
+    </div>
+  </div>
+</section>
+
+<div class="div" style="margin-top:56px"></div>
+
+<!-- KONTEKS -->
+<section class="konteks-sec" style="padding-top:72px">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">💡 Mengapa Proyek Ini?</div>
+      <h2>Dari Pertanyaan "Mengapa?" ke Pengalaman Ilmiah Pertama</h2>
+      <p>Pertanyaan "mengapa pesawatku tidak terbang sejauh punyamu?" adalah pintu masuk sempurna untuk sains di kelas 1.</p>
+    </div>
+    <div class="k-box rev">
+      <div class="k-tag">📋 Konteks Masalah</div>
+      <h3>Murid tahu bahwa hasil lemparan berbeda-beda — ada yang jauh, ada yang langsung jatuh, ada yang berputar. Tapi hampir tidak ada yang tahu <em>mengapa</em>, dan hampir tidak ada yang tahu <em>apa yang bisa diubah</em>.</h3>
+      <p>Proyek ini mengajak murid kelas 1 menjalankan siklus paling mendasar dari cara berpikir ilmiah: <strong style="color:#fff">coba → amati → ubah satu bagian → coba lagi</strong>. Mereka tidak hanya membuat dan melempar pesawat — mereka membandingkan dua model yang berbeda, memahami secara sederhana bahwa bentuk memengaruhi cara terbang, dan mencoba satu modifikasi untuk melihat apakah hasilnya berubah. Semua ini terjadi dalam bentuk permainan yang menyenangkan.</p>
+      <div class="k-prinsip">
+        <div class="k-pr"><span class="k-pr-ico">📐</span><h5>Matematika Nyata</h5><p>Langkah kaki sebagai satuan ukur — angka yang lebih besar berarti lebih jauh. Matematika digunakan sebagai alat, bukan latihan abstrak.</p></div>
+        <div class="k-pr"><span class="k-pr-ico">🔬</span><h5>Sains Konkret</h5><p>Bentuk benda memengaruhi cara ia bergerak di udara. Disampaikan tanpa istilah teknis — hanya pengamatan langsung dari pengalaman sendiri.</p></div>
+        <div class="k-pr"><span class="k-pr-ico">⚙️</span><h5>Satu Perubahan</h5><p>Hanya boleh mengubah SATU bagian pesawat — prinsip paling dasar dari eksperimen ilmiah yang dibangun sejak kelas 1.</p></div>
+        <div class="k-pr"><span class="k-pr-ico">🎮</span><h5>Belajar Sambil Bermain</h5><p>Aktivitas fisik (berlari, menghitung langkah) adalah bagian dari pembelajaran — bukan gangguan yang perlu dihentikan.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEM INTEGRATION -->
+<section class="stem-sec" id="stem">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🔬 Integrasi STEM</div>
+      <h2>Sains · Teknologi · Enjinering · Matematika</h2>
+      <p>Keempat disiplin STEM hadir dalam aksi yang nyata dan bisa dirasakan langsung oleh murid kelas 1.</p>
+    </div>
+    <div class="stem-grid rev">
+      <div class="stem-card sc-s">
+        <div class="stem-badge">🔬 Sains · IPAS</div>
+        <h4>Mengamati Gerak Pesawat di Udara</h4>
+        <div class="sub">Lurus · melayang · berputar · jatuh</div>
+        <p>Murid mengamati dan mendeskripsikan bagaimana pesawat bergerak menggunakan bahasa pengamatan konkret: <em>"pesawat yang runcing terbang lebih lurus"</em>, <em>"pesawat lebar melayang lebih pelan"</em>. Penjelasan sains menggunakan bahasa yang dipahami anak kelas 1 — udara mendorong, hidung membelah — tanpa istilah teknis sama sekali.</p>
+        <div class="stem-ghost">S</div>
+      </div>
+      <div class="stem-card sc-t">
+        <div class="stem-badge">🔧 Teknologi</div>
+        <h4>Melipat & Langkah Kaki sebagai Alat</h4>
+        <div class="sub">Teknik lipat · Satuan ukur tidak baku</div>
+        <ul>
+          <li><strong>Teknik melipat kertas</strong> yang berbeda menghasilkan produk yang berbeda — ini adalah teknologi paling sederhana yang bisa dipelajari kelas 1.</li>
+          <li><strong>Langkah kaki</strong> sebagai satuan ukur tidak baku — alat paling konkret dan mandiri yang bisa digunakan murid kelas 1 untuk mengukur jarak.</li>
+        </ul>
+        <div class="stem-ghost">T</div>
+      </div>
+      <div class="stem-card sc-e">
+        <div class="stem-badge">⚙️ Enjinering</div>
+        <h4>Siklus Desain Paling Sederhana</h4>
+        <div class="sub">Buat → Lempar → Ubah satu → Lempar lagi</div>
+        <div class="step-counter">
+          <div class="sc-num">🛫</div>
+          <span style="font-size:13px;color:var(--text-mute)">→</span>
+          <div class="sc-num">👀</div>
+          <span style="font-size:13px;color:var(--text-mute)">→</span>
+          <div class="sc-num highlight">✏️</div>
+          <span style="font-size:13px;color:var(--text-mute)">→</span>
+          <div class="sc-num">🛫</div>
+          <span style="font-size:13px;color:var(--text-mute)">→</span>
+          <div class="sc-num">📊</div>
+        </div>
+        <p style="margin-top:10px;font-size:13px;color:var(--text-mid)">Jika kita hanya mengubah satu hal, kita bisa tahu hal itu yang membuat perbedaan. Ini adalah fondasi berpikir ilmiah yang dibangun sejak kelas 1.</p>
+        <div class="stem-ghost">E</div>
+      </div>
+      <div class="stem-card sc-m">
+        <div class="stem-badge">📊 Matematika</div>
+        <h4>Bilangan sebagai Alat Nyata</h4>
+        <div class="sub">Langkah kaki · lebih jauh · lebih dekat · selisih</div>
+        <ul>
+          <li>Murid menghitung langkah kaki dari titik lempar ke titik pendaratan dan mencatatnya sebagai angka.</li>
+          <li>Membandingkan: <em>"Pesawat A = 5 langkah, Pesawat B = 8 langkah — Pesawat B lebih jauh."</em></li>
+          <li>Angka yang lebih besar berarti lebih jauh — penerapan matematika paling konkret yang bisa dialami kelas 1.</li>
+        </ul>
+        <div class="stem-ghost">M</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- DUA MODEL PESAWAT -->
+<section style="padding:80px 0;position:relative;z-index:1">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">✈️ Dua Model Pesawat · Pertemuan 2</div>
+      <h2>Dart vs. Layang — Dua Karakter Terbang</h2>
+      <p>Murid membuat dan membandingkan dua model pesawat yang berbeda — bukan untuk mencari yang "terbaik", tapi untuk mengamati bahwa bentuk yang berbeda menghasilkan cara terbang yang berbeda.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" class="rev">
+      <div style="background:#fff;border-radius:var(--rl);border:1px solid var(--border-sky);padding:32px 28px;box-shadow:var(--shadow-md);border-top:4px solid var(--blue-mid)">
+        <span style="font-size:48px;display:block;margin-bottom:16px">🚀</span>
+        <div style="font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:6px">Model A · Dart / Panah</div>
+        <h3 style="font-family:var(--ff-display);font-size:20px;color:var(--text);margin-bottom:10px">Hidung runcing, sayap sempit</h3>
+        <p style="font-size:13px;color:var(--text-mute);line-height:1.6;margin-bottom:14px">Terbang lurus dan jauh karena hidungnya membelah udara dengan mudah. Biasanya lebih cepat dan lebih konsisten arahnya. ±6–7 langkah lipatan.</p>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--sky2);color:var(--blue);border:1px solid var(--sky3)">🏎️ Lurus & cepat</span>
+          <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--sky2);color:var(--blue);border:1px solid var(--sky3)">📏 Jarak jauh</span>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:var(--rl);border:1px solid var(--border-sky);padding:32px 28px;box-shadow:var(--shadow-md);border-top:4px solid var(--sun)">
+        <span style="font-size:48px;display:block;margin-bottom:16px">🛩️</span>
+        <div style="font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);margin-bottom:6px">Model B · Wide Glider / Layang Lebar</div>
+        <h3 style="font-family:var(--ff-display);font-size:20px;color:var(--text);margin-bottom:10px">Sayap lebih lebar, hidung lebih tumpul</h3>
+        <p style="font-size:13px;color:var(--text-mute);line-height:1.6;margin-bottom:14px">Terbang lebih pelan dan melayang — udara menopang sayap lebar dari bawah. Sering berbelok atau memutari ruangan. Lebih menarik untuk diamati.</p>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--sun-soft);color:var(--sun);border:1px solid #FDE047">🌊 Melayang & tenang</span>
+          <span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--sun-soft);color:var(--sun);border:1px solid #FDE047">🎯 Kontrol arah</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 MODIFIKASI -->
+<section class="mod-sec" id="modifikasi">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">✏️ Tiga Pilihan Modifikasi · Pertemuan 4</div>
+      <h2>Ubah Satu Bagian — Lihat Apa yang Terjadi</h2>
+      <p>Setiap murid memilih SATU dari tiga opsi modifikasi. Hanya satu — agar mereka tahu <em>bagian mana</em> yang membuat perbedaan.</p>
+    </div>
+    <div class="mod-grid rev">
+      <div class="mod-card mod-a">
+        <span class="mod-ico">↗️</span>
+        <div class="mod-label">Opsi A</div>
+        <h4>Ujung Sayap ke ATAS</h4>
+        <p>Lipat ujung kanan dan kiri sayap sekitar 0,5 cm ke atas. Sayap yang sedikit miring ke atas membuat udara mendorong pesawat naik — biasanya membuat pesawat lebih stabil.</p>
+        <span class="mod-tip">Seperti sayap pesawat sungguhan!</span>
+      </div>
+      <div class="mod-card mod-b">
+        <span class="mod-ico">↘️</span>
+        <div class="mod-label">Opsi B</div>
+        <h4>Ujung Sayap ke BAWAH</h4>
+        <p>Lipat ujung kanan dan kiri sayap sekitar 0,5 cm ke bawah. Apa yang terjadi berbeda dengan Opsi A — pesawat mungkin lebih cepat menukik ke bawah. Apakah lebih jauh atau lebih dekat?</p>
+        <span class="mod-tip">Eksperimen sejati — tidak ada jawaban benar!</span>
+      </div>
+      <div class="mod-card mod-c">
+        <span class="mod-ico">📌</span>
+        <div class="mod-label">Opsi C</div>
+        <h4>Selotip Kecil di Hidung</h4>
+        <p>Tempel selotip ±1 cm di paling ujung hidung pesawat sebagai pemberat. Hidung yang lebih berat membuat pesawat lebih stabil dan terbang lebih lurus — tapi apakah lebih jauh?</p>
+        <span class="mod-tip">Pemberat = lebih stabil?</span>
+      </div>
+    </div>
+    <div style="background:var(--sky2);border:1px solid var(--sky3);border-radius:14px;padding:20px 24px;margin-top:16px;display:flex;gap:14px;align-items:flex-start" class="rev">
+      <span style="font-size:24px;flex-shrink:0">💡</span>
+      <div>
+        <p style="font-size:14px;font-weight:800;color:var(--blue);margin-bottom:4px">Mengapa hanya SATU perubahan?</p>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.6">Bayangkan kamu sakit perut — kamu minum obat dan juga minum air hangat dan juga istirahat. Kamu membaik. Tapi kamu tidak tahu mana yang membuatmu sembuh! Begitu juga dengan pesawat — kalau kita mengubah banyak hal sekaligus, kita tidak tahu bagian mana yang membuat perbedaan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE 5E -->
+<section class="tl-sec" id="alur">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📅 Alur Pembelajaran · Model 5E</div>
+      <h2>Lima Pertemuan, Satu Pengalaman Pertama</h2>
+      <p>Dari mencoba bebas hingga hari terbang bersama — setiap pertemuan membangun rasa ingin tahu dan keberanian untuk mencoba.</p>
+    </div>
+    <div class="tl-wrap rev">
+
+      <div class="tl-item p1">
+        <div class="tl-node"><div class="tl-num">1</div><div class="tl-phase">Engagement</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 1 · Engagement</div>
+          <div class="tl-title">"Pesawat Kertasku Bisa Seberapa Jauh?"</div>
+          <div class="tl-chips"><span class="tl-chip">🎮 Bebas Mencoba</span><span class="tl-chip">👣 Langkah Kaki</span><span class="tl-chip">📍 Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Setiap murid mendapat 2 lembar kertas dengan instruksi sederhana: <em>"Buat pesawat dari kertas ini dengan cara yang kalian mau."</em> Tidak ada penjelasan lebih — biarkan mereka mencoba sendiri.</li>
+            <li>Kelas pergi ke area luar (koridor/halaman). Murid melempar pesawat dari garis awal, berjalan ke tempat pesawat mendarat, dan menghitung langkah kaki dengan lantang.</li>
+            <li>Kembali ke kelas, murid mengisi LK 1: gambar pesawat · jumlah langkah · pilih wajah (jauh 😄 / biasa / dekat 😕).</li>
+            <li>Diskusi penasaran: <em>"Mengapa hasil kita berbeda-beda? Kira-kira kalau bentuknya beda, hasilnya akan berbeda?"</em> — guru tidak menjawab, biarkan murid penasaran.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p2">
+        <div class="tl-node"><div class="tl-num">2</div><div class="tl-phase">Exploration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 2 · Exploration</div>
+          <div class="tl-title">"Dua Model Pesawat — Mana yang Lebih Jauh?"</div>
+          <div class="tl-chips"><span class="tl-chip">✈️ Model A & B</span><span class="tl-chip">📊 Bandingkan</span><span class="tl-chip">📍 Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Guru menunjukkan kedua model yang sudah jadi dan melemparnya di dalam kelas — murid mengamati perbedaan cara terbangnya sebelum belajar membuatnya.</li>
+            <li>Guru mengajarkan Model A (Dart) langkah per langkah melalui demonstrasi — satu langkah, murid ikuti, satu langkah lagi. Murid yang selesai lebih dulu boleh membantu temannya.</li>
+            <li>Ulangi untuk Model B (Layang Lebar). Setelah keduanya selesai, kelas pergi ke area luar.</li>
+            <li>Setiap murid melempar Model A (hitung langkah), kembali ke garis, melempar Model B (hitung langkah). Isi LK 2: dua kolom berdampingan + lingkari model yang lebih jauh.</li>
+          </ul>
+          <div class="lk-box">
+            <h5>📋 Format LK 2</h5>
+            <ul>
+              <li>Dua kolom: siluet Model A (runcing) | siluet Model B (lebar)</li>
+              <li>Di bawah tiap gambar: "Model ini terbang ___ langkah"</li>
+              <li>Di bawah tabel: "Pesawat yang lebih jauh adalah Model ___ (A / B)"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item p3">
+        <div class="tl-node"><div class="tl-num">3</div><div class="tl-phase">Explanation</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 3 · Explanation</div>
+          <div class="tl-title">"Mengapa Bentuknya Memengaruhi Cara Pesawat Terbang?"</div>
+          <div class="tl-chips"><span class="tl-chip">💨 Udara & Sayap</span><span class="tl-chip">🔬 Demonstrasi</span><span class="tl-chip">📍 Bermakna</span></div>
+          <ul class="tl-acts">
+            <li><strong>Demonstrasi 1:</strong> lempar kertas datar (jatuh) vs. pesawat kertas (terbang) — padahal bahannya sama! Diskusi: mengapa berbeda?</li>
+            <li><strong>Demonstrasi 2:</strong> pegang kertas di depan mulut, tiup ke atasnya — kertas terangkat. Murid mencoba sendiri. <em>"Udara yang bergerak bisa mendorong benda!"</em></li>
+            <li>Penjelasan dengan gerakan tangan: <em>"Hidung yang runcing membelah udara lebih mudah — seperti ujung pensil yang mudah menembus tanah."</em> Tidak ada istilah teknis.</li>
+            <li>Murid mengisi LK 3: gambar pesawat dari samping, gambar anak panah menunjukkan arah udara, lingkari "Sayap didorong ke ___ (atas / bawah)".</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p4">
+        <div class="tl-node"><div class="tl-num">4</div><div class="tl-phase">Elaboration</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 4 · Elaboration</div>
+          <div class="tl-title">"Ubah Satu Bagian, Lihat Apa yang Terjadi"</div>
+          <div class="tl-chips"><span class="tl-chip">✏️ Satu Modifikasi</span><span class="tl-chip">📊 Sebelum vs. Sesudah</span><span class="tl-chip">📍 Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Guru menunjukkan tiga kartu modifikasi di papan dan mendemonstrasikan masing-masing: Opsi A (sayap atas), Opsi B (sayap bawah), Opsi C (selotip di hidung).</li>
+            <li>Setiap murid memilih model pesawat favoritnya (A atau B), membuat satu pesawat tanpa modifikasi, lalu satu lagi dengan modifikasi yang dipilih.</li>
+            <li>Di area lempar: lempar pesawat TANPA modifikasi (hitung langkah), kemudian DENGAN modifikasi (hitung langkah).</li>
+            <li>Isi LK 4: dua kolom sebelum–sesudah + centang apakah pesawat terbang <em>lebih jauh / lebih dekat / sama</em>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item p5">
+        <div class="tl-node"><div class="tl-num">5</div><div class="tl-phase">Evaluation</div></div>
+        <div class="tl-card">
+          <div class="tl-pert">Pertemuan 5 · Evaluation — Asesmen Sumatif</div>
+          <div class="tl-title">"Hari Terbang Bersama 🎉"</div>
+          <div class="tl-chips"><span class="tl-chip">🎯 Kompetisi Target</span><span class="tl-chip">🎤 Presentasi Mini</span><span class="tl-chip">📍 Menggembirakan</span></div>
+          <ul class="tl-acts">
+            <li>Murid menggunakan pesawat terbaik mereka. Di area melempar: ada lingkaran target di lantai (±3–4 meter dari garis). Kompetisi <strong>paling dekat ke target</strong> — bukan sejauh mungkin. Ini melatih kontrol, bukan sekadar kekuatan.</li>
+            <li>Setiap murid presentasi mini kepada kelompok kecil (3–4 teman): <em>"Ini model [A/B]. Saya mengubah [bagian]. Hasilnya [lebih jauh/dekat/sama]."</em></li>
+            <li>Guru melakukan observasi selama presentasi — ini adalah asesmen sumatif utama, bukan tes tertulis.</li>
+            <li>Refleksi penutup: <em>"Dari semua yang kita coba, satu hal apa yang paling mengejutkan kamu tentang pesawat kertas?"</em></li>
+          </ul>
+          <div style="background:var(--sun-soft);border:1px solid #FDE047;border-radius:12px;padding:14px 16px;margin-top:12px">
+            <p style="font-size:13px;font-weight:700;color:var(--sun);margin-bottom:4px">🎯 Mengapa kompetisi target, bukan sejauh mungkin?</p>
+            <p style="font-size:12px;color:var(--text-mid);line-height:1.55">Menargetkan tempat tertentu memaksa murid berpikir tentang KONTROL — bukan hanya kekuatan lemparan. Ini lebih sesuai dengan cara teknik bekerja di dunia nyata. Selain itu, kompetisi "siapa paling jauh" bisa membuat murid yang pesawatnya kurang bagus merasa kalah — sedangkan "paling dekat ke target" lebih menyeimbangkan kemampuan.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRINSIP GURU -->
+<section class="prinsip-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">👩‍🏫 Panduan Pendidik</div>
+      <h2>Empat Prinsip yang Harus Dipegang Sepanjang Proyek</h2>
+    </div>
+    <div class="pr-grid rev">
+      <div class="pr-card">
+        <div class="pr-num">1</div>
+        <div>
+          <h4>Kegagalan adalah Bagian dari Permainan</h4>
+          <p>Jika pesawat murid tidak terbang, jangan betulkan caranya. Tanya: <em>"Apa yang terjadi? Mau kamu coba lagi dengan cara yang berbeda?"</em></p>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">2</div>
+        <div>
+          <h4>Demonstrasikan, Jangan Dibacakan</h4>
+          <p>Semua instruksi cara melipat HARUS didemonstrasikan — murid kelas 1 mengikuti gerakan tangan, bukan instruksi verbal atau tulisan di papan.</p>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">3</div>
+        <div>
+          <h4>Tidak Perlu Semua Pesawat Sempurna</h4>
+          <p>Yang penting adalah murid <strong>mengamati perbedaan</strong> dan mulai bertanya-tanya mengapa — bukan membuat pesawat yang sempurna setiap kali.</p>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">4</div>
+        <div>
+          <h4>Gerakan Fisik adalah Pembelajaran</h4>
+          <p>Berlari ke tempat pesawat mendarat, menghitung langkah dengan lantang — ini adalah bagian integral dari proses belajar, bukan gangguan yang perlu dikendalikan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ASESMEN OBSERVASI -->
+<section class="asesmen-sec" id="asesmen">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">📋 Asesmen · Berbasis Observasi Guru</div>
+      <h2>Asesmen di Kelas 1: Observasi, Bukan Angka</h2>
+      <p>Lembar Kerja 1–4 berfungsi sebagai dokumentasi proses, bukan instrumen penilaian angka. Asesmen utama adalah <strong>pengamatan guru</strong> selama kegiatan berlangsung.</p>
+    </div>
+    <div class="obs-grid rev">
+
+      <div class="obs-card o-blue">
+        <div class="obs-stripe"></div>
+        <div class="obs-body">
+          <div class="obs-aspek">✈️ Membuat & Menguji<br><small>Proses STEM · P1–5</small></div>
+          <div class="obs-level"><strong class="lv-bb">🌟 Berkembang Baik</strong>Membuat pesawat dengan usaha penuh di semua sesi, melempar dan mengamati hasil dengan antusias.</div>
+          <div class="obs-level"><strong class="lv-b">✅ Berkembang</strong>Membuat pesawat di sebagian besar sesi, kadang perlu dorongan untuk mencoba.</div>
+          <div class="obs-level"><strong class="lv-pd">🤝 Perlu Pendampingan</strong>Hanya membuat atau melempar dengan bimbingan guru, tidak mencoba mandiri.</div>
+        </div>
+      </div>
+
+      <div class="obs-card o-cyan">
+        <div class="obs-stripe"></div>
+        <div class="obs-body">
+          <div class="obs-aspek">🔬 Mengamati & Membandingkan<br><small>Sains · Saat ditanya</small></div>
+          <div class="obs-level"><strong class="lv-bb">🌟 Berkembang Baik</strong>Dapat menjelaskan dengan kalimat sendiri mengapa satu pesawat terbang lebih jauh dari yang lain.</div>
+          <div class="obs-level"><strong class="lv-b">✅ Berkembang</strong>Dapat menyebut perbedaan yang ia amati meski belum bisa menjelaskan mengapa.</div>
+          <div class="obs-level"><strong class="lv-pd">🤝 Perlu Pendampingan</strong>Belum dapat membedakan atau mendeskripsikan perbedaan yang ia amati.</div>
+        </div>
+      </div>
+
+      <div class="obs-card o-sun">
+        <div class="obs-stripe"></div>
+        <div class="obs-body">
+          <div class="obs-aspek">📊 Mengukur & Mencatat<br><small>Matematika · Langkah kaki</small></div>
+          <div class="obs-level"><strong class="lv-bb">🌟 Berkembang Baik</strong>Menghitung langkah kaki secara mandiri dan mencatat angkanya di semua LK.</div>
+          <div class="obs-level"><strong class="lv-b">✅ Berkembang</strong>Menghitung dengan bantuan teman/guru, mencatat di sebagian LK.</div>
+          <div class="obs-level"><strong class="lv-pd">🤝 Perlu Pendampingan</strong>Belum dapat menghitung langkah atau mencatat tanpa bantuan penuh.</div>
+        </div>
+      </div>
+
+      <div class="obs-card o-green">
+        <div class="obs-stripe"></div>
+        <div class="obs-body">
+          <div class="obs-aspek">🎤 Menyampaikan Pengalaman<br><small>Komunikasi · Presentasi P5</small></div>
+          <div class="obs-level"><strong class="lv-bb">🌟 Berkembang Baik</strong>Dapat menyampaikan: model yang digunakan, bagian yang diubah, dan hasilnya dalam 1–2 kalimat.</div>
+          <div class="obs-level"><strong class="lv-b">✅ Berkembang</strong>Dapat menyampaikan salah satu (model ATAU perubahan ATAU hasil) dengan kalimat sederhana.</div>
+          <div class="obs-level"><strong class="lv-pd">🤝 Perlu Pendampingan</strong>Belum dapat menyampaikan pengalamannya secara verbal meski dengan panduan pertanyaan.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TINDAK LANJUT -->
+<section class="tl2-sec">
+  <div class="wrap">
+    <div class="sh rev">
+      <div class="sh-pill">🗺️ Rencana Tindak Lanjut</div>
+      <h2>Setelah Proyek: Langkah Selanjutnya</h2>
+    </div>
+    <div class="tl2-grid rev">
+      <div class="tl2-card tc2-bb">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>🌟 Berkembang Baik</h4><span class="tc2-badge">Berkembang Baik</span></div>
+          <ul>
+            <li>Tantangan tambahan: buat pesawat dari kertas yang berbeda ukurannya (lebih kecil atau lebih besar) — apakah hasilnya berbeda?</li>
+            <li>Ajak murid menjadi "pengajar" untuk temannya di P2 atau P4: minta ia mendemonstrasikan cara melipat kepada 1–2 teman sekelas.</li>
+            <li>Tantangan kreativitas: boleh membuat modifikasi yang tidak ada di kartu guru — dan menjelaskan mengapa ia memilih itu.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl2-card tc2-b">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>✅ Berkembang</h4><span class="tc2-badge">Berkembang</span></div>
+          <ul>
+            <li>Berikan LK yang lebih visual: gunakan gambar bukan teks, cukup melingkari gambar atau menempelkan stiker untuk menjawab.</li>
+            <li>Fokus pada kemampuan verbal: minta murid menceritakan secara lisan apa yang terjadi daripada menulis di LK.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl2-card tc2-pd">
+        <div class="tc2-stripe"></div>
+        <div class="tc2-body">
+          <div class="tc2-hdr"><h4>🤝 Perlu Pendampingan</h4><span class="tc2-badge">Perlu Pendampingan</span></div>
+          <ul>
+            <li>Mulai dari titik yang bisa dilakukan: jika tidak bisa melipat, berikan pesawat yang sudah setengah jadi untuk diselesaikan.</li>
+            <li>Dampingi langsung saat sesi melempar — jadikan itu momen positif, bukan korektif.</li>
+            <li>Sederhanakan LK: hanya satu gambar + satu angka yang guru bantu isi bersama murid.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEMITRAAN -->
+<section class="mitra-sec">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-pill">🤝 Kemitraan Pembelajaran</div>
+      <h2>Belajar Bersama Komunitas</h2>
+    </div>
+    <div class="mitra-grid">
+      <div class="mitra-card">
+        <span class="mitra-ico">👨‍👩‍👧</span>
+        <h4>Orang Tua Murid</h4>
+        <p>Diajak membuat pesawat kertas bersama anak di rumah setelah P2. Guru mengirimkan petunjuk lipat sederhana (sketsa atau link YouTube) di buku penghubung sebagai penguatan.</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">🏆</span>
+        <h4>Kakak Kelas (Kelas 4–5)</h4>
+        <p>Jika tersedia, murid kelas atas dapat diundang ke sesi P5 sebagai "juri" atau penghitung langkah. Ini memberi murid kelas 1 penonton yang antusias dan membangun rasa percaya diri.</p>
+      </div>
+      <div class="mitra-card">
+        <span class="mitra-ico">🌤️</span>
+        <h4>Halaman & Koridor Sekolah</h4>
+        <p>Aktivitas melempar HARUS di luar kelas: koridor panjang, halaman, atau aula. Pastikan ada garis awal yang jelas, ruang bebas hambatan minimal 6–8 meter, dan kondisi tidak terlalu berangin.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-sec">
+  <div class="wrap">
+    <div class="q-box rev">
+      <blockquote>"Yang paling penting bukan seberapa jauh pesawatnya terbang — melainkan apakah murid mulai <em>bertanya mengapa</em> dan berani <em>mencoba sekali lagi</em> dengan cara yang berbeda."</blockquote>
+      <cite>— Catatan Pendidik, Perencanaan STEM Kelas 1 · SDM01 Kukusan</cite>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="ft-brand">Pesawat Kertasku · Kelas 1 SDM01</div>
+        <p class="ft-desc">Perencanaan pembelajaran STEM terintegrasi IPAS dan Matematika untuk kelas 1 SD Muhammadiyah 01 Kukusan. Model 5E Bybee · 20 JP · 5 Pertemuan · Asesmen berbasis observasi.</p>
+        <p class="ft-meta">SD Muhammadiyah 01 Kukusan · Berdasarkan Panduan STEM Kemendikdasmen 2025</p>
+      </div>
+      <ul class="ft-links">
+        <li><a href="index.html">🏠 Hub SDM01</a></li>
+        <li><a href="aksi-hijau-stem-kelas5.html">🌱 Kelas 6 · Aksi Hijau</a></li>
+        <li><a href="sistem-kebersihan-kelas5.html">🧹 Kelas 5 · Sistem Kebersihan</a></li>
+        <li><a href="kelasku-terlalu-berisik.html">🔊 Kelas 4 · Kelasku Berisik</a></li>
+        <li><a href="jusnya-tidak-enak.html">🥤 Kelas 3 · Jusnya Tidak Enak</a></li>
+        <li><a href="kapal-kertas-kelas2.html">🚢 Kelas 2 · Kapal Kertas</a></li>
+        <li><a href="pesawat-kertas-kelas1.html">✈️ Kelas 1 · Pesawat Kertas</a></li>
+        <li><a href="../index.html">↖ Hub Utama STEM</a></li>
+      </ul>
+    </div>
+    <div class="ft-bot">
+      <p>SD Muhammadiyah 01 Kukusan · Kepentingan pendidikan non-komersial</p>
+      <span class="ft-ver">v1.0.0 · Mei 2025</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const s = document.documentElement.scrollTop, h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (s / h * 100) + '%';
+});
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+}), { threshold: .08 });
+document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+
+// Generate clouds
+const cDiv = document.getElementById('clouds');
+for (let i = 0; i < 6; i++) {
+  const c = document.createElement('div');
+  const w = 120 + Math.random() * 200, h = 40 + Math.random() * 60;
+  c.className = 'cloud';
+  c.style.cssText = `width:${w}px;height:${h}px;top:${Math.random()*70}%;animation-duration:${30+Math.random()*30}s;animation-delay:${Math.random()*20}s;`;
+  cDiv.appendChild(c);
+}
+</script>
+</body>
+</html>
